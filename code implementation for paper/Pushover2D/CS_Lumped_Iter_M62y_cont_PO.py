@@ -2,6 +2,10 @@ import openseespy.opensees as op
 import numpy as np
 from matplotlib import pyplot as plt
 from Functions import*
+import os
+
+# Output files (results, layout, figures) next to this script, wherever it is run from
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 #Lumped orthogonal line
 
@@ -11,6 +15,10 @@ from Functions import*
 # ------------------------------------------------------------
 Lpipe  = 82000
 npipes = 3
+n_mains = 1
+n_mains_left  = n_mains   # mains lumped left of x_center
+n_mains_right = n_mains   # mains lumped right of x_center
+x_center      = Lpipe/2   # split location along the main
 Dext = 127
 Dint = 113
 E = 210000
@@ -24,7 +32,7 @@ soft_spacing = 3000
 # NEW: stiff hangers defined by mask (0/1)
 # Example mask — must be defined by you
 stiff_mask = np.array([
-    1,0,0,1,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,1,0,0,1
+    1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,1,0,0,0,1
 ], dtype=int)
 #x_stiff_user = np.array([
 #    1000.0, 10000.0, 22000.0, 34000.0, 43000.0, 55000.0, 67000.0, 76000.0
@@ -100,6 +108,10 @@ for dc in dc_vec:
         Dext=Dext,
         Dint=Dint,
         npipes=npipes,
+        n_mains=n_mains,
+        n_mains_left=n_mains_left,
+        n_mains_right=n_mains_right,
+        x_center=x_center,
         E=E,
         G=G,
         rho=rho,
@@ -162,7 +174,42 @@ for dc in dc_vec:
 results_arr = np.array(results, float)
 
 np.savetxt(
-    "pushover_results_M62y.txt",
+    os.path.join(SCRIPT_DIR, "pushover_results_M62y.txt"),
     results_arr,
     fmt="%.3f",
+)
+
+# Layout of the 2D model, used to build the SDOF (Pushover_SDOF)
+save_pushover_layout(
+    os.path.join(SCRIPT_DIR, "pushover_layout_M62y.json"),
+    x_d,
+    x_stiff_out,
+    n_ortho_springs_user,
+    n_mains_left,
+    n_mains_right,
+    x_center,
+    order=order,          # results saved sorted by x
+)
+
+# ------------------------------------------------------------
+# Displaced shape at critical displacement vs NLTHA mean shape
+# ------------------------------------------------------------
+# NLTHA points on the analysed main: (label, point indices, 2D x [mm])
+nltha_lines = [
+    ('',
+     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29],
+     [0, 1000, 4000, 7000, 10000, 13000, 16000, 19000, 22000, 25000, 28000, 31000, 32000, 34000, 37000, 40000, 43000, 46000, 49000, 52000, 55000, 58000, 61000, 64000, 67000, 70000, 73000, 76000, 79000, 82000]),
+]
+
+plot_shape_vs_nltha(
+    results_arr,
+    x_d[order],           # results saved sorted by x
+    model="M62",
+    direction="Y",
+    nltha_lines=nltha_lines,
+    dc_target=12.0,
+    level=-1,                     # strongest NLTHA intensity
+    x_ref=32000,                  # NLTHA shapes are normalized at the orthogonal at x = 32 m
+    x_supports=x_stiff_out,
+    out_png=os.path.join(SCRIPT_DIR, "shape_comparison_M62y.png"),
 )

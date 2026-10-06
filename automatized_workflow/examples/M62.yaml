@@ -1,0 +1,25 @@
+# Units: N, mm, s
+# Layout of archetype M62 (82 m main line, two 52 m branches), restraints at the positions of the
+# 3D model of the repo (inputs/models3d/M62.json).
+name: M62_auto
+description: Layout of archetype M62, restraints at the positions of the repo's 3D model
+main_line:
+  length: 82000
+  n_pipes: 3
+  hangers: {first: 1000, spacing: 3000}
+  braces:
+    transverse: {positions: [1000, 10000, 22000, 34000, 46000, 58000, 67000, 79000]}
+    longitudinal: {positions: [1000, 13000, 22000, 34000, 46000, 58000, 67000, 79000]}
+branches:
+  - x: 82000
+    side: +y
+    length: 52000
+    braces:
+      transverse: {positions: [4000, 13000, 25000, 37000, 46000]}
+      longitudinal: {positions: [1000, 13000, 25000, 37000, 49000]}
+  - x: 32000
+    side: +y
+    length: 52000
+    braces:
+      transverse: {positions: [4000, 13000, 25000, 37000, 46000]}
+      longitudinal: {positions: [1000, 13000, 25000, 37000, 49000]}

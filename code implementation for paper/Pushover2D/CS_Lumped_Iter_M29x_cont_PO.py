@@ -2,6 +2,10 @@ import openseespy.opensees as op
 import numpy as np
 from matplotlib import pyplot as plt
 from Functions import*
+import os
+
+# Output files (results, layout, figures) next to this script, wherever it is run from
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 #Lumped orthogonal line
 
@@ -10,7 +14,11 @@ from Functions import*
 # Parameters
 # ------------------------------------------------------------
 Lpipe  = 12000
-npipes = 18
+npipes = 3
+n_mains = 9
+n_mains_left  = 6   # mains lumped left of x_center: the 6 branches on the -y side (2D x = 6 m + y)
+n_mains_right = 9   # mains lumped right of x_center: the 9 branches on the +y side
+x_center      = Lpipe/2   # split location along the main
 Dext = 127
 Dint = 113
 E = 210000
@@ -103,6 +111,10 @@ for dc in dc_vec:
         Dext=Dext,
         Dint=Dint,
         npipes=npipes,
+        n_mains=n_mains,
+        n_mains_left=n_mains_left,
+        n_mains_right=n_mains_right,
+        x_center=x_center,
         E=E,
         G=G,
         rho=rho,
@@ -158,7 +170,43 @@ for dc in dc_vec:
 results_arr = np.array(results, float)
 
 np.savetxt(
-    "pushover_results_M29x.txt",
+    os.path.join(SCRIPT_DIR, "pushover_results_M29x.txt"),
     results_arr,
     fmt="%.3f",
+)
+
+# Layout of the 2D model, used to build the SDOF (Pushover_SDOF)
+save_pushover_layout(
+    os.path.join(SCRIPT_DIR, "pushover_layout_M29x.json"),
+    x_d,
+    x_stiff_out,
+    n_ortho_springs_user,
+    n_mains_left,
+    n_mains_right,
+    x_center,
+)
+
+# ------------------------------------------------------------
+# Displaced shape at critical displacement vs NLTHA mean shape
+# ------------------------------------------------------------
+# NLTHA points on the analysed main: (label, point indices, 2D x [mm])
+nltha_lines = [
+    ('(line at x = 7.05 m)',
+     [55, 56, 57, 7, 31, 32, 33],
+     [1000, 1500, 4500, 6000, 7500, 10500, 11000]),
+    ('(line at x = 11.55 m)',
+     [58, 59, 60, 10, 34, 35, 36],
+     [1000, 1500, 4500, 6000, 7500, 10500, 11000]),
+]
+
+plot_shape_vs_nltha(
+    results_arr,
+    x_d,
+    model="M29",
+    direction="X",
+    nltha_lines=nltha_lines,
+    dc_target=12.0,
+    level=-1,                     # strongest NLTHA intensity
+    x_supports=x_stiff_out,
+    out_png=os.path.join(SCRIPT_DIR, "shape_comparison_M29x.png"),
 )

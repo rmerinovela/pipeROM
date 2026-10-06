@@ -7,6 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 import scipy as scp
+from sdof_from_2d import load_sdof_params, plot_pushover_comparison
 
 
 
@@ -15,23 +16,23 @@ op.wipe()
 
 print('Model generation started...')
 
-direc = './ResultsM63x_SDOF'
+# Output in Pushover_SDOF, wherever the script is run from
+direc = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ResultsM63x_SDOF')
 
 if(os.path.isdir(direc)==False):
     os.mkdir(direc)
     
-Analysis_Type = 'CPO'
+Analysis_Type = 'PO'
         
 op.model('basic', '-ndm', 2, '-ndf', 3) 
 
 nodefix = 1
 nodefree = 2
 
-mass = [22.19, 22.19, 0] 
-Gamma = 0.87
-DispShape = [0.96,1.19,1.23,1.07,1]
-nT = 4
-nL = 6
+# Equivalent SDOF from the 2D pushover (Pushover2D) at the step closest to dc_target
+sdof = load_sdof_params('M63x', dc_target=12.0)
+Gamma = sdof['Gamma']
+mass = [sdof['mass'], sdof['mass'], 0]
 
 op.node(nodefix, 0.0, 0.0)
 op.node(nodefree, 0.0, 0.0, '-mass', *mass)
@@ -122,32 +123,34 @@ TgFLim = 0.0 #floating point values controlling cyclic degradation model for str
 TgE = 10.0 #floating point value used to define maximum energy dissipation under cyclic loading. Total energy dissipation capacity is definedTs this factor multiplied by the energy dissipated under monotonic loading.
 TdmgType = "cycle" #string to indicate type of damage (option: "cycle", "energy"
 
-matLong = 10
-matTran = [20,30,40,50]
+# One Pinching4 spring per support of the 2D model: forces scaled by the number
+# of identical springs it represents (n), deformations by 1/(Gamma*phi)
+matTags = []
 
-op.uniaxialMaterial('Pinching4', matLong, nL*LePf1, LePd1/(Gamma*DispShape[-1]), nL*LePf2, LePd2/(Gamma*DispShape[-1]), nL*LePf3, LePd3/(Gamma*DispShape[-1]), nL*LePf4, LePd4/(Gamma*DispShape[-1]), 
-                    nL*LeNf1, LeNd1/(Gamma*DispShape[-1]), nL*LeNf2, LeNd2/(Gamma*DispShape[-1]), nL*LeNf3, LeNd3/(Gamma*DispShape[-1]), nL*LeNf4, LeNd4/(Gamma*DispShape[-1]), 
-                    LrDispP, LrForceP, LuForceP, LrDispN, LrForceN, LuForceN, LgK1, LgK2, LgK3, LgK4, LgKLim, LgD1, LgD2, LgD3, LgD4, LgDLim, LgF1, LgF2, LgF3, LgF4, LgFLim, LgE, LdmgType)
+for i, (phi, n) in enumerate(sdof['long']):
+    matTag = 100 + i
+    op.uniaxialMaterial('Pinching4', matTag, n*LePf1, LePd1/(Gamma*phi), n*LePf2, LePd2/(Gamma*phi), n*LePf3, LePd3/(Gamma*phi), n*LePf4, LePd4/(Gamma*phi),
+                        n*LeNf1, LeNd1/(Gamma*phi), n*LeNf2, LeNd2/(Gamma*phi), n*LeNf3, LeNd3/(Gamma*phi), n*LeNf4, LeNd4/(Gamma*phi),
+                        LrDispP, LrForceP, LuForceP, LrDispN, LrForceN, LuForceN, LgK1, LgK2, LgK3, LgK4, LgKLim, LgD1, LgD2, LgD3, LgD4, LgDLim, LgF1, LgF2, LgF3, LgF4, LgFLim, LgE, LdmgType)
+    matTags.append(matTag)
 
-for i in range(nT):
-    op.uniaxialMaterial('Pinching4', matTran[i], 2*TePf1, TePd1/(Gamma*DispShape[i]), 2*TePf2, TePd2/(Gamma*DispShape[i]), 2*TePf3, TePd3/(Gamma*DispShape[i]), 2*TePf4, TePd4/(Gamma*DispShape[i]), 
-                         2*TeNf1, TeNd1/(Gamma*DispShape[i]), 2*TeNf2, TeNd2/(Gamma*DispShape[i]), 2*TeNf3, TeNd3/(Gamma*DispShape[i]), 2*TeNf4, TeNd4/(Gamma*DispShape[i]), 
-                         TrDispP, TrForceP, TuForceP, TrDispN, TrForceN, TuForceN, TgK1, TgK2, TgK3, TgK4, TgKLim, TgD1, TgD2, TgD3, TgD4, TgDLim, TgF1, TgF2, TgF3, TgF4, TgFLim, TgE, TdmgType)
+for i, (phi, n) in enumerate(sdof['trans']):
+    matTag = 300 + i
+    op.uniaxialMaterial('Pinching4', matTag, n*TePf1, TePd1/(Gamma*phi), n*TePf2, TePd2/(Gamma*phi), n*TePf3, TePd3/(Gamma*phi), n*TePf4, TePd4/(Gamma*phi),
+                        n*TeNf1, TeNd1/(Gamma*phi), n*TeNf2, TeNd2/(Gamma*phi), n*TeNf3, TeNd3/(Gamma*phi), n*TeNf4, TeNd4/(Gamma*phi),
+                        TrDispP, TrForceP, TuForceP, TrDispN, TrForceN, TuForceN, TgK1, TgK2, TgK3, TgK4, TgKLim, TgD1, TgD2, TgD3, TgD4, TgDLim, TgF1, TgF2, TgF3, TgF4, TgFLim, TgE, TdmgType)
+    matTags.append(matTag)
 
 matTot = 1000
-op.uniaxialMaterial('Parallel', matTot, matLong, matTran[0], matTran[1], matTran[2], matTran[3])
+op.uniaxialMaterial('Parallel', matTot, *matTags)
 
 
 matRig = 4
 op.uniaxialMaterial('Elastic', 	 matRig,	10e12)
     
-#matTot = 30
-#op.uniaxialMaterial('Parallel', matTot, matLong, matTran)
 
 eleID1 = 1
 op.element('zeroLength', eleID1, nodefix, nodefree, '-mat', matTot, matRig, matRig, '-dir', 1, 2, 3)
-#eleID2 = 2
-#op.element('zeroLength', eleID2, nodefix, nodefree, '-mat', matTran, matRig, matRig, '-dir', 1, 2, 3)
 
 #op.equalDOF(nodefix, nodefree, 2 ,3)
 
@@ -236,24 +239,30 @@ for j in range(0, len(displist)):
             op.test('EnergyIncr',*testParams2)
             op.algorithm('Newton','-initial')
             print("Trying Newton with Initial Tangent ..")
-            ok = op.analyze(1,dsteps/2)
-            op.test('RelativeEnergyIncr',*testParams) 
+            op.integrator('DisplacementControl', IDctrlNode, IDctrlDOF, dsteps/2)   # 2 sub-steps of dsteps/2 (A5)
+            ok = op.analyze(2)
+            op.integrator('DisplacementControl', IDctrlNode, IDctrlDOF, dsteps)
+            op.test('EnergyIncr',*testParams)   # back to the main test (A5)
             op.algorithm('Newton') 
         
         if ok != 0:
             op.algorithm('Broyden',50)
             op.test('EnergyIncr',*testParams2)
             print("Trying Broyden ..")
-            ok = op.analyze(1,dsteps/2) 
-            op.test('RelativeEnergyIncr',*testParams) 
+            op.integrator('DisplacementControl', IDctrlNode, IDctrlDOF, dsteps/2)   # 2 sub-steps of dsteps/2 (A5)
+            ok = op.analyze(2)
+            op.integrator('DisplacementControl', IDctrlNode, IDctrlDOF, dsteps)
+            op.test('EnergyIncr',*testParams)   # back to the main test (A5)
             op.algorithm('Newton') 
             
         if ok != 0:
             op.algorithm('NewtonLineSearch')
             op.test('EnergyIncr',*testParams2)
             print("Trying NewtonWithLineSearch ..")
-            ok = op.analyze(1,dsteps/10)
-            op.test('RelativeEnergyIncr',*testParams) 
+            op.integrator('DisplacementControl', IDctrlNode, IDctrlDOF, dsteps/10)   # 10 sub-steps of dsteps/10 (A5)
+            ok = op.analyze(10)
+            op.integrator('DisplacementControl', IDctrlNode, IDctrlDOF, dsteps)
+            op.test('EnergyIncr',*testParams)   # back to the main test (A5)
             op.algorithm('Newton') # use Newton's solution algorithm: updates tangent stiffness at every iteration
         
         if ok == 0:
@@ -270,3 +279,20 @@ else:
 #print(force)        
 #ani = vfo.animate_deformedshape(model="Tank", loadcase="Pushover")
 #vfo.plot_model(show_nodes = "yes",show_nodetags="yes")
+
+
+# --------------------------------------------------------
+# SDOF pushover vs 2D adaptive pushover (Pushover2D)
+# --------------------------------------------------------
+op.wipe()      # closes the recorders → output files complete
+
+suffix = '_CPO' if Analysis_Type == 'CPO' else ''
+plot_pushover_comparison(
+    'M63x',
+    direc+'/DispC'+suffix+'.out',
+    direc+'/VbaseC'+suffix+'.out',
+    dc_target=12.0,
+    cyclic=(Analysis_Type == 'CPO'),
+    out_png=direc+'/pushover_comparison_M63x'+suffix+'.png',
+)
+plt.show()

@@ -1,12 +1,19 @@
+import os
 import openseespy.opensees as op
 import numpy as np
+from matplotlib import pyplot as plt
+
+RESULTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Results")
 
 def build_model(
-        n_elem=10,
         Lpipe=6000,
         Dext=127,
         Dint=113,
         npipes=1,
+        n_mains=1,               # number of mains lumped into the analysed main
+        n_mains_left=None,       # mains lumped left of x_center (default: n_mains)
+        n_mains_right=None,      # mains lumped right of x_center (default: n_mains)
+        x_center=None,           # split location along the main (default: Lpipe/2)
         E=210000.0,
         G=81000.0,
         rho=7.85e-9,
@@ -25,7 +32,6 @@ def build_model(
         n_ortho_springs_user=None,
 
         alpha=1.0,
-        use_initial_k=False
 ):
     # --------------------------------------------------------
     # Trilinear stiffness envelopes (unchanged numerically)
@@ -40,7 +46,7 @@ def build_model(
 
     # Longitudinal (L)
     d1_L, d2_L = 12.0, 24.0
-    F1_L, F2_L = 7500.0, 11500.0
+    F1_L, F2_L = 7500.0, 10000.0
     k1_L = F1_L / d1_L
     k2_L = (F2_L - F1_L) / (d2_L - d1_L)
     k3_L = 0.01 * k1_L
@@ -123,11 +129,6 @@ def build_model(
         raise ValueError("stiff_mask must be provided under Option A.")
 
     stiff_mask = np.array(stiff_mask, dtype=int)
-    
-    print(">>> stiff_mask INSIDE build_model =", stiff_mask)
-    print(">>> sum(stiff_mask) =", stiff_mask.sum())
-    print(">>> stiff_indices =", np.where(stiff_mask == 1)[0])
-    print(">>> n_soft =", n_soft)
 
     if len(stiff_mask) != n_soft:
         raise ValueError(
@@ -168,12 +169,47 @@ def build_model(
     # --------------------------------------------------------
     # Section and mass properties
     # --------------------------------------------------------
+    if n_mains_left is None:
+        n_mains_left = n_mains
+    if n_mains_right is None:
+        n_mains_right = n_mains
+    for name, val in (("n_mains", n_mains),
+                      ("n_mains_left", n_mains_left),
+                      ("n_mains_right", n_mains_right)):
+        if int(val) != val or val < 1:
+            raise ValueError(f"{name} must be a positive integer, got {val}.")
+    n_mains_left  = int(n_mains_left)
+    n_mains_right = int(n_mains_right)
+
+    if x_center is None:
+        x_center = 0.5 * Lpipe
+    x_center = float(x_center)
+    if not (0.0 < x_center < Lpipe):
+        raise ValueError(f"x_center must lie inside (0, Lpipe), got {x_center}.")
+
+    tol_center = 1e-3
+
+    def n_mains_at(x):
+        """Number of mains lumped at position x along the modelled main.
+        A point exactly at x_center straddles both sides → average."""
+        if x < x_center - tol_center:
+            return float(n_mains_left)
+        if x > x_center + tol_center:
+            return float(n_mains_right)
+        return 0.5 * (n_mains_left + n_mains_right)
+
+    # The modelled main is a single main (npipes pipes): mass, area and torsion.
+    # The other mains only stiffen it in bending → Iy, Iz × n_mains on each
+    # side of x_center (n_mains_left to the left, n_mains_right to the right)
     A  = npipes * np.pi * ((Dext/2)**2 - (Dint/2)**2)
     Aw = npipes * np.pi * ((Dint/2)**2)
 
     J  = npipes*np.pi/2*((Dext/2)**4 - (Dint/2)**4)
-    Iy = npipes*np.pi/4*((Dext/2)**4 - (Dint/2)**4)
-    Iz = Iy
+    I_single = npipes*np.pi/4*((Dext/2)**4 - (Dint/2)**4)
+    Iy_left  = n_mains_left  * I_single
+    Iy_right = n_mains_right * I_single
+    Iz_left  = Iy_left
+    Iz_right = Iy_right
 
     mass_per_length  = rho * A
     mass_per_lengthw = (rho/7.8) * Aw
@@ -225,7 +261,11 @@ def build_model(
             # add new node
             x_coords_list.append(x_ortho)
 
-    # 5. Finalize main-line x-coordinates
+    # 5. Ensure a (massless) node at x_center so the Iy/Iz change falls on a node
+    if np.min(np.abs(np.array(x_coords_list, float) - x_center)) >= tol_snap:
+        x_coords_list.append(x_center)
+
+    # 6. Finalize main-line x-coordinates
     x_coords = np.unique(np.round(np.array(x_coords_list, float), 6))
     x_coords = np.sort(x_coords)
 
@@ -287,31 +327,32 @@ def build_model(
     mass_positions.add(Lpipe)
 
     # --------------------------------------------------------
-    # Compute tributary lengths for each FE node
+    # Compute tributary lengths for each mass node
+    # (between mass nodes only, so the massless x_center node does not
+    #  steal tributary length from its neighbours)
     # --------------------------------------------------------
-    elem_lengths = np.diff(x_coords)
+    is_mass_node = np.array(
+        [any(abs(x - xm) < tol_x for xm in mass_positions) for x in x_coords]
+    )
+    idx_mass     = np.where(is_mass_node)[0]
+    elem_lengths = np.diff(x_coords[idx_mass])
     L_trib       = np.zeros_like(x_coords)
 
-    for i in range(len(x_coords)):
-        if i == 0:
+    for k, i in enumerate(idx_mass):
+        if k == 0:
             L_trib[i] = 0.5 * elem_lengths[0]
-        elif i == len(x_coords) - 1:
+        elif k == len(idx_mass) - 1:
             L_trib[i] = 0.5 * elem_lengths[-1]
         else:
-            L_trib[i] = 0.5 * (elem_lengths[i-1] + elem_lengths[i])
+            L_trib[i] = 0.5 * (elem_lengths[k-1] + elem_lengths[k])
 
     # --------------------------------------------------------
     # Assign FE nodal masses
     # --------------------------------------------------------
     nodal_masses = np.zeros_like(x_coords)
 
-    for i, x in enumerate(x_coords):
+    for i in idx_mass:
         tag = line_node_tags[i]
-
-        is_mass_node = any(abs(x - xm) < tol_x for xm in mass_positions)
-        if not is_mass_node:
-            continue
-
         nodal_masses[i] = L_trib[i] * mL_total
         op.mass(tag, nodal_masses[i], nodal_masses[i], 0, 0, 0, 0)
 
@@ -321,15 +362,22 @@ def build_model(
     beam_base = 1000
 
     for i in range(len(line_node_tags) - 1):
+        # element side w.r.t. x_center decided by its midpoint
+        x_mid_e = 0.5 * (x_coords[i] + x_coords[i+1])
+        if x_mid_e < x_center:
+            Iy_e, Iz_e = Iy_left, Iz_left
+        else:
+            Iy_e, Iz_e = Iy_right, Iz_right
+
         op.element('elasticBeamColumn',
                    base + beam_base + i,
                    line_node_tags[i], line_node_tags[i+1],
-                   A, E, G, J, Iy, Iz, 1)
+                   A, E, G, J, Iy_e, Iz_e, 1)
 
 
 
     # --------------------------------------------------------
-    # Stiff spring tangent stiffnesses (now based on hanger DOFs)
+    # Stiff spring secant stiffnesses (now based on hanger DOFs)
     # --------------------------------------------------------
 
     # DOF layout (new):
@@ -397,7 +445,7 @@ def build_model(
         j = hanger_to_stiff[i]   # -1 if soft, 0..n_stiff-1 if stiff
 
         if j >= 0:
-            # This hanger is stiff → use tangent stiffness stiff_kT[j]
+            # This hanger is stiff → use secant stiffness stiff_kT[j]
             line_stiff_nodes[j] = bot
 
             mat_id = base + 600 + i
@@ -458,9 +506,10 @@ def build_model(
         op.node(nd_start_j, x_j, Loff, 0.0)
 
         # rigid tee offset: short beam from main line to branch start
+        I_tee_j = n_mains_at(x_j) * I_single
         op.element('elasticBeamColumn', eid_global,
                    nd_main_j, nd_start_j,
-                   A, E, G, J, Iy, Iz, 1)
+                   A, E, G, J, I_tee_j, I_tee_j, 1)
         eid_global += 1
 
         # ------------------------------------------------------------
@@ -487,12 +536,14 @@ def build_model(
         d_elbow_j = d[i_ortho]
 
 
-        # evaluate tangent stiffness at orthogonal DOF displacement
+        # evaluate secant stiffness at orthogonal DOF displacement
         u_elbow_j = Delta * d_elbow_j
         kL_unit_j = trilinear_keff(u_elbow_j, k1_L, k2_L, k3_L, d1_L, d2_L)
 
-        # lumped stiffness
-        k_ortho_lump[j] = alpha * ns_j * kL_unit_j
+        # lumped stiffness: the orthogonal's longitudinal supports are shared
+        # between the mains → modelled main takes ns_j / n_mains of them
+        # (n_mains on the side of x_center where the orthogonal sits)
+        k_ortho_lump[j] = alpha * (ns_j / n_mains_at(x_j)) * kL_unit_j
 
         mat_tag_j = MAT_ORTHO_BASE + j
         op.uniaxialMaterial('Elastic', mat_tag_j, k_ortho_lump[j])
@@ -693,40 +744,28 @@ def build_model(
         else:
             V_pass_ortho[j] = 0.0
             V_stay_ortho[j] = 0.0
-                
-        # ------------------------------------------------------------
-        # 6) SEGMENT-WISE REDISTRIBUTION OF BASE SHEAR (GENERALIZED)
-        # ------------------------------------------------------------
 
-        # Segment boundaries: 0, all orthogonal x-locations, Lpipe
-        seg_bounds = sorted(set([0.0] + list(x_ortho_user) + [Lpipe]))
+    # ------------------------------------------------------------
+    # 6) SEGMENT-WISE REDISTRIBUTION OF BASE SHEAR (GENERALIZED)
+    # ------------------------------------------------------------
 
-        # DOF coordinates and arrays (NEW convention)
-        #   d = [all hangers (soft+stiff) ..., all orthogonals ...]
-        x_d = np.zeros(n_dof)
-        x_d[:n_hangers] = x_soft
-        for j in range(n_orth):
-            x_d[n_hangers + j] = x_ortho_user[j]
+    # Segment boundaries: 0, all orthogonal x-locations, Lpipe
+    seg_bounds = sorted(set([0.0] + list(x_ortho_user) + [Lpipe]))
 
-        d_d = np.array(d, float)
-        m_d = m_d
+    # DOF coordinates and arrays (NEW convention)
+    #   d = [all hangers (soft+stiff) ..., all orthogonals ...]
+    x_d = np.zeros(n_dof)
+    x_d[:n_hangers] = x_soft
+    for j in range(n_orth):
+        x_d[n_hangers + j] = x_ortho_user[j]
 
-        Fy_full = np.zeros_like(x_d)
+    d_d = np.array(d, float)
 
-        # FE coordinates and masses
-        x_fe = x_coords
-        m_fe = nodal_masses
+    Fy_full = np.zeros_like(x_d)
 
-        # Neighbour set for tributary logic: ends + stiff + orthogonals
-        x_support = np.sort(
-            np.concatenate([
-                np.array([0.0, Lpipe], dtype=float),
-                x_stiff.copy(),
-                x_ortho_user.copy()
-            ])
-        )
-
-        tol_x = 1e-9
+    # FE coordinates and masses
+    x_fe = x_coords
+    m_fe = nodal_masses
 
     # ------------------------------------------------------------
     # Precompute pass shear (stay/pass + left/right) for each orthogonal
@@ -785,7 +824,7 @@ def build_model(
 
         idx_ortho_node    = np.where(np.abs(x_fe - xj) < tol_x)[0][0]
         m_node_ortho_main = m_fe[idx_ortho_node]
-        #m_main_trib_j    += m_node_ortho_main
+        m_main_trib_j    += m_node_ortho_main
 
         m_ortho_j = m_ortho_lump[j]
         m_eff_j   = m_ortho_j + m_main_trib_j
@@ -870,26 +909,6 @@ def build_model(
 
         dF_seg = V_seg * md_seg / denom
         Fy_full[idx_seg] += dF_seg
-    
-    print("\n================ DOF DIAGNOSTICS ================")
-
-    print("\nDOF coordinates (x_d):")
-    for i, x in enumerate(x_d):
-        print(f"  DOF {i:2d}: x = {x:10.3f}")
-
-    print("\nShape vector d:")
-    for i, val in enumerate(d_d):
-        print(f"  d[{i:2d}] = {val:12.6f}")
-
-    print("\nMass vector m_d:")
-    for i, val in enumerate(m_d):
-        print(f"  m[{i:2d}] = {val:12.6f}")
-
-    print("\nRedistributed shear Fy:")
-    for i, val in enumerate(Fy_full):
-        print(f"  Fy[{i:2d}] = {val:12.6f}")
-
-    print("=================================================\n")
 
        
     # ------------------------------------------------------------
@@ -953,7 +972,9 @@ def build_model(
 
     # DOF shape and mass vectors in the new order
     d_all = d_d.copy()     # [d_stiff..., d_ortho...]
-    m_all = m_d.copy()     # tributary main-line masses
+    # main-line masses of ALL mains (same shape), n_mains taken per DOF side
+    n_mains_d = np.array([n_mains_at(x) for x in x_d])
+    m_all = n_mains_d * m_d.copy()
     d_all = d_all/d_all[-1]
     # Add orthogonal lumped masses to the orthogonal DOFs
     for j in range(n_orth):
@@ -973,15 +994,21 @@ def build_model(
     # Effective modal mass
     M_eff = Gamma * num
 
-    # Global base shear = redistributed main-line forces + stay forces
-    Vb = np.sum(Fy_full) + np.sum(V_stay_ortho)
+    # Global base shear = support reactions of the modelled main at the
+    # displaced shape (stiff hangers + orthogonal longitudinal springs),
+    # times the number of identical mains on the side of each support
+    Vb = 0.0
+    for i in range(n_stiff):
+        Vb += n_mains_at(x_stiff_user[i]) * stiff_kT[i] * (Delta * d[stiff_indices[i]])
+    for j in range(n_orth):
+        Vb += n_mains_at(x_ortho_user[j]) * V_ortho_tot[j]
 
     # ------------------------------------------------------------
     # Modal mass ratio (generalized)
     # ------------------------------------------------------------
 
-    # Total modal mass = main-line modal masses + orthogonal lumped masses
-    M_total = np.sum(m_d) + np.sum(m_ortho_lump)
+    # Total modal mass = main-line masses of all mains + orthogonal lumped masses
+    M_total = np.sum(n_mains_d * m_d) + np.sum(m_ortho_lump)
 
     mass_ratio = M_eff / M_total if M_total > 0 else 0.0
 
@@ -1028,6 +1055,56 @@ def build_model(
         f_push,
     )
     
+def save_pushover_layout(
+    path,
+    x_d,
+    x_stiff,
+    n_ortho_springs,
+    n_mains_left,
+    n_mains_right,
+    x_center,
+    alpha=1.0,
+    order=None,
+):
+    """
+    Save the 2D model layout needed to build the equivalent SDOF from the
+    pushover results (Pushover_SDOF/sdof_from_2d.py).
+
+    x_d             : DOF x-coordinates (mm) [hangers..., orthogonals...]
+    x_stiff         : x (mm) of the stiff (transverse) hangers
+    n_ortho_springs : number of longitudinal springs of each orthogonal
+    order           : permutation applied to d_norm/d_scaled/f_push before
+                      saving them (column k holds DOF order[k]); None = DOF order
+    """
+    import json
+
+    x_d     = np.asarray(x_d, float)
+    x_stiff = np.asarray(x_stiff, float)
+    n_ortho_springs = np.asarray(n_ortho_springs, int)
+    n_orth    = len(n_ortho_springs)
+    n_hangers = len(x_d) - n_orth
+
+    # DOF index of each stiff hanger (hanger DOFs come first in x_d)
+    i_stiff = [int(np.argmin(np.abs(x_d[:n_hangers] - xs))) for xs in x_stiff]
+
+    layout = {
+        "x_d": x_d.tolist(),
+        "n_hangers": int(n_hangers),
+        "i_stiff": i_stiff,
+        "i_ortho": list(range(n_hangers, n_hangers + n_orth)),
+        "n_ortho_springs": n_ortho_springs.tolist(),
+        "n_mains_left": int(n_mains_left),
+        "n_mains_right": int(n_mains_right),
+        "x_center": float(x_center),
+        "alpha": float(alpha),
+        "column_order": (list(range(len(x_d))) if order is None
+                         else [int(k) for k in order]),
+    }
+    with open(path, "w") as f:
+        json.dump(layout, f, indent=2)
+    print(f"Saved pushover layout: {path}")
+
+
 def normalize_shape(phi):
     max_abs = np.max(np.abs(phi))
     if max_abs == 0:
@@ -1143,4 +1220,98 @@ def iterate_shape_from_static(
         order,             # plotting index
         f_push,
     )
+
+
+def plot_shape_vs_nltha(
+    results_arr,
+    x_d,
+    model,
+    direction,
+    nltha_lines,
+    dc_target=12.0,
+    level=-1,
+    x_ref=None,
+    x_supports=None,
+    out_png=None,
+):
+    """
+    Compare the 2D displaced shape at the pushover step closest to dc_target
+    with the NLTHA mean displaced shape (Results/<model>_bironDispShape<dir>.npy).
+
+    results_arr : pushover results rows [dc, Gamma, M_eff, Vb, mass_ratio,
+                  u_sdof, d_norm..., d_scaled..., f_push...]
+    x_d         : DOF x-coordinates (mm), same order as d_norm
+    nltha_lines : list of (label, NLTHA point indices, 2D x-coordinates in mm)
+                  for the NLTHA points lying on the analysed main
+    level       : NLTHA intensity level index (-1 = strongest)
+    x_ref       : x (mm) of the DOF where both shapes are normalized to 1
+                  (default: last DOF, as in d_norm)
+    x_supports  : x (mm) of the transverse supports (stiff hangers) to highlight
+    """
+    x_d = np.asarray(x_d, float)
+    n_dof = len(x_d)
+
+    # 2D shape at the pushover step closest to dc_target
+    i_step = np.argmin(np.abs(results_arr[:, 0] - dc_target))
+    dc     = results_arr[i_step, 0]
+    d_norm = results_arr[i_step, 6:6 + n_dof]   # normalized by last DOF
+
+    # Normalization location: re-normalize the 2D shape at the DOF closest to x_ref
+    if x_ref is None:
+        x_ref = x_d[-1]
+    i_ref  = np.argmin(np.abs(x_d - x_ref))
+    x_ref  = x_d[i_ref]
+    d_norm = d_norm / d_norm[i_ref]
+
+    # NLTHA mean/std over records (records with all-zero shapes excluded)
+    shapes_all = np.load(os.path.join(RESULTS_DIR, f"{model}_bironDispShape{direction}.npy"))
+    n_levels   = shapes_all.shape[2]
+    shapes = shapes_all[:, :, level]
+    shapes = shapes[np.any(shapes > 0, axis=1)]
+    mu, sd = shapes.mean(axis=0), shapes.std(axis=0)
+
+    fig, ax = plt.subplots(figsize=(8, 4.5))
+
+    # Transverse supports: vertical lines + triangle markers on the x-axis
+    if x_supports is not None and len(x_supports) > 0:
+        xs_m = np.asarray(x_supports, float) / 1000
+        for xs in xs_m:
+            ax.axvline(xs, color='0.5', ls=':', lw=1.2, zorder=0)
+        ax.plot(xs_m, np.zeros_like(xs_m), '^', color='0.3', ms=10,
+                transform=ax.get_xaxis_transform(), clip_on=False, zorder=5,
+                label='Transverse supports')
+
+    o = np.argsort(x_d)
+    ax.plot(x_d[o] / 1000, d_norm[o], 'o--', color='#365c8d', lw=2,
+            label=rf'2D pushover ($\Delta_c$ = {dc:.1f} mm)')
+
+    for k, (label, idx, x2d) in enumerate(nltha_lines):
+        idx = np.asarray(idx, int)
+        x2d = np.asarray(x2d, float)
+        s   = np.argsort(x2d)
+        x_k, m_k, s_k = x2d[s], mu[idx][s], sd[idx][s]
+
+        # Normalize NLTHA at the same location as the 2D shape
+        ref = np.interp(x_ref, x_k, m_k)
+        m_k, s_k = m_k / ref, s_k / ref
+
+        color = 'k' if k == 0 else f'C{k}'
+        suffix = f' {label}' if label else ''
+        ax.plot(x_k / 1000, m_k, ls='-.', color=color, lw=2,
+                label=rf'$\mu_{{NLTHA}}${suffix}')
+        ax.fill_between(x_k / 1000, m_k - 2*s_k, m_k + 2*s_k, color=color, alpha=0.15,
+                        label=rf'$\mu_{{NLTHA}} \pm 2\sigma${suffix}')
+
+    ax.set_title(f"{model}{direction.lower()}: NLTHA level {level % n_levels + 1}/{n_levels}, "
+                 f"{len(shapes)} records")
+    ax.set_xlabel(r'$x$ along analysed main  (m)', fontsize=14)
+    ax.set_ylabel('Normalized displacement', fontsize=14)
+    ax.legend(fontsize=10)
+    fig.tight_layout()
+
+    if out_png is not None:
+        fig.savefig(out_png, dpi=200)
+        print(f"Saved shape comparison: {out_png}")
+
+    return fig, ax
  

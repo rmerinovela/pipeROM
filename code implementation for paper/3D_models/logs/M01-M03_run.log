@@ -1,0 +1,666 @@
+M01_biron.py: 220 tasks (IM x ground motion) on 20 workers -> Results/M01_biron_*
+[1/220] IM10 GM18 ok in 62 s  X r35: 14.79 mm, Y r36: 15.78 mm, X r36: 16.52 mm, Y r35: 14.83 mm
+[2/220] IM10 GM2 ok in 64 s  X r3: 9.71 mm, Y r4: 13.49 mm, X r4: 14.51 mm, Y r3: 10.26 mm
+[3/220] IM10 GM17 ok in 79 s  X r33: 16.46 mm, Y r34: 16.91 mm, X r34: 17.16 mm, Y r33: 15.17 mm
+[4/220] IM10 GM11 ok in 80 s  X r21: 15.71 mm, Y r22: 15.10 mm, X r22: 15.08 mm, Y r21: 12.97 mm
+[5/220] IM10 GM15 ok in 90 s  X r29: 22.48 mm, Y r30: 21.97 mm, X r30: 24.30 mm, Y r29: 21.53 mm
+[6/220] IM10 GM21 ok in 28 s  X r41: 100.00 mm, Y r42: 100.00 mm, X r42: 100.00 mm, Y r41: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[7/220] IM10 GM1 ok in 92 s  X r1: 11.55 mm, Y r2: 14.87 mm, X r2: 16.33 mm, Y r1: 11.18 mm
+[8/220] IM10 GM8 ok in 121 s  X r15: 10.58 mm, Y r16: 10.42 mm, X r16: 10.81 mm, Y r15: 10.93 mm
+[9/220] IM10 GM7 ok in 131 s  X r13: 21.07 mm, Y r14: 15.73 mm, X r14: 15.98 mm, Y r13: 17.71 mm
+[10/220] IM10 GM4 ok in 142 s  X r7: 17.26 mm, Y r8: 29.07 mm, X r8: 36.71 mm, Y r7: 16.05 mm
+[11/220] IM9 GM2 ok in 72 s  X r3: 9.28 mm, Y r4: 13.04 mm, X r4: 13.99 mm, Y r3: 9.12 mm
+[12/220] IM10 GM9 ok in 163 s  X r17: 15.19 mm, Y r18: 16.72 mm, X r18: 18.36 mm, Y r17: 11.93 mm
+[13/220] IM10 GM3 ok in 169 s  X r5: 16.74 mm, Y r6: 11.88 mm, X r6: 12.29 mm, Y r5: 16.51 mm
+[14/220] IM9 GM1 ok in 103 s  X r1: 10.71 mm, Y r2: 13.65 mm, X r2: 14.68 mm, Y r1: 10.85 mm
+[15/220] IM10 GM10 ok in 189 s  X r19: 39.77 mm, Y r20: 21.92 mm, X r20: 23.70 mm, Y r19: 33.60 mm
+[16/220] IM10 GM6 ok in 2249 s  X r11: 21.33 mm, Y r12: 27.98 mm, X r12: 24.57 mm, Y r11: 24.53 mm
+[17/220] IM9 GM4 ok in 2167 s  X r7: 15.54 mm, Y r8: 18.90 mm, X r8: 21.98 mm, Y r7: 16.58 mm
+[18/220] IM10 GM13 ok in 2258 s  X r25: 12.47 mm, Y r26: 10.55 mm, X r26: 10.53 mm, Y r25: 12.86 mm
+[19/220] IM10 GM16 ok in 2258 s  X r31: 17.68 mm, Y r32: 14.42 mm, X r32: 15.57 mm, Y r31: 17.15 mm
+[20/220] IM10 GM14 ok in 2258 s  X r27: 29.92 mm, Y r28: 19.48 mm, X r28: 19.69 mm, Y r27: 31.15 mm
+[21/220] IM9 GM11 ok in 2101 s  X r21: 14.17 mm, Y r22: 14.30 mm, X r22: 12.80 mm, Y r21: 13.55 mm
+[22/220] IM9 GM3 ok in 2186 s  X r5: 15.58 mm, Y r6: 12.51 mm, X r6: 13.05 mm, Y r5: 15.53 mm
+[23/220] IM9 GM7 ok in 2147 s  X r13: 18.72 mm, Y r14: 15.16 mm, X r14: 14.01 mm, Y r13: 16.90 mm
+[24/220] IM9 GM8 ok in 2143 s  X r15: 10.14 mm, Y r16: 12.24 mm, X r16: 12.57 mm, Y r15: 10.20 mm
+[25/220] IM10 GM22 ok in 2234 s  X r43: 19.65 mm, Y r44: 14.72 mm, X r44: 16.42 mm, Y r43: 17.53 mm
+[26/220] IM9 GM21 ok in 40 s  X r41: 100.00 mm, Y r42: 100.00 mm, X r42: 100.00 mm, Y r41: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[27/220] IM10 GM5 ok in 2323 s  X r9: 15.62 mm, Y r10: 14.24 mm, X r10: 14.83 mm, Y r9: 14.67 mm
+[28/220] IM9 GM9 ok in 2184 s  X r17: 13.57 mm, Y r18: 14.43 mm, X r18: 15.55 mm, Y r17: 12.86 mm
+[29/220] IM9 GM18 ok in 86 s  X r35: 16.06 mm, Y r36: 15.69 mm, X r36: 16.92 mm, Y r35: 14.16 mm
+[30/220] IM9 GM17 ok in 88 s  X r33: 14.49 mm, Y r34: 15.84 mm, X r34: 16.03 mm, Y r33: 14.34 mm
+[31/220] IM10 GM12 ok in 2352 s  X r23: 10.64 mm, Y r24: 10.90 mm, X r24: 11.28 mm, Y r23: 10.81 mm
+[32/220] IM9 GM15 ok in 99 s  X r29: 19.60 mm, Y r30: 18.95 mm, X r30: 18.59 mm, Y r29: 19.71 mm
+[33/220] IM9 GM10 ok in 2199 s  X r19: 36.29 mm, Y r20: 16.68 mm, X r20: 18.28 mm, Y r19: 32.02 mm
+[34/220] IM9 GM6 ok in 2255 s  X r11: 20.20 mm, Y r12: 25.88 mm, X r12: 23.21 mm, Y r11: 22.42 mm
+[35/220] IM8 GM2 ok in 71 s  X r3: 8.11 mm, Y r4: 12.08 mm, X r4: 12.67 mm, Y r3: 8.56 mm
+[36/220] IM8 GM1 ok in 104 s  X r1: 8.73 mm, Y r2: 12.07 mm, X r2: 12.73 mm, Y r1: 9.64 mm
+[37/220] IM9 GM5 ok in 2321 s  X r9: 12.39 mm, Y r10: 12.23 mm, X r10: 10.92 mm, Y r9: 14.36 mm
+[38/220] IM9 GM13 ok in 2257 s  X r25: 12.01 mm, Y r26: 9.77 mm, X r26: 9.36 mm, Y r25: 12.61 mm
+[39/220] IM8 GM11 ok in 87 s  X r21: 14.84 mm, Y r22: 12.34 mm, X r22: 12.61 mm, Y r21: 13.13 mm
+[40/220] IM8 GM4 ok in 151 s  X r7: 12.83 mm, Y r8: 22.64 mm, X r8: 19.96 mm, Y r7: 13.29 mm
+[41/220] IM8 GM7 ok in 136 s  X r13: 17.09 mm, Y r14: 12.52 mm, X r14: 13.54 mm, Y r13: 17.30 mm
+[42/220] IM8 GM8 ok in 135 s  X r15: 9.08 mm, Y r16: 11.33 mm, X r16: 11.35 mm, Y r15: 8.71 mm
+[43/220] IM8 GM3 ok in 178 s  X r5: 14.02 mm, Y r6: 12.14 mm, X r6: 13.13 mm, Y r5: 13.83 mm
+[44/220] IM9 GM14 ok in 253 s  X r27: 27.74 mm, Y r28: 18.83 mm, X r28: 18.80 mm, Y r27: 30.76 mm
+[45/220] IM9 GM22 ok in 222 s  X r43: 16.88 mm, Y r44: 14.31 mm, X r44: 15.73 mm, Y r43: 16.91 mm
+[46/220] IM9 GM16 ok in 267 s  X r31: 16.66 mm, Y r32: 12.41 mm, X r32: 12.82 mm, Y r31: 16.19 mm
+[47/220] IM10 GM19 ok in 2531 s  X r37: 16.00 mm, Y r38: 12.40 mm, X r38: 14.20 mm, Y r37: 14.02 mm
+[48/220] IM8 GM9 ok in 169 s  X r17: 11.90 mm, Y r18: 12.47 mm, X r18: 13.04 mm, Y r17: 12.49 mm
+[49/220] IM9 GM12 ok in 2359 s  X r23: 9.70 mm, Y r24: 9.26 mm, X r24: 11.27 mm, Y r23: 9.79 mm
+[50/220] IM10 GM20 ok in 2562 s  X r39: 14.72 mm, Y r40: 10.65 mm, X r40: 11.36 mm, Y r39: 13.37 mm
+[51/220] IM8 GM18 ok in 73 s  X r35: 17.03 mm, Y r36: 15.11 mm, X r36: 15.86 mm, Y r35: 14.84 mm
+[52/220] IM8 GM17 ok in 89 s  X r33: 14.83 mm, Y r34: 14.74 mm, X r34: 15.35 mm, Y r33: 15.33 mm
+[53/220] IM8 GM15 ok in 102 s  X r29: 17.24 mm, Y r30: 17.84 mm, X r30: 17.74 mm, Y r29: 17.44 mm
+[54/220] IM8 GM10 ok in 217 s  X r19: 28.39 mm, Y r20: 18.34 mm, X r20: 17.92 mm, Y r19: 29.58 mm
+[55/220] IM8 GM6 ok in 252 s  X r11: 16.67 mm, Y r12: 16.49 mm, X r12: 16.85 mm, Y r11: 18.02 mm
+[56/220] IM7 GM2 ok in 82 s  X r3: 7.42 mm, Y r4: 10.18 mm, X r4: 10.58 mm, Y r3: 7.10 mm
+[57/220] IM8 GM21 ok in 111 s  X r41: 26.22 mm, Y r42: 17.74 mm, X r42: 17.34 mm, Y r41: 24.42 mm
+[58/220] IM7 GM1 ok in 117 s  X r1: 9.60 mm, Y r2: 10.91 mm, X r2: 11.27 mm, Y r1: 9.21 mm
+[59/220] IM8 GM5 ok in 322 s  X r9: 12.98 mm, Y r10: 12.19 mm, X r10: 11.10 mm, Y r9: 11.28 mm
+[60/220] IM8 GM13 ok in 264 s  X r25: 10.95 mm, Y r26: 9.80 mm, X r26: 9.11 mm, Y r25: 11.67 mm
+[61/220] IM7 GM11 ok in 97 s  X r21: 12.68 mm, Y r22: 11.44 mm, X r22: 12.81 mm, Y r21: 12.50 mm
+[62/220] IM7 GM4 ok in 157 s  X r7: 10.74 mm, Y r8: 21.35 mm, X r8: 21.22 mm, Y r7: 11.24 mm
+[63/220] IM7 GM7 ok in 145 s  X r13: 13.69 mm, Y r14: 10.38 mm, X r14: 10.29 mm, Y r13: 14.64 mm
+[64/220] IM8 GM14 ok in 289 s  X r27: 24.60 mm, Y r28: 17.23 mm, X r28: 17.77 mm, Y r27: 26.25 mm
+[65/220] IM7 GM8 ok in 150 s  X r15: 10.23 mm, Y r16: 9.72 mm, X r16: 9.10 mm, Y r15: 8.62 mm
+[66/220] IM7 GM3 ok in 204 s  X r5: 12.76 mm, Y r6: 10.00 mm, X r6: 11.12 mm, Y r5: 12.02 mm
+[67/220] IM8 GM16 ok in 260 s  X r31: 13.78 mm, Y r32: 9.70 mm, X r32: 12.27 mm, Y r31: 13.98 mm
+[68/220] IM8 GM12 ok in 386 s  X r23: 9.07 mm, Y r24: 9.58 mm, X r24: 9.44 mm, Y r23: 9.37 mm
+[69/220] IM8 GM22 ok in 263 s  X r43: 14.44 mm, Y r44: 12.91 mm, X r44: 13.69 mm, Y r43: 14.75 mm
+[70/220] IM7 GM18 ok in 71 s  X r35: 15.05 mm, Y r36: 14.25 mm, X r36: 14.56 mm, Y r35: 14.05 mm
+[71/220] IM7 GM9 ok in 210 s  X r17: 9.89 mm, Y r18: 10.78 mm, X r18: 11.84 mm, Y r17: 10.01 mm
+[72/220] IM7 GM17 ok in 85 s  X r33: 12.76 mm, Y r34: 13.25 mm, X r34: 12.73 mm, Y r33: 13.24 mm
+[73/220] IM7 GM15 ok in 97 s  X r29: 15.51 mm, Y r30: 15.18 mm, X r30: 15.09 mm, Y r29: 15.50 mm
+[74/220] IM7 GM6 ok in 274 s  X r11: 14.63 mm, Y r12: 14.10 mm, X r12: 13.21 mm, Y r11: 14.95 mm
+[75/220] IM7 GM10 ok in 240 s  X r19: 25.82 mm, Y r20: 21.02 mm, X r20: 22.19 mm, Y r19: 28.11 mm
+[76/220] IM9 GM19 ok in 587 s  X r37: 15.05 mm, Y r38: 12.39 mm, X r38: 13.48 mm, Y r37: 14.85 mm
+[77/220] IM7 GM21 ok in 117 s  X r41: 19.90 mm, Y r42: 15.16 mm, X r42: 14.62 mm, Y r41: 19.63 mm
+[78/220] IM9 GM20 ok in 602 s  X r39: 13.43 mm, Y r40: 10.00 mm, X r40: 11.67 mm, Y r39: 12.02 mm
+[79/220] IM6 GM2 ok in 75 s  X r3: 6.59 mm, Y r4: 9.40 mm, X r4: 10.16 mm, Y r3: 6.84 mm
+[80/220] IM7 GM5 ok in 322 s  X r9: 9.76 mm, Y r10: 12.72 mm, X r10: 12.21 mm, Y r9: 9.35 mm
+[81/220] IM6 GM1 ok in 108 s  X r1: 10.15 mm, Y r2: 10.66 mm, X r2: 11.12 mm, Y r1: 9.15 mm
+[82/220] IM7 GM13 ok in 274 s  X r25: 10.08 mm, Y r26: 9.61 mm, X r26: 8.87 mm, Y r25: 9.59 mm
+[83/220] IM7 GM14 ok in 281 s  X r27: 21.38 mm, Y r28: 15.31 mm, X r28: 14.12 mm, Y r27: 21.16 mm
+[84/220] IM6 GM4 ok in 156 s  X r7: 10.01 mm, Y r8: 14.67 mm, X r8: 13.54 mm, Y r7: 9.49 mm
+[85/220] IM6 GM11 ok in 86 s  X r21: 12.11 mm, Y r22: 9.42 mm, X r22: 8.43 mm, Y r21: 12.22 mm
+[86/220] IM6 GM3 ok in 173 s  X r5: 10.59 mm, Y r6: 6.95 mm, X r6: 7.39 mm, Y r5: 10.11 mm
+[87/220] IM7 GM16 ok in 268 s  X r31: 12.29 mm, Y r32: 9.29 mm, X r32: 9.79 mm, Y r31: 12.07 mm
+[88/220] IM6 GM8 ok in 132 s  X r15: 7.65 mm, Y r16: 7.58 mm, X r16: 7.46 mm, Y r15: 7.90 mm
+[89/220] IM6 GM7 ok in 142 s  X r13: 12.22 mm, Y r14: 9.53 mm, X r14: 9.91 mm, Y r13: 12.21 mm
+[90/220] IM7 GM12 ok in 355 s  X r23: 10.07 mm, Y r24: 10.91 mm, X r24: 10.87 mm, Y r23: 9.01 mm
+[91/220] IM7 GM22 ok in 239 s  X r43: 12.19 mm, Y r44: 11.14 mm, X r44: 12.08 mm, Y r43: 11.71 mm
+[92/220] IM6 GM9 ok in 175 s  X r17: 9.14 mm, Y r18: 10.48 mm, X r18: 10.74 mm, Y r17: 8.63 mm
+[93/220] IM6 GM18 ok in 65 s  X r35: 11.99 mm, Y r36: 12.28 mm, X r36: 12.35 mm, Y r35: 11.29 mm
+[94/220] IM6 GM15 ok in 94 s  X r29: 13.03 mm, Y r30: 12.63 mm, X r30: 12.23 mm, Y r29: 13.78 mm
+[95/220] IM6 GM17 ok in 85 s  X r33: 10.79 mm, Y r34: 10.40 mm, X r34: 10.80 mm, Y r33: 11.02 mm
+[96/220] IM8 GM19 ok in 552 s  X r37: 12.65 mm, Y r38: 12.23 mm, X r38: 13.69 mm, Y r37: 12.17 mm
+[97/220] IM6 GM10 ok in 198 s  X r19: 23.41 mm, Y r20: 14.16 mm, X r20: 13.66 mm, Y r19: 25.88 mm
+[98/220] IM8 GM20 ok in 588 s  X r39: 11.36 mm, Y r40: 9.63 mm, X r40: 10.11 mm, Y r39: 11.35 mm
+[99/220] IM6 GM6 ok in 239 s  X r11: 12.72 mm, Y r12: 11.98 mm, X r12: 11.20 mm, Y r11: 13.23 mm
+[100/220] IM6 GM21 ok in 98 s  X r41: 17.42 mm, Y r42: 13.24 mm, X r42: 13.59 mm, Y r41: 17.07 mm
+[101/220] IM5 GM2 ok in 69 s  X r3: 5.98 mm, Y r4: 9.98 mm, X r4: 8.90 mm, Y r3: 6.48 mm
+[102/220] IM6 GM5 ok in 306 s  X r9: 7.28 mm, Y r10: 10.06 mm, X r10: 9.42 mm, Y r9: 7.02 mm
+[103/220] IM5 GM1 ok in 97 s  X r1: 5.65 mm, Y r2: 9.58 mm, X r2: 9.12 mm, Y r1: 5.92 mm
+[104/220] IM6 GM13 ok in 253 s  X r25: 8.99 mm, Y r26: 7.80 mm, X r26: 7.39 mm, Y r25: 9.12 mm
+[105/220] IM6 GM14 ok in 247 s  X r27: 18.41 mm, Y r28: 11.82 mm, X r28: 10.92 mm, Y r27: 16.38 mm
+[106/220] IM5 GM4 ok in 142 s  X r7: 8.60 mm, Y r8: 9.81 mm, X r8: 10.94 mm, Y r7: 7.96 mm
+[107/220] IM5 GM11 ok in 90 s  X r21: 10.69 mm, Y r22: 9.28 mm, X r22: 9.80 mm, Y r21: 9.52 mm
+[108/220] IM6 GM16 ok in 244 s  X r31: 13.33 mm, Y r32: 7.42 mm, X r32: 8.54 mm, Y r31: 13.01 mm
+[109/220] IM5 GM7 ok in 137 s  X r13: 11.24 mm, Y r14: 8.73 mm, X r14: 8.32 mm, Y r13: 10.61 mm
+[110/220] IM5 GM3 ok in 176 s  X r5: 7.58 mm, Y r6: 6.83 mm, X r6: 7.79 mm, Y r5: 7.33 mm
+[111/220] IM6 GM12 ok in 338 s  X r23: 8.35 mm, Y r24: 8.97 mm, X r24: 9.72 mm, Y r23: 7.01 mm
+[112/220] IM5 GM8 ok in 134 s  X r15: 8.15 mm, Y r16: 5.88 mm, X r16: 5.65 mm, Y r15: 7.87 mm
+[113/220] IM6 GM22 ok in 220 s  X r43: 9.67 mm, Y r44: 12.20 mm, X r44: 12.03 mm, Y r43: 8.97 mm
+[114/220] IM5 GM9 ok in 169 s  X r17: 7.58 mm, Y r18: 8.88 mm, X r18: 10.22 mm, Y r17: 7.54 mm
+[115/220] IM5 GM18 ok in 66 s  X r35: 7.85 mm, Y r36: 10.03 mm, X r36: 9.33 mm, Y r35: 7.11 mm
+[116/220] IM7 GM20 ok in 534 s  X r39: 11.22 mm, Y r40: 9.14 mm, X r40: 8.64 mm, Y r39: 11.87 mm
+[117/220] IM5 GM17 ok in 81 s  X r33: 8.29 mm, Y r34: 9.95 mm, X r34: 8.64 mm, Y r33: 8.78 mm
+[118/220] IM5 GM15 ok in 93 s  X r29: 11.80 mm, Y r30: 9.89 mm, X r30: 10.02 mm, Y r29: 12.22 mm
+[119/220] IM5 GM10 ok in 191 s  X r19: 19.41 mm, Y r20: 9.96 mm, X r20: 10.17 mm, Y r19: 20.71 mm
+[120/220] IM5 GM6 ok in 237 s  X r11: 9.90 mm, Y r12: 9.83 mm, X r12: 8.62 mm, Y r11: 10.19 mm
+[121/220] IM7 GM19 ok in 558 s  X r37: 9.11 mm, Y r38: 11.74 mm, X r38: 13.64 mm, Y r37: 8.36 mm
+[122/220] IM5 GM21 ok in 93 s  X r41: 12.16 mm, Y r42: 10.02 mm, X r42: 11.40 mm, Y r41: 12.68 mm
+[123/220] IM4 GM1 ok in 96 s  X r1: 4.88 mm, Y r2: 6.49 mm, X r2: 6.41 mm, Y r1: 4.60 mm
+[124/220] IM4 GM2 ok in 68 s  X r3: 4.38 mm, Y r4: 5.75 mm, X r4: 6.44 mm, Y r3: 4.75 mm
+[125/220] IM5 GM5 ok in 300 s  X r9: 6.40 mm, Y r10: 8.22 mm, X r10: 9.08 mm, Y r9: 6.45 mm
+[126/220] IM5 GM13 ok in 242 s  X r25: 6.58 mm, Y r26: 4.53 mm, X r26: 4.95 mm, Y r25: 6.48 mm
+[127/220] IM5 GM14 ok in 250 s  X r27: 11.85 mm, Y r28: 9.83 mm, X r28: 9.93 mm, Y r27: 13.84 mm
+[128/220] IM4 GM11 ok in 82 s  X r21: 6.13 mm, Y r22: 6.26 mm, X r22: 6.22 mm, Y r21: 6.21 mm
+[129/220] IM4 GM7 ok in 129 s  X r13: 7.94 mm, Y r14: 7.99 mm, X r14: 7.20 mm, Y r13: 7.47 mm
+[130/220] IM4 GM4 ok in 138 s  X r7: 6.20 mm, Y r8: 6.97 mm, X r8: 7.66 mm, Y r7: 5.66 mm
+[131/220] IM4 GM8 ok in 129 s  X r15: 4.72 mm, Y r16: 4.64 mm, X r16: 4.27 mm, Y r15: 4.41 mm
+[132/220] IM5 GM16 ok in 243 s  X r31: 13.25 mm, Y r32: 5.88 mm, X r32: 5.68 mm, Y r31: 12.08 mm
+[133/220] IM4 GM3 ok in 166 s  X r5: 6.42 mm, Y r6: 5.33 mm, X r6: 5.59 mm, Y r5: 5.81 mm
+[134/220] IM5 GM22 ok in 219 s  X r43: 7.26 mm, Y r44: 9.36 mm, X r44: 10.52 mm, Y r43: 6.48 mm
+[135/220] IM5 GM12 ok in 328 s  X r23: 6.48 mm, Y r24: 8.05 mm, X r24: 8.55 mm, Y r23: 5.80 mm
+[136/220] IM4 GM9 ok in 165 s  X r17: 6.36 mm, Y r18: 5.69 mm, X r18: 6.18 mm, Y r17: 5.90 mm
+[137/220] IM4 GM18 ok in 62 s  X r35: 5.04 mm, Y r36: 8.30 mm, X r36: 8.48 mm, Y r35: 5.19 mm
+[138/220] IM4 GM15 ok in 86 s  X r29: 8.65 mm, Y r30: 7.65 mm, X r30: 7.61 mm, Y r29: 8.98 mm
+[139/220] IM4 GM17 ok in 77 s  X r33: 6.94 mm, Y r34: 6.57 mm, X r34: 6.16 mm, Y r33: 6.30 mm
+[140/220] IM4 GM10 ok in 186 s  X r19: 15.92 mm, Y r20: 7.23 mm, X r20: 6.80 mm, Y r19: 17.39 mm
+[141/220] IM4 GM6 ok in 230 s  X r11: 7.13 mm, Y r12: 7.22 mm, X r12: 6.90 mm, Y r11: 8.53 mm
+[142/220] IM6 GM20 ok in 523 s  X r39: 10.37 mm, Y r40: 7.70 mm, X r40: 7.05 mm, Y r39: 11.41 mm
+[143/220] IM6 GM19 ok in 537 s  X r37: 8.73 mm, Y r38: 10.40 mm, X r38: 11.19 mm, Y r37: 8.18 mm
+[144/220] IM4 GM21 ok in 91 s  X r41: 8.43 mm, Y r42: 7.51 mm, X r42: 7.99 mm, Y r41: 8.70 mm
+[145/220] IM3 GM2 ok in 66 s  X r3: 3.81 mm, Y r4: 4.91 mm, X r4: 4.44 mm, Y r3: 3.15 mm
+[146/220] IM3 GM1 ok in 95 s  X r1: 3.49 mm, Y r2: 5.31 mm, X r2: 4.96 mm, Y r1: 3.09 mm
+[147/220] IM4 GM5 ok in 297 s  X r9: 4.65 mm, Y r10: 5.32 mm, X r10: 5.92 mm, Y r9: 4.83 mm
+[148/220] IM4 GM13 ok in 235 s  X r25: 4.53 mm, Y r26: 3.80 mm, X r26: 3.56 mm, Y r25: 4.31 mm
+[149/220] IM4 GM14 ok in 237 s  X r27: 10.01 mm, Y r28: 7.78 mm, X r28: 8.58 mm, Y r27: 11.36 mm
+[150/220] IM3 GM11 ok in 80 s  X r21: 4.10 mm, Y r22: 4.94 mm, X r22: 4.49 mm, Y r21: 4.89 mm
+[151/220] IM3 GM4 ok in 138 s  X r7: 5.01 mm, Y r8: 5.97 mm, X r8: 5.94 mm, Y r7: 4.50 mm
+[152/220] IM3 GM7 ok in 124 s  X r13: 6.18 mm, Y r14: 5.89 mm, X r14: 6.08 mm, Y r13: 6.19 mm
+[153/220] IM4 GM16 ok in 237 s  X r31: 8.61 mm, Y r32: 5.66 mm, X r32: 5.92 mm, Y r31: 8.50 mm
+[154/220] IM3 GM8 ok in 127 s  X r15: 2.89 mm, Y r16: 3.16 mm, X r16: 3.16 mm, Y r15: 2.92 mm
+[155/220] IM3 GM3 ok in 164 s  X r5: 4.98 mm, Y r6: 3.91 mm, X r6: 4.08 mm, Y r5: 3.92 mm
+[156/220] IM4 GM22 ok in 210 s  X r43: 5.73 mm, Y r44: 6.91 mm, X r44: 7.38 mm, Y r43: 4.58 mm
+[157/220] IM4 GM12 ok in 328 s  X r23: 3.60 mm, Y r24: 5.01 mm, X r24: 5.15 mm, Y r23: 3.39 mm
+[158/220] IM3 GM15 ok in 81 s  X r29: 5.97 mm, Y r30: 5.97 mm, X r30: 5.83 mm, Y r29: 7.55 mm
+[159/220] IM3 GM9 ok in 164 s  X r17: 4.90 mm, Y r18: 4.28 mm, X r18: 4.98 mm, Y r17: 4.76 mm
+[160/220] IM3 GM18 ok in 61 s  X r35: 3.49 mm, Y r36: 6.19 mm, X r36: 6.47 mm, Y r35: 3.33 mm
+[161/220] IM3 GM17 ok in 75 s  X r33: 5.70 mm, Y r34: 5.08 mm, X r34: 4.46 mm, Y r33: 5.13 mm
+[162/220] IM3 GM10 ok in 183 s  X r19: 12.89 mm, Y r20: 5.44 mm, X r20: 5.37 mm, Y r19: 13.88 mm
+[163/220] IM3 GM21 ok in 91 s  X r41: 6.75 mm, Y r42: 6.25 mm, X r42: 7.07 mm, Y r41: 7.18 mm
+[164/220] IM3 GM6 ok in 231 s  X r11: 5.42 mm, Y r12: 5.24 mm, X r12: 5.04 mm, Y r11: 6.48 mm
+[165/220] IM5 GM19 ok in 526 s  X r37: 7.25 mm, Y r38: 8.90 mm, X r38: 8.97 mm, Y r37: 6.51 mm
+[166/220] IM5 GM20 ok in 515 s  X r39: 9.26 mm, Y r40: 5.20 mm, X r40: 5.98 mm, Y r39: 10.24 mm
+[167/220] IM2 GM2 ok in 68 s  X r3: 1.85 mm, Y r4: 2.69 mm, X r4: 2.94 mm, Y r3: 1.57 mm
+[168/220] IM2 GM1 ok in 97 s  X r1: 2.15 mm, Y r2: 3.80 mm, X r2: 3.43 mm, Y r1: 2.21 mm
+[169/220] IM3 GM5 ok in 294 s  X r9: 3.72 mm, Y r10: 4.23 mm, X r10: 4.63 mm, Y r9: 3.88 mm
+[170/220] IM3 GM13 ok in 237 s  X r25: 3.13 mm, Y r26: 2.98 mm, X r26: 2.83 mm, Y r25: 3.04 mm
+[171/220] IM3 GM14 ok in 233 s  X r27: 8.32 mm, Y r28: 5.80 mm, X r28: 5.53 mm, Y r27: 9.59 mm
+[172/220] IM2 GM11 ok in 75 s  X r21: 3.57 mm, Y r22: 3.35 mm, X r22: 3.03 mm, Y r21: 3.18 mm
+[173/220] IM2 GM4 ok in 137 s  X r7: 2.83 mm, Y r8: 5.28 mm, X r8: 5.27 mm, Y r7: 2.98 mm
+[174/220] IM3 GM16 ok in 236 s  X r31: 9.22 mm, Y r32: 4.48 mm, X r32: 4.70 mm, Y r31: 8.11 mm
+[175/220] IM2 GM3 ok in 165 s  X r5: 3.34 mm, Y r6: 2.35 mm, X r6: 2.62 mm, Y r5: 3.06 mm
+[176/220] IM2 GM7 ok in 123 s  X r13: 4.07 mm, Y r14: 3.22 mm, X r14: 2.99 mm, Y r13: 4.22 mm
+[177/220] IM2 GM8 ok in 124 s  X r15: 1.70 mm, Y r16: 1.47 mm, X r16: 1.42 mm, Y r15: 1.80 mm
+[178/220] IM3 GM12 ok in 323 s  X r23: 2.41 mm, Y r24: 4.30 mm, X r24: 4.45 mm, Y r23: 2.40 mm
+[179/220] IM3 GM22 ok in 216 s  X r43: 4.26 mm, Y r44: 5.79 mm, X r44: 6.08 mm, Y r43: 4.16 mm
+[180/220] IM2 GM9 ok in 159 s  X r17: 2.32 mm, Y r18: 2.63 mm, X r18: 2.99 mm, Y r17: 2.07 mm
+[181/220] IM2 GM15 ok in 81 s  X r29: 3.70 mm, Y r30: 4.73 mm, X r30: 4.35 mm, Y r29: 3.91 mm
+[182/220] IM2 GM17 ok in 74 s  X r33: 4.00 mm, Y r34: 3.48 mm, X r34: 3.59 mm, Y r33: 3.99 mm
+[183/220] IM2 GM18 ok in 59 s  X r35: 1.78 mm, Y r36: 4.29 mm, X r36: 4.28 mm, Y r35: 1.54 mm
+[184/220] IM2 GM10 ok in 178 s  X r19: 8.59 mm, Y r20: 4.54 mm, X r20: 4.37 mm, Y r19: 8.84 mm
+[185/220] IM4 GM19 ok in 511 s  X r37: 5.46 mm, Y r38: 6.61 mm, X r38: 6.04 mm, Y r37: 5.19 mm
+[186/220] IM2 GM21 ok in 85 s  X r41: 3.98 mm, Y r42: 4.41 mm, X r42: 4.48 mm, Y r41: 4.60 mm
+[187/220] IM2 GM6 ok in 229 s  X r11: 3.50 mm, Y r12: 3.57 mm, X r12: 3.46 mm, Y r11: 3.82 mm
+[188/220] IM4 GM20 ok in 514 s  X r39: 7.56 mm, Y r40: 3.84 mm, X r40: 4.33 mm, Y r39: 8.23 mm
+[189/220] IM1 GM1 ok in 91 s  X r1: 1.24 mm, Y r2: 2.09 mm, X r2: 2.14 mm, Y r1: 0.97 mm
+[190/220] IM1 GM2 ok in 63 s  X r3: 0.53 mm, Y r4: 1.04 mm, X r4: 1.00 mm, Y r3: 0.28 mm
+[191/220] IM2 GM5 ok in 291 s  X r9: 2.58 mm, Y r10: 2.66 mm, X r10: 2.60 mm, Y r9: 3.01 mm
+[192/220] IM2 GM13 ok in 228 s  X r25: 2.21 mm, Y r26: 1.92 mm, X r26: 1.87 mm, Y r25: 2.34 mm
+[193/220] IM1 GM11 ok in 72 s  X r21: 1.58 mm, Y r22: 1.22 mm, X r22: 1.46 mm, Y r21: 1.81 mm
+[194/220] IM1 GM4 ok in 133 s  X r7: 1.63 mm, Y r8: 2.82 mm, X r8: 2.81 mm, Y r7: 1.58 mm
+[195/220] IM2 GM14 ok in 225 s  X r27: 5.95 mm, Y r28: 4.18 mm, X r28: 5.13 mm, Y r27: 6.65 mm
+[196/220] IM1 GM7 ok in 121 s  X r13: 2.01 mm, Y r14: 1.59 mm, X r14: 1.59 mm, Y r13: 1.80 mm
+[197/220] IM2 GM16 ok in 229 s  X r31: 5.70 mm, Y r32: 2.71 mm, X r32: 3.12 mm, Y r31: 5.35 mm
+[198/220] IM1 GM3 ok in 159 s  X r5: 1.13 mm, Y r6: 0.98 mm, X r6: 1.08 mm, Y r5: 0.98 mm
+[199/220] IM1 GM8 ok in 120 s  X r15: 0.62 mm, Y r16: 0.23 mm, X r16: 0.45 mm, Y r15: 0.39 mm
+[200/220] IM2 GM12 ok in 314 s  X r23: 1.63 mm, Y r24: 2.25 mm, X r24: 2.29 mm, Y r23: 1.54 mm
+[201/220] IM2 GM22 ok in 206 s  X r43: 3.23 mm, Y r44: 3.86 mm, X r44: 3.57 mm, Y r43: 2.52 mm
+[202/220] IM1 GM9 ok in 156 s  X r17: 0.63 mm, Y r18: 0.59 mm, X r18: 1.02 mm, Y r17: 0.47 mm
+[203/220] IM1 GM15 ok in 76 s  X r29: 2.62 mm, Y r30: 2.80 mm, X r30: 3.19 mm, Y r29: 2.57 mm
+[204/220] IM1 GM17 ok in 69 s  X r33: 2.16 mm, Y r34: 2.00 mm, X r34: 1.86 mm, Y r33: 2.14 mm
+[205/220] IM1 GM18 ok in 57 s  X r35: 0.55 mm, Y r36: 2.01 mm, X r36: 2.08 mm, Y r35: 0.34 mm
+[206/220] IM1 GM10 ok in 170 s  X r19: 5.42 mm, Y r20: 3.20 mm, X r20: 2.87 mm, Y r19: 5.16 mm
+[207/220] IM1 GM6 ok in 216 s  X r11: 1.91 mm, Y r12: 1.84 mm, X r12: 1.84 mm, Y r11: 1.68 mm
+[208/220] IM3 GM20 ok in 495 s  X r39: 5.91 mm, Y r40: 3.17 mm, X r40: 3.34 mm, Y r39: 6.44 mm
+[209/220] IM3 GM19 ok in 499 s  X r37: 3.21 mm, Y r38: 5.26 mm, X r38: 5.18 mm, Y r37: 3.43 mm
+[210/220] IM1 GM21 ok in 77 s  X r41: 2.58 mm, Y r42: 2.38 mm, X r42: 1.92 mm, Y r41: 3.07 mm
+[211/220] IM1 GM5 ok in 261 s  X r9: 1.61 mm, Y r10: 1.56 mm, X r10: 1.67 mm, Y r9: 1.50 mm
+[212/220] IM1 GM13 ok in 197 s  X r25: 0.79 mm, Y r26: 0.15 mm, X r26: 0.25 mm, Y r25: 0.60 mm
+[213/220] IM1 GM14 ok in 187 s  X r27: 3.51 mm, Y r28: 2.16 mm, X r28: 2.31 mm, Y r27: 3.70 mm
+[214/220] IM1 GM16 ok in 178 s  X r31: 2.30 mm, Y r32: 1.04 mm, X r32: 1.24 mm, Y r31: 2.09 mm
+[215/220] IM1 GM12 ok in 261 s  X r23: 0.73 mm, Y r24: 0.89 mm, X r24: 1.10 mm, Y r23: 0.44 mm
+[216/220] IM1 GM22 ok in 154 s  X r43: 1.44 mm, Y r44: 1.49 mm, X r44: 1.59 mm, Y r43: 1.42 mm
+[217/220] IM2 GM20 ok in 408 s  X r39: 3.65 mm, Y r40: 1.56 mm, X r40: 1.74 mm, Y r39: 3.76 mm
+[218/220] IM2 GM19 ok in 412 s  X r37: 2.64 mm, Y r38: 3.27 mm, X r38: 3.81 mm, Y r37: 2.20 mm
+[219/220] IM1 GM19 ok in 322 s  X r37: 0.95 mm, Y r38: 1.58 mm, X r38: 1.58 mm, Y r37: 0.53 mm
+[220/220] IM1 GM20 ok in 317 s  X r39: 1.53 mm, Y r40: 0.34 mm, X r40: 0.55 mm, Y r39: 1.61 mm
+Done in 73.0 min
+M02_biron.py: 220 tasks (IM x ground motion) on 20 workers -> Results/M02_biron_*
+[1/220] IM10 GM17 ok in 32 s  X r33: 100.00 mm, Y r34: 100.00 mm, X r34: 100.00 mm, Y r33: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[2/220] IM10 GM7 ok in 33 s  X r13: 100.00 mm, Y r14: 100.00 mm, X r14: 100.00 mm, Y r13: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[3/220] IM10 GM14 ok in 39 s  X r27: 100.00 mm, Y r28: 100.00 mm, X r28: 100.00 mm, Y r27: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[4/220] IM10 GM18 ok in 41 s  X r35: 21.06 mm, Y r36: 31.86 mm, X r36: 100.00 mm, Y r35: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[5/220] IM10 GM4 ok in 47 s  X r7: 100.00 mm, Y r8: 100.00 mm, X r8: 100.00 mm, Y r7: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[6/220] IM10 GM21 ok in 23 s  X r41: 100.00 mm, Y r42: 100.00 mm, X r42: 100.00 mm, Y r41: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[7/220] IM10 GM2 ok in 64 s  X r3: 17.18 mm, Y r4: 19.35 mm, X r4: 20.32 mm, Y r3: 15.69 mm
+[8/220] IM10 GM11 ok in 80 s  X r21: 43.27 mm, Y r22: 21.50 mm, X r22: 24.58 mm, Y r21: 28.50 mm
+[9/220] IM10 GM15 ok in 89 s  X r29: 30.12 mm, Y r30: 33.83 mm, X r30: 72.33 mm, Y r29: 28.61 mm
+[10/220] IM10 GM1 ok in 92 s  X r1: 16.94 mm, Y r2: 23.11 mm, X r2: 36.93 mm, Y r1: 14.59 mm
+[11/220] IM10 GM10 ok in 97 s  X r19: 100.00 mm, Y r20: 100.00 mm, X r20: 100.00 mm, Y r19: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[12/220] IM9 GM2 ok in 63 s  X r3: 15.73 mm, Y r4: 18.31 mm, X r4: 19.50 mm, Y r3: 13.71 mm
+[13/220] IM10 GM8 ok in 118 s  X r15: 17.49 mm, Y r16: 15.51 mm, X r16: 17.28 mm, Y r15: 15.94 mm
+[14/220] IM9 GM7 ok in 38 s  X r13: 100.00 mm, Y r14: 100.00 mm, X r14: 100.00 mm, Y r13: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[15/220] IM9 GM1 ok in 91 s  X r1: 18.26 mm, Y r2: 19.91 mm, X r2: 25.01 mm, Y r1: 15.70 mm
+[16/220] IM9 GM4 ok in 90 s  X r7: 100.00 mm, Y r8: 100.00 mm, X r8: 39.46 mm, Y r7: 22.09 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[17/220] IM10 GM9 ok in 153 s  X r17: 18.07 mm, Y r18: 34.22 mm, X r18: 34.34 mm, Y r17: 16.05 mm
+[18/220] IM10 GM3 ok in 160 s  X r5: 26.32 mm, Y r6: 13.62 mm, X r6: 15.20 mm, Y r5: 22.86 mm
+[19/220] IM9 GM14 ok in 41 s  X r27: 100.00 mm, Y r28: 100.00 mm, X r28: 100.00 mm, Y r27: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[20/220] IM9 GM11 ok in 77 s  X r21: 29.21 mm, Y r22: 19.59 mm, X r22: 22.63 mm, Y r21: 19.84 mm
+[21/220] IM9 GM10 ok in 101 s  X r19: 100.00 mm, Y r20: 100.00 mm, X r20: 100.00 mm, Y r19: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[22/220] IM9 GM3 ok in 159 s  X r5: 25.28 mm, Y r6: 14.36 mm, X r6: 17.93 mm, Y r5: 22.64 mm
+[23/220] IM9 GM8 ok in 118 s  X r15: 14.71 mm, Y r16: 16.43 mm, X r16: 17.97 mm, Y r15: 12.36 mm
+[24/220] IM10 GM6 ok in 219 s  X r11: 30.68 mm, Y r12: 33.58 mm, X r12: 37.88 mm, Y r11: 28.53 mm
+[25/220] IM10 GM16 ok in 222 s  X r31: 23.63 mm, Y r32: 22.90 mm, X r32: 27.66 mm, Y r31: 19.07 mm
+[26/220] IM10 GM13 ok in 223 s  X r25: 26.70 mm, Y r26: 13.62 mm, X r26: 15.75 mm, Y r25: 19.85 mm
+[27/220] IM9 GM21 ok in 24 s  X r41: 100.00 mm, Y r42: 100.00 mm, X r42: 100.00 mm, Y r41: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[28/220] IM10 GM22 ok in 203 s  X r43: 31.73 mm, Y r44: 27.93 mm, X r44: 28.50 mm, Y r43: 27.17 mm
+[29/220] IM9 GM15 ok in 88 s  X r29: 27.59 mm, Y r30: 30.11 mm, X r30: 34.33 mm, Y r29: 26.41 mm
+[30/220] IM9 GM17 ok in 65 s  X r33: 100.00 mm, Y r34: 100.00 mm, X r34: 30.81 mm, Y r33: 32.20 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[31/220] IM9 GM9 ok in 154 s  X r17: 17.33 mm, Y r18: 24.90 mm, X r18: 31.68 mm, Y r17: 17.93 mm
+[32/220] IM9 GM18 ok in 63 s  X r35: 19.57 mm, Y r36: 29.50 mm, X r36: 36.77 mm, Y r35: 19.48 mm
+[33/220] IM8 GM2 ok in 63 s  X r3: 14.92 mm, Y r4: 17.12 mm, X r4: 18.30 mm, Y r3: 12.62 mm
+[34/220] IM10 GM5 ok in 287 s  X r9: 22.32 mm, Y r10: 15.36 mm, X r10: 19.07 mm, Y r9: 20.06 mm
+[35/220] IM9 GM6 ok in 217 s  X r11: 31.17 mm, Y r12: 30.92 mm, X r12: 35.49 mm, Y r11: 27.79 mm
+[36/220] IM10 GM12 ok in 310 s  X r23: 19.54 mm, Y r24: 15.26 mm, X r24: 20.86 mm, Y r23: 16.60 mm
+[37/220] IM8 GM1 ok in 91 s  X r1: 16.52 mm, Y r2: 17.28 mm, X r2: 21.90 mm, Y r1: 14.10 mm
+[38/220] IM8 GM4 ok in 90 s  X r7: 100.00 mm, Y r8: 100.00 mm, X r8: 36.20 mm, Y r7: 19.87 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[39/220] IM9 GM5 ok in 282 s  X r9: 21.21 mm, Y r10: 14.79 mm, X r10: 16.75 mm, Y r9: 19.24 mm
+[40/220] IM9 GM13 ok in 223 s  X r25: 23.82 mm, Y r26: 12.90 mm, X r26: 14.65 mm, Y r25: 17.41 mm
+[41/220] IM8 GM7 ok in 123 s  X r13: 34.16 mm, Y r14: 18.81 mm, X r14: 24.80 mm, Y r13: 21.80 mm
+[42/220] IM8 GM11 ok in 78 s  X r21: 20.86 mm, Y r22: 17.67 mm, X r22: 20.16 mm, Y r21: 18.99 mm
+[43/220] IM8 GM8 ok in 119 s  X r15: 13.02 mm, Y r16: 14.96 mm, X r16: 15.77 mm, Y r15: 11.86 mm
+[44/220] IM9 GM16 ok in 223 s  X r31: 22.03 mm, Y r32: 19.23 mm, X r32: 24.08 mm, Y r31: 19.49 mm
+[45/220] IM8 GM10 ok in 105 s  X r19: 100.00 mm, Y r20: 100.00 mm, X r20: 100.00 mm, Y r19: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[46/220] IM8 GM3 ok in 161 s  X r5: 23.19 mm, Y r6: 16.80 mm, X r6: 18.97 mm, Y r5: 20.29 mm
+[47/220] IM9 GM22 ok in 202 s  X r43: 27.16 mm, Y r44: 26.51 mm, X r44: 27.88 mm, Y r43: 23.15 mm
+[48/220] IM8 GM15 ok in 86 s  X r29: 24.29 mm, Y r30: 23.53 mm, X r30: 25.16 mm, Y r29: 23.36 mm
+[49/220] IM9 GM12 ok in 308 s  X r23: 18.32 mm, Y r24: 15.56 mm, X r24: 17.81 mm, Y r23: 17.45 mm
+[50/220] IM8 GM18 ok in 61 s  X r35: 19.33 mm, Y r36: 24.99 mm, X r36: 32.36 mm, Y r35: 18.28 mm
+[51/220] IM8 GM9 ok in 154 s  X r17: 16.11 mm, Y r18: 20.17 mm, X r18: 24.12 mm, Y r17: 14.96 mm
+[52/220] IM8 GM17 ok in 75 s  X r33: 31.46 mm, Y r34: 19.85 mm, X r34: 22.78 mm, Y r33: 24.85 mm
+[53/220] IM8 GM21 ok in 63 s  X r41: 100.00 mm, Y r42: 100.00 mm, X r42: 23.79 mm, Y r41: 34.93 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[54/220] IM8 GM6 ok in 222 s  X r11: 27.20 mm, Y r12: 25.56 mm, X r12: 30.25 mm, Y r11: 22.16 mm
+[55/220] IM10 GM19 ok in 492 s  X r37: 21.94 mm, Y r38: 25.34 mm, X r38: 33.72 mm, Y r37: 22.30 mm
+[56/220] IM7 GM2 ok in 65 s  X r3: 13.27 mm, Y r4: 15.13 mm, X r4: 15.98 mm, Y r3: 10.90 mm
+[57/220] IM10 GM20 ok in 496 s  X r39: 25.16 mm, Y r40: 16.74 mm, X r40: 19.12 mm, Y r39: 22.35 mm
+[58/220] IM7 GM1 ok in 91 s  X r1: 16.23 mm, Y r2: 15.94 mm, X r2: 19.11 mm, Y r1: 13.03 mm
+[59/220] IM8 GM5 ok in 284 s  X r9: 15.42 mm, Y r10: 15.32 mm, X r10: 15.36 mm, Y r9: 15.06 mm
+[60/220] IM8 GM13 ok in 223 s  X r25: 22.48 mm, Y r26: 11.89 mm, X r26: 13.15 mm, Y r25: 17.48 mm
+[61/220] IM8 GM14 ok in 227 s  X r27: 36.50 mm, Y r28: 20.05 mm, X r28: 22.64 mm, Y r27: 34.19 mm
+[62/220] IM7 GM4 ok in 136 s  X r7: 16.78 mm, Y r8: 26.88 mm, X r8: 29.44 mm, Y r7: 17.02 mm
+[63/220] IM7 GM11 ok in 76 s  X r21: 22.50 mm, Y r22: 16.27 mm, X r22: 19.02 mm, Y r21: 17.09 mm
+[64/220] IM8 GM16 ok in 227 s  X r31: 20.67 mm, Y r32: 15.10 mm, X r32: 19.34 mm, Y r31: 19.25 mm
+[65/220] IM7 GM7 ok in 124 s  X r13: 23.12 mm, Y r14: 14.61 mm, X r14: 17.44 mm, Y r13: 18.55 mm
+[66/220] IM7 GM8 ok in 120 s  X r15: 12.50 mm, Y r16: 12.01 mm, X r16: 12.86 mm, Y r15: 11.27 mm
+[67/220] IM7 GM3 ok in 159 s  X r5: 18.23 mm, Y r6: 14.59 mm, X r6: 15.84 mm, Y r5: 17.56 mm
+[68/220] IM8 GM22 ok in 202 s  X r43: 22.25 mm, Y r44: 19.51 mm, X r44: 21.40 mm, Y r43: 19.41 mm
+[69/220] IM8 GM12 ok in 315 s  X r23: 18.53 mm, Y r24: 14.14 mm, X r24: 15.38 mm, Y r23: 16.46 mm
+[70/220] IM7 GM15 ok in 87 s  X r29: 21.39 mm, Y r30: 19.28 mm, X r30: 19.33 mm, Y r29: 19.77 mm
+[71/220] IM7 GM18 ok in 61 s  X r35: 15.56 mm, Y r36: 21.40 mm, X r36: 27.13 mm, Y r35: 15.54 mm
+[72/220] IM7 GM17 ok in 73 s  X r33: 24.50 mm, Y r34: 14.68 mm, X r34: 14.28 mm, Y r33: 18.08 mm
+[73/220] IM7 GM9 ok in 155 s  X r17: 14.05 mm, Y r18: 20.90 mm, X r18: 24.35 mm, Y r17: 12.90 mm
+[74/220] IM7 GM6 ok in 219 s  X r11: 22.18 mm, Y r12: 20.15 mm, X r12: 24.63 mm, Y r11: 18.33 mm
+[75/220] IM7 GM10 ok in 173 s  X r19: 36.67 mm, Y r20: 23.20 mm, X r20: 21.85 mm, Y r19: 34.90 mm
+[76/220] IM7 GM21 ok in 92 s  X r41: 30.34 mm, Y r42: 18.89 mm, X r42: 20.44 mm, Y r41: 25.33 mm
+[77/220] IM9 GM19 ok in 495 s  X r37: 19.11 mm, Y r38: 23.19 mm, X r38: 27.26 mm, Y r37: 18.37 mm
+[78/220] IM9 GM20 ok in 495 s  X r39: 21.50 mm, Y r40: 16.03 mm, X r40: 18.31 mm, Y r39: 19.70 mm
+[79/220] IM6 GM2 ok in 63 s  X r3: 10.59 mm, Y r4: 13.84 mm, X r4: 14.34 mm, Y r3: 9.46 mm
+[80/220] IM6 GM1 ok in 90 s  X r1: 11.74 mm, Y r2: 14.94 mm, X r2: 16.86 mm, Y r1: 12.29 mm
+[81/220] IM7 GM5 ok in 282 s  X r9: 11.36 mm, Y r10: 14.78 mm, X r10: 12.93 mm, Y r9: 11.58 mm
+[82/220] IM7 GM13 ok in 224 s  X r25: 19.48 mm, Y r26: 11.62 mm, X r26: 12.21 mm, Y r25: 15.24 mm
+[83/220] IM7 GM14 ok in 225 s  X r27: 32.51 mm, Y r28: 16.59 mm, X r28: 15.54 mm, Y r27: 29.76 mm
+[84/220] IM6 GM11 ok in 74 s  X r21: 16.20 mm, Y r22: 14.24 mm, X r22: 15.95 mm, Y r21: 14.20 mm
+[85/220] IM6 GM4 ok in 133 s  X r7: 13.54 mm, Y r8: 19.39 mm, X r8: 19.30 mm, Y r7: 13.89 mm
+[86/220] IM6 GM7 ok in 121 s  X r13: 19.56 mm, Y r14: 13.12 mm, X r14: 14.33 mm, Y r13: 14.90 mm
+[87/220] IM7 GM16 ok in 226 s  X r31: 19.90 mm, Y r32: 13.22 mm, X r32: 17.79 mm, Y r31: 18.69 mm
+[88/220] IM6 GM3 ok in 160 s  X r5: 14.81 mm, Y r6: 10.18 mm, X r6: 10.90 mm, Y r5: 13.73 mm
+[89/220] IM7 GM22 ok in 203 s  X r43: 18.41 mm, Y r44: 19.77 mm, X r44: 22.08 mm, Y r43: 16.50 mm
+[90/220] IM6 GM8 ok in 118 s  X r15: 10.90 mm, Y r16: 9.51 mm, X r16: 10.38 mm, Y r15: 9.69 mm
+[91/220] IM7 GM12 ok in 312 s  X r23: 14.09 mm, Y r24: 14.19 mm, X r24: 15.86 mm, Y r23: 14.68 mm
+[92/220] IM6 GM15 ok in 86 s  X r29: 18.87 mm, Y r30: 15.79 mm, X r30: 16.80 mm, Y r29: 16.91 mm
+[93/220] IM6 GM18 ok in 59 s  X r35: 12.07 mm, Y r36: 17.47 mm, X r36: 21.33 mm, Y r35: 11.85 mm
+[94/220] IM6 GM17 ok in 72 s  X r33: 17.28 mm, Y r34: 12.58 mm, X r34: 12.42 mm, Y r33: 14.75 mm
+[95/220] IM6 GM9 ok in 155 s  X r17: 13.11 mm, Y r18: 16.79 mm, X r18: 17.77 mm, Y r17: 12.34 mm
+[96/220] IM6 GM10 ok in 175 s  X r19: 28.52 mm, Y r20: 16.17 mm, X r20: 18.87 mm, Y r19: 29.81 mm
+[97/220] IM8 GM19 ok in 498 s  X r37: 15.39 mm, Y r38: 21.36 mm, X r38: 24.23 mm, Y r37: 13.48 mm
+[98/220] IM8 GM20 ok in 496 s  X r39: 20.19 mm, Y r40: 13.79 mm, X r40: 16.22 mm, Y r39: 17.41 mm
+[99/220] IM6 GM21 ok in 89 s  X r41: 19.83 mm, Y r42: 16.10 mm, X r42: 17.42 mm, Y r41: 20.84 mm
+[100/220] IM6 GM6 ok in 224 s  X r11: 16.46 mm, Y r12: 15.44 mm, X r12: 21.45 mm, Y r11: 16.66 mm
+[101/220] IM5 GM2 ok in 63 s  X r3: 9.21 mm, Y r4: 11.60 mm, X r4: 12.34 mm, Y r3: 8.93 mm
+[102/220] IM5 GM1 ok in 89 s  X r1: 8.70 mm, Y r2: 13.09 mm, X r2: 14.41 mm, Y r1: 8.59 mm
+[103/220] IM6 GM5 ok in 282 s  X r9: 10.82 mm, Y r10: 11.44 mm, X r10: 11.49 mm, Y r9: 9.67 mm
+[104/220] IM6 GM13 ok in 223 s  X r25: 13.91 mm, Y r26: 9.68 mm, X r26: 10.73 mm, Y r25: 12.36 mm
+[105/220] IM6 GM14 ok in 226 s  X r27: 25.89 mm, Y r28: 13.86 mm, X r28: 13.90 mm, Y r27: 23.20 mm
+[106/220] IM5 GM4 ok in 133 s  X r7: 10.72 mm, Y r8: 15.94 mm, X r8: 15.31 mm, Y r7: 10.28 mm
+[107/220] IM5 GM11 ok in 74 s  X r21: 13.39 mm, Y r22: 12.75 mm, X r22: 13.19 mm, Y r21: 12.28 mm
+[108/220] IM5 GM7 ok in 119 s  X r13: 14.42 mm, Y r14: 10.82 mm, X r14: 11.98 mm, Y r13: 13.15 mm
+[109/220] IM5 GM8 ok in 122 s  X r15: 8.80 mm, Y r16: 6.58 mm, X r16: 7.23 mm, Y r15: 8.96 mm
+[110/220] IM6 GM16 ok in 228 s  X r31: 18.79 mm, Y r32: 11.25 mm, X r32: 13.66 mm, Y r31: 18.90 mm
+[111/220] IM5 GM3 ok in 157 s  X r5: 12.82 mm, Y r6: 9.37 mm, X r6: 9.78 mm, Y r5: 11.94 mm
+[112/220] IM6 GM22 ok in 204 s  X r43: 15.11 mm, Y r44: 16.82 mm, X r44: 17.45 mm, Y r43: 13.86 mm
+[113/220] IM6 GM12 ok in 316 s  X r23: 13.32 mm, Y r24: 12.30 mm, X r24: 13.62 mm, Y r23: 12.50 mm
+[114/220] IM5 GM9 ok in 154 s  X r17: 11.56 mm, Y r18: 14.61 mm, X r18: 15.06 mm, Y r17: 10.81 mm
+[115/220] IM5 GM18 ok in 59 s  X r35: 9.49 mm, Y r36: 13.37 mm, X r36: 14.69 mm, Y r35: 9.12 mm
+[116/220] IM5 GM17 ok in 70 s  X r33: 13.67 mm, Y r34: 10.68 mm, X r34: 10.45 mm, Y r33: 12.95 mm
+[117/220] IM5 GM15 ok in 81 s  X r29: 14.72 mm, Y r30: 13.12 mm, X r30: 13.16 mm, Y r29: 13.68 mm
+[118/220] IM5 GM10 ok in 174 s  X r19: 23.23 mm, Y r20: 13.53 mm, X r20: 14.52 mm, Y r19: 23.63 mm
+[119/220] IM7 GM19 ok in 494 s  X r37: 12.38 mm, Y r38: 18.76 mm, X r38: 19.68 mm, Y r37: 10.78 mm
+[120/220] IM7 GM20 ok in 495 s  X r39: 18.84 mm, Y r40: 12.41 mm, X r40: 14.49 mm, Y r39: 15.44 mm
+[121/220] IM5 GM6 ok in 217 s  X r11: 12.51 mm, Y r12: 12.83 mm, X r12: 12.95 mm, Y r11: 12.13 mm
+[122/220] IM5 GM21 ok in 87 s  X r41: 14.84 mm, Y r42: 12.39 mm, X r42: 12.67 mm, Y r41: 13.73 mm
+[123/220] IM4 GM2 ok in 62 s  X r3: 6.98 mm, Y r4: 8.64 mm, X r4: 9.32 mm, Y r3: 5.41 mm
+[124/220] IM4 GM1 ok in 91 s  X r1: 6.94 mm, Y r2: 9.33 mm, X r2: 10.26 mm, Y r1: 6.94 mm
+[125/220] IM5 GM5 ok in 284 s  X r9: 9.95 mm, Y r10: 10.55 mm, X r10: 11.39 mm, Y r9: 9.61 mm
+[126/220] IM5 GM13 ok in 226 s  X r25: 10.97 mm, Y r26: 8.34 mm, X r26: 8.87 mm, Y r25: 9.89 mm
+[127/220] IM5 GM14 ok in 226 s  X r27: 20.85 mm, Y r28: 15.03 mm, X r28: 15.94 mm, Y r27: 17.45 mm
+[128/220] IM4 GM11 ok in 77 s  X r21: 8.99 mm, Y r22: 9.35 mm, X r22: 10.11 mm, Y r21: 8.41 mm
+[129/220] IM4 GM4 ok in 131 s  X r7: 9.09 mm, Y r8: 13.43 mm, X r8: 14.05 mm, Y r7: 8.69 mm
+[130/220] IM4 GM7 ok in 120 s  X r13: 9.89 mm, Y r14: 8.70 mm, X r14: 9.37 mm, Y r13: 9.59 mm
+[131/220] IM4 GM8 ok in 120 s  X r15: 5.94 mm, Y r16: 5.03 mm, X r16: 5.98 mm, Y r15: 5.72 mm
+[132/220] IM5 GM16 ok in 227 s  X r31: 15.37 mm, Y r32: 8.75 mm, X r32: 10.64 mm, Y r31: 13.83 mm
+[133/220] IM4 GM3 ok in 159 s  X r5: 9.99 mm, Y r6: 7.89 mm, X r6: 8.29 mm, Y r5: 8.76 mm
+[134/220] IM5 GM22 ok in 208 s  X r43: 13.94 mm, Y r44: 12.47 mm, X r44: 12.39 mm, Y r43: 12.40 mm
+[135/220] IM5 GM12 ok in 312 s  X r23: 10.23 mm, Y r24: 10.05 mm, X r24: 11.58 mm, Y r23: 9.93 mm
+[136/220] IM4 GM9 ok in 154 s  X r17: 8.64 mm, Y r18: 9.58 mm, X r18: 10.55 mm, Y r17: 8.22 mm
+[137/220] IM4 GM18 ok in 58 s  X r35: 6.32 mm, Y r36: 11.83 mm, X r36: 12.39 mm, Y r35: 5.90 mm
+[138/220] IM4 GM15 ok in 81 s  X r29: 9.74 mm, Y r30: 9.81 mm, X r30: 10.65 mm, Y r29: 9.70 mm
+[139/220] IM4 GM17 ok in 70 s  X r33: 10.41 mm, Y r34: 8.96 mm, X r34: 9.46 mm, Y r33: 10.03 mm
+[140/220] IM4 GM10 ok in 175 s  X r19: 19.07 mm, Y r20: 9.39 mm, X r20: 9.64 mm, Y r19: 19.30 mm
+[141/220] IM4 GM6 ok in 222 s  X r11: 9.42 mm, Y r12: 10.06 mm, X r12: 10.71 mm, Y r11: 9.47 mm
+[142/220] IM6 GM19 ok in 495 s  X r37: 11.84 mm, Y r38: 12.24 mm, X r38: 14.17 mm, Y r37: 11.21 mm
+[143/220] IM6 GM20 ok in 497 s  X r39: 16.78 mm, Y r40: 11.22 mm, X r40: 12.98 mm, Y r39: 14.10 mm
+[144/220] IM4 GM21 ok in 85 s  X r41: 11.36 mm, Y r42: 9.04 mm, X r42: 11.34 mm, Y r41: 10.27 mm
+[145/220] IM3 GM2 ok in 62 s  X r3: 4.58 mm, Y r4: 6.25 mm, X r4: 6.81 mm, Y r3: 4.64 mm
+[146/220] IM3 GM1 ok in 89 s  X r1: 5.71 mm, Y r2: 7.04 mm, X r2: 7.53 mm, Y r1: 5.82 mm
+[147/220] IM4 GM5 ok in 283 s  X r9: 7.42 mm, Y r10: 7.41 mm, X r10: 7.69 mm, Y r9: 6.58 mm
+[148/220] IM4 GM13 ok in 227 s  X r25: 7.11 mm, Y r26: 5.20 mm, X r26: 6.12 mm, Y r25: 6.43 mm
+[149/220] IM4 GM14 ok in 225 s  X r27: 15.32 mm, Y r28: 10.83 mm, X r28: 11.61 mm, Y r27: 12.91 mm
+[150/220] IM3 GM11 ok in 74 s  X r21: 6.65 mm, Y r22: 7.40 mm, X r22: 7.83 mm, Y r21: 6.31 mm
+[151/220] IM3 GM4 ok in 131 s  X r7: 7.17 mm, Y r8: 11.40 mm, X r8: 11.98 mm, Y r7: 6.49 mm
+[152/220] IM3 GM7 ok in 121 s  X r13: 7.91 mm, Y r14: 6.70 mm, X r14: 7.46 mm, Y r13: 7.43 mm
+[153/220] IM4 GM16 ok in 226 s  X r31: 10.74 mm, Y r32: 8.01 mm, X r32: 8.43 mm, Y r31: 10.65 mm
+[154/220] IM3 GM3 ok in 158 s  X r5: 8.16 mm, Y r6: 6.10 mm, X r6: 6.72 mm, Y r5: 6.62 mm
+[155/220] IM3 GM8 ok in 119 s  X r15: 4.71 mm, Y r16: 3.04 mm, X r16: 3.78 mm, Y r15: 4.78 mm
+[156/220] IM4 GM22 ok in 203 s  X r43: 9.57 mm, Y r44: 11.97 mm, X r44: 11.92 mm, Y r43: 8.17 mm
+[157/220] IM4 GM12 ok in 314 s  X r23: 6.86 mm, Y r24: 8.27 mm, X r24: 8.21 mm, Y r23: 5.57 mm
+[158/220] IM3 GM9 ok in 157 s  X r17: 6.50 mm, Y r18: 6.96 mm, X r18: 7.55 mm, Y r17: 6.06 mm
+[159/220] IM3 GM17 ok in 72 s  X r33: 8.85 mm, Y r34: 6.46 mm, X r34: 6.59 mm, Y r33: 8.28 mm
+[160/220] IM3 GM15 ok in 78 s  X r29: 8.20 mm, Y r30: 8.23 mm, X r30: 9.27 mm, Y r29: 8.04 mm
+[161/220] IM3 GM18 ok in 57 s  X r35: 5.03 mm, Y r36: 10.06 mm, X r36: 10.83 mm, Y r35: 4.25 mm
+[162/220] IM3 GM10 ok in 172 s  X r19: 14.71 mm, Y r20: 7.29 mm, X r20: 8.19 mm, Y r19: 14.38 mm
+[163/220] IM3 GM6 ok in 223 s  X r11: 8.14 mm, Y r12: 7.59 mm, X r12: 9.05 mm, Y r11: 8.13 mm
+[164/220] IM3 GM21 ok in 85 s  X r41: 8.53 mm, Y r42: 7.06 mm, X r42: 7.39 mm, Y r41: 8.10 mm
+[165/220] IM5 GM20 ok in 496 s  X r39: 14.52 mm, Y r40: 9.26 mm, X r40: 10.72 mm, Y r39: 12.63 mm
+[166/220] IM5 GM19 ok in 505 s  X r37: 10.84 mm, Y r38: 9.58 mm, X r38: 10.64 mm, Y r37: 9.76 mm
+[167/220] IM2 GM2 ok in 64 s  X r3: 3.33 mm, Y r4: 4.23 mm, X r4: 4.77 mm, Y r3: 3.20 mm
+[168/220] IM2 GM1 ok in 93 s  X r1: 3.64 mm, Y r2: 4.82 mm, X r2: 4.99 mm, Y r1: 3.22 mm
+[169/220] IM3 GM5 ok in 285 s  X r9: 5.11 mm, Y r10: 5.52 mm, X r10: 5.65 mm, Y r9: 5.15 mm
+[170/220] IM3 GM13 ok in 226 s  X r25: 6.78 mm, Y r26: 3.85 mm, X r26: 4.70 mm, Y r25: 5.52 mm
+[171/220] IM2 GM11 ok in 73 s  X r21: 5.10 mm, Y r22: 4.86 mm, X r22: 5.50 mm, Y r21: 5.11 mm
+[172/220] IM3 GM14 ok in 226 s  X r27: 11.33 mm, Y r28: 7.91 mm, X r28: 8.43 mm, Y r27: 10.01 mm
+[173/220] IM2 GM4 ok in 134 s  X r7: 3.85 mm, Y r8: 8.68 mm, X r8: 9.54 mm, Y r7: 3.11 mm
+[174/220] IM3 GM16 ok in 229 s  X r31: 9.24 mm, Y r32: 6.12 mm, X r32: 7.19 mm, Y r31: 9.71 mm
+[175/220] IM2 GM7 ok in 122 s  X r13: 6.10 mm, Y r14: 4.62 mm, X r14: 5.67 mm, Y r13: 5.77 mm
+[176/220] IM2 GM3 ok in 161 s  X r5: 6.22 mm, Y r6: 3.48 mm, X r6: 3.91 mm, Y r5: 5.22 mm
+[177/220] IM2 GM8 ok in 120 s  X r15: 2.61 mm, Y r16: 2.29 mm, X r16: 3.03 mm, Y r15: 2.49 mm
+[178/220] IM3 GM22 ok in 205 s  X r43: 7.65 mm, Y r44: 9.71 mm, X r44: 9.63 mm, Y r43: 6.46 mm
+[179/220] IM3 GM12 ok in 315 s  X r23: 5.00 mm, Y r24: 6.61 mm, X r24: 7.38 mm, Y r23: 5.18 mm
+[180/220] IM2 GM9 ok in 156 s  X r17: 4.95 mm, Y r18: 4.44 mm, X r18: 5.19 mm, Y r17: 4.07 mm
+[181/220] IM2 GM17 ok in 70 s  X r33: 7.79 mm, Y r34: 4.64 mm, X r34: 4.73 mm, Y r33: 5.94 mm
+[182/220] IM2 GM15 ok in 77 s  X r29: 7.21 mm, Y r30: 6.79 mm, X r30: 7.12 mm, Y r29: 6.18 mm
+[183/220] IM2 GM18 ok in 59 s  X r35: 3.97 mm, Y r36: 7.21 mm, X r36: 7.75 mm, Y r35: 3.58 mm
+[184/220] IM2 GM10 ok in 175 s  X r19: 8.00 mm, Y r20: 4.86 mm, X r20: 4.37 mm, Y r19: 8.55 mm
+[185/220] IM2 GM6 ok in 221 s  X r11: 5.66 mm, Y r12: 5.12 mm, X r12: 5.45 mm, Y r11: 5.98 mm
+[186/220] IM2 GM21 ok in 84 s  X r41: 5.59 mm, Y r42: 4.89 mm, X r42: 4.92 mm, Y r41: 5.78 mm
+[187/220] IM4 GM19 ok in 498 s  X r37: 7.25 mm, Y r38: 6.85 mm, X r38: 7.13 mm, Y r37: 6.56 mm
+[188/220] IM4 GM20 ok in 498 s  X r39: 11.24 mm, Y r40: 6.56 mm, X r40: 7.58 mm, Y r39: 9.54 mm
+[189/220] IM1 GM1 ok in 89 s  X r1: 1.75 mm, Y r2: 3.00 mm, X r2: 2.81 mm, Y r1: 1.63 mm
+[190/220] IM1 GM2 ok in 62 s  X r3: 1.32 mm, Y r4: 1.43 mm, X r4: 1.80 mm, Y r3: 1.20 mm
+[191/220] IM2 GM5 ok in 281 s  X r9: 3.60 mm, Y r10: 3.47 mm, X r10: 3.70 mm, Y r9: 3.68 mm
+[192/220] IM2 GM13 ok in 227 s  X r25: 4.92 mm, Y r26: 2.66 mm, X r26: 3.08 mm, Y r25: 3.98 mm
+[193/220] IM1 GM11 ok in 71 s  X r21: 2.64 mm, Y r22: 2.37 mm, X r22: 2.47 mm, Y r21: 2.29 mm
+[194/220] IM2 GM14 ok in 226 s  X r27: 7.92 mm, Y r28: 5.52 mm, X r28: 5.99 mm, Y r27: 6.36 mm
+[195/220] IM1 GM4 ok in 134 s  X r7: 2.42 mm, Y r8: 4.09 mm, X r8: 4.49 mm, Y r7: 1.85 mm
+[196/220] IM1 GM7 ok in 119 s  X r13: 3.82 mm, Y r14: 2.08 mm, X r14: 2.24 mm, Y r13: 3.74 mm
+[197/220] IM2 GM16 ok in 226 s  X r31: 7.39 mm, Y r32: 4.68 mm, X r32: 4.54 mm, Y r31: 6.93 mm
+[198/220] IM1 GM8 ok in 118 s  X r15: 1.24 mm, Y r16: 1.04 mm, X r16: 1.36 mm, Y r15: 1.20 mm
+[199/220] IM1 GM3 ok in 161 s  X r5: 3.34 mm, Y r6: 1.72 mm, X r6: 2.20 mm, Y r5: 2.76 mm
+[200/220] IM2 GM22 ok in 205 s  X r43: 5.94 mm, Y r44: 6.92 mm, X r44: 7.96 mm, Y r43: 4.70 mm
+[201/220] IM2 GM12 ok in 315 s  X r23: 3.30 mm, Y r24: 2.98 mm, X r24: 4.00 mm, Y r23: 3.60 mm
+[202/220] IM1 GM9 ok in 155 s  X r17: 1.97 mm, Y r18: 1.72 mm, X r18: 2.05 mm, Y r17: 1.53 mm
+[203/220] IM1 GM15 ok in 76 s  X r29: 3.16 mm, Y r30: 3.63 mm, X r30: 3.56 mm, Y r29: 2.85 mm
+[204/220] IM1 GM18 ok in 56 s  X r35: 1.20 mm, Y r36: 3.31 mm, X r36: 4.20 mm, Y r35: 0.81 mm
+[205/220] IM1 GM17 ok in 68 s  X r33: 3.83 mm, Y r34: 2.81 mm, X r34: 2.65 mm, Y r33: 2.88 mm
+[206/220] IM1 GM10 ok in 171 s  X r19: 4.68 mm, Y r20: 3.29 mm, X r20: 2.99 mm, Y r19: 5.11 mm
+[207/220] IM1 GM6 ok in 214 s  X r11: 3.10 mm, Y r12: 2.69 mm, X r12: 2.35 mm, Y r11: 2.59 mm
+[208/220] IM3 GM19 ok in 492 s  X r37: 4.13 mm, Y r38: 5.93 mm, X r38: 6.42 mm, Y r37: 4.04 mm
+[209/220] IM1 GM21 ok in 78 s  X r41: 3.26 mm, Y r42: 3.42 mm, X r42: 3.28 mm, Y r41: 3.01 mm
+[210/220] IM3 GM20 ok in 496 s  X r39: 8.39 mm, Y r40: 5.06 mm, X r40: 5.66 mm, Y r39: 7.36 mm
+[211/220] IM1 GM5 ok in 261 s  X r9: 2.12 mm, Y r10: 1.93 mm, X r10: 2.04 mm, Y r9: 1.84 mm
+[212/220] IM1 GM13 ok in 200 s  X r25: 1.34 mm, Y r26: 1.05 mm, X r26: 1.10 mm, Y r25: 1.15 mm
+[213/220] IM1 GM14 ok in 192 s  X r27: 4.44 mm, Y r28: 3.27 mm, X r28: 3.20 mm, Y r27: 3.98 mm
+[214/220] IM1 GM16 ok in 185 s  X r31: 3.55 mm, Y r32: 2.25 mm, X r32: 2.70 mm, Y r31: 3.45 mm
+[215/220] IM1 GM12 ok in 265 s  X r23: 1.82 mm, Y r24: 1.55 mm, X r24: 1.82 mm, Y r23: 1.21 mm
+[216/220] IM1 GM22 ok in 157 s  X r43: 2.83 mm, Y r44: 2.46 mm, X r44: 2.99 mm, Y r43: 2.15 mm
+[217/220] IM2 GM19 ok in 416 s  X r37: 3.39 mm, Y r38: 4.21 mm, X r38: 5.20 mm, Y r37: 2.68 mm
+[218/220] IM2 GM20 ok in 414 s  X r39: 5.57 mm, Y r40: 2.95 mm, X r40: 3.84 mm, Y r39: 4.53 mm
+[219/220] IM1 GM19 ok in 306 s  X r37: 1.67 mm, Y r38: 2.28 mm, X r38: 2.50 mm, Y r37: 1.49 mm
+[220/220] IM1 GM20 ok in 306 s  X r39: 2.44 mm, Y r40: 1.09 mm, X r40: 1.73 mm, Y r39: 2.07 mm
+Done in 35.4 min
+M03_biron.py: 220 tasks (IM x ground motion) on 20 workers -> Results/M03_biron_*
+[1/220] IM10 GM18 ok in 16 s  X r35: 100.00 mm, Y r36: 100.00 mm, X r36: 100.00 mm, Y r35: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[2/220] IM10 GM1 ok in 18 s  X r1: 100.00 mm, Y r2: 100.00 mm, X r2: 100.00 mm, Y r1: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[3/220] IM10 GM17 ok in 20 s  X r33: 100.00 mm, Y r34: 100.00 mm, X r34: 100.00 mm, Y r33: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[4/220] IM10 GM2 ok in 22 s  X r3: 100.00 mm, Y r4: 100.00 mm, X r4: 100.00 mm, Y r3: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[5/220] IM10 GM15 ok in 22 s  X r29: 100.00 mm, Y r30: 100.00 mm, X r30: 100.00 mm, Y r29: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[6/220] IM10 GM4 ok in 25 s  X r7: 100.00 mm, Y r8: 100.00 mm, X r8: 100.00 mm, Y r7: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[7/220] IM10 GM7 ok in 31 s  X r13: 100.00 mm, Y r14: 100.00 mm, X r14: 100.00 mm, Y r13: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[8/220] IM10 GM11 ok in 31 s  X r21: 100.00 mm, Y r22: 100.00 mm, X r22: 100.00 mm, Y r21: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[9/220] IM10 GM5 ok in 31 s  X r9: 100.00 mm, Y r10: 100.00 mm, X r10: 100.00 mm, Y r9: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[10/220] IM10 GM21 ok in 16 s  X r41: 100.00 mm, Y r42: 100.00 mm, X r42: 100.00 mm, Y r41: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[11/220] IM10 GM14 ok in 35 s  X r27: 100.00 mm, Y r28: 100.00 mm, X r28: 100.00 mm, Y r27: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[12/220] IM10 GM3 ok in 35 s  X r5: 100.00 mm, Y r6: 100.00 mm, X r6: 100.00 mm, Y r5: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[13/220] IM9 GM1 ok in 19 s  X r1: 100.00 mm, Y r2: 100.00 mm, X r2: 100.00 mm, Y r1: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[14/220] IM10 GM8 ok in 41 s  X r15: 100.00 mm, Y r16: 100.00 mm, X r16: 100.00 mm, Y r15: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[15/220] IM9 GM2 ok in 23 s  X r3: 100.00 mm, Y r4: 100.00 mm, X r4: 100.00 mm, Y r3: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[16/220] IM10 GM6 ok in 45 s  X r11: 100.00 mm, Y r12: 100.00 mm, X r12: 100.00 mm, Y r11: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[17/220] IM10 GM22 ok in 29 s  X r43: 100.00 mm, Y r44: 100.00 mm, X r44: 100.00 mm, Y r43: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[18/220] IM10 GM13 ok in 50 s  X r25: 100.00 mm, Y r26: 100.00 mm, X r26: 100.00 mm, Y r25: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[19/220] IM9 GM4 ok in 26 s  X r7: 100.00 mm, Y r8: 100.00 mm, X r8: 100.00 mm, Y r7: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[20/220] IM10 GM9 ok in 53 s  X r17: 100.00 mm, Y r18: 100.00 mm, X r18: 100.00 mm, Y r17: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[21/220] IM9 GM3 ok in 36 s  X r5: 100.00 mm, Y r6: 100.00 mm, X r6: 100.00 mm, Y r5: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[22/220] IM9 GM7 ok in 28 s  X r13: 100.00 mm, Y r14: 100.00 mm, X r14: 100.00 mm, Y r13: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[23/220] IM9 GM18 ok in 16 s  X r35: 100.00 mm, Y r36: 100.00 mm, X r36: 100.00 mm, Y r35: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[24/220] IM9 GM15 ok in 22 s  X r29: 100.00 mm, Y r30: 100.00 mm, X r30: 100.00 mm, Y r29: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[25/220] IM9 GM11 ok in 33 s  X r21: 100.00 mm, Y r22: 100.00 mm, X r22: 100.00 mm, Y r21: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[26/220] IM9 GM17 ok in 22 s  X r33: 100.00 mm, Y r34: 100.00 mm, X r34: 100.00 mm, Y r33: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[27/220] IM9 GM8 ok in 44 s  X r15: 100.00 mm, Y r16: 100.00 mm, X r16: 100.00 mm, Y r15: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[28/220] IM9 GM6 ok in 45 s  X r11: 100.00 mm, Y r12: 100.00 mm, X r12: 100.00 mm, Y r11: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[29/220] IM10 GM16 ok in 79 s  X r31: 100.00 mm, Y r32: 100.00 mm, X r32: 100.00 mm, Y r31: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[30/220] IM9 GM14 ok in 36 s  X r27: 100.00 mm, Y r28: 100.00 mm, X r28: 100.00 mm, Y r27: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[31/220] IM10 GM10 ok in 83 s  X r19: 100.00 mm, Y r20: 100.00 mm, X r20: 100.00 mm, Y r19: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[32/220] IM9 GM21 ok in 18 s  X r41: 100.00 mm, Y r42: 100.00 mm, X r42: 100.00 mm, Y r41: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[33/220] IM9 GM9 ok in 54 s  X r17: 100.00 mm, Y r18: 100.00 mm, X r18: 100.00 mm, Y r17: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[34/220] IM9 GM5 ok in 61 s  X r9: 100.00 mm, Y r10: 100.00 mm, X r10: 100.00 mm, Y r9: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[35/220] IM8 GM1 ok in 23 s  X r1: 100.00 mm, Y r2: 100.00 mm, X r2: 100.00 mm, Y r1: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[36/220] IM8 GM2 ok in 28 s  X r3: 100.00 mm, Y r4: 100.00 mm, X r4: 100.00 mm, Y r3: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[37/220] IM9 GM13 ok in 57 s  X r25: 100.00 mm, Y r26: 100.00 mm, X r26: 100.00 mm, Y r25: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[38/220] IM9 GM22 ok in 34 s  X r43: 100.00 mm, Y r44: 100.00 mm, X r44: 100.00 mm, Y r43: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[39/220] IM8 GM4 ok in 28 s  X r7: 100.00 mm, Y r8: 100.00 mm, X r8: 100.00 mm, Y r7: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[40/220] IM8 GM3 ok in 41 s  X r5: 100.00 mm, Y r6: 100.00 mm, X r6: 100.00 mm, Y r5: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[41/220] IM8 GM7 ok in 34 s  X r13: 100.00 mm, Y r14: 100.00 mm, X r14: 100.00 mm, Y r13: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[42/220] IM9 GM10 ok in 88 s  X r19: 100.00 mm, Y r20: 100.00 mm, X r20: 100.00 mm, Y r19: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[43/220] IM8 GM11 ok in 34 s  X r21: 100.00 mm, Y r22: 100.00 mm, X r22: 100.00 mm, Y r21: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[44/220] IM8 GM6 ok in 50 s  X r11: 100.00 mm, Y r12: 100.00 mm, X r12: 100.00 mm, Y r11: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[45/220] IM8 GM15 ok in 28 s  X r29: 100.00 mm, Y r30: 100.00 mm, X r30: 100.00 mm, Y r29: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[46/220] IM9 GM16 ok in 83 s  X r31: 100.00 mm, Y r32: 100.00 mm, X r32: 100.00 mm, Y r31: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[47/220] IM8 GM8 ok in 52 s  X r15: 100.00 mm, Y r16: 100.00 mm, X r16: 100.00 mm, Y r15: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[48/220] IM8 GM14 ok in 36 s  X r27: 100.00 mm, Y r28: 100.00 mm, X r28: 100.00 mm, Y r27: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[49/220] IM8 GM18 ok in 18 s  X r35: 100.00 mm, Y r36: 100.00 mm, X r36: 100.00 mm, Y r35: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[50/220] IM8 GM17 ok in 26 s  X r33: 100.00 mm, Y r34: 100.00 mm, X r34: 100.00 mm, Y r33: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[51/220] IM8 GM9 ok in 59 s  X r17: 100.00 mm, Y r18: 100.00 mm, X r18: 100.00 mm, Y r17: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[52/220] IM8 GM21 ok in 18 s  X r41: 100.00 mm, Y r42: 100.00 mm, X r42: 100.00 mm, Y r41: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[53/220] IM8 GM5 ok in 71 s  X r9: 100.00 mm, Y r10: 100.00 mm, X r10: 100.00 mm, Y r9: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[54/220] IM10 GM12 ok in 151 s  X r23: 100.00 mm, Y r24: 100.00 mm, X r24: 100.00 mm, Y r23: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[55/220] IM8 GM13 ok in 58 s  X r25: 100.00 mm, Y r26: 100.00 mm, X r26: 100.00 mm, Y r25: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[56/220] IM7 GM1 ok in 23 s  X r1: 100.00 mm, Y r2: 100.00 mm, X r2: 100.00 mm, Y r1: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[57/220] IM7 GM2 ok in 27 s  X r3: 100.00 mm, Y r4: 100.00 mm, X r4: 100.00 mm, Y r3: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[58/220] IM8 GM22 ok in 35 s  X r43: 100.00 mm, Y r44: 100.00 mm, X r44: 100.00 mm, Y r43: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[59/220] IM7 GM4 ok in 32 s  X r7: 100.00 mm, Y r8: 100.00 mm, X r8: 100.00 mm, Y r7: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[60/220] IM7 GM3 ok in 39 s  X r5: 100.00 mm, Y r6: 100.00 mm, X r6: 100.00 mm, Y r5: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[61/220] IM8 GM10 ok in 90 s  X r19: 100.00 mm, Y r20: 100.00 mm, X r20: 100.00 mm, Y r19: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[62/220] IM10 GM19 ok in 182 s  X r37: 100.00 mm, Y r38: 100.00 mm, X r38: 100.00 mm, Y r37: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[63/220] IM7 GM7 ok in 35 s  X r13: 100.00 mm, Y r14: 100.00 mm, X r14: 100.00 mm, Y r13: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[64/220] IM8 GM16 ok in 86 s  X r31: 100.00 mm, Y r32: 100.00 mm, X r32: 100.00 mm, Y r31: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[65/220] IM7 GM11 ok in 36 s  X r21: 100.00 mm, Y r22: 100.00 mm, X r22: 100.00 mm, Y r21: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[66/220] IM9 GM12 ok in 162 s  X r23: 100.00 mm, Y r24: 100.00 mm, X r24: 100.00 mm, Y r23: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[67/220] IM7 GM8 ok in 52 s  X r15: 100.00 mm, Y r16: 100.00 mm, X r16: 100.00 mm, Y r15: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[68/220] IM7 GM6 ok in 55 s  X r11: 100.00 mm, Y r12: 100.00 mm, X r12: 100.00 mm, Y r11: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[69/220] IM7 GM15 ok in 27 s  X r29: 100.00 mm, Y r30: 100.00 mm, X r30: 100.00 mm, Y r29: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[70/220] IM7 GM17 ok in 26 s  X r33: 100.00 mm, Y r34: 100.00 mm, X r34: 100.00 mm, Y r33: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[71/220] IM7 GM14 ok in 37 s  X r27: 100.00 mm, Y r28: 100.00 mm, X r28: 100.00 mm, Y r27: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[72/220] IM7 GM9 ok in 62 s  X r17: 100.00 mm, Y r18: 100.00 mm, X r18: 100.00 mm, Y r17: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[73/220] IM7 GM21 ok in 22 s  X r41: 100.00 mm, Y r42: 100.00 mm, X r42: 100.00 mm, Y r41: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[74/220] IM6 GM1 ok in 30 s  X r1: 100.00 mm, Y r2: 100.00 mm, X r2: 100.00 mm, Y r1: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[75/220] IM7 GM18 ok in 40 s  X r35: 100.00 mm, Y r36: 100.00 mm, X r36: 69.52 mm, Y r35: 23.69 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[76/220] IM9 GM19 ok in 186 s  X r37: 100.00 mm, Y r38: 100.00 mm, X r38: 100.00 mm, Y r37: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[77/220] IM10 GM20 ok in 256 s  X r39: 100.00 mm, Y r40: 100.00 mm, X r40: 100.00 mm, Y r39: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[78/220] IM6 GM2 ok in 47 s  X r3: 100.00 mm, Y r4: 100.00 mm, X r4: 35.68 mm, Y r3: 20.42 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[79/220] IM7 GM10 ok in 98 s  X r19: 100.00 mm, Y r20: 100.00 mm, X r20: 100.00 mm, Y r19: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[80/220] IM6 GM4 ok in 39 s  X r7: 100.00 mm, Y r8: 100.00 mm, X r8: 100.00 mm, Y r7: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[81/220] IM8 GM12 ok in 164 s  X r23: 100.00 mm, Y r24: 100.00 mm, X r24: 100.00 mm, Y r23: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[82/220] IM6 GM7 ok in 39 s  X r13: 100.00 mm, Y r14: 100.00 mm, X r14: 100.00 mm, Y r13: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[83/220] IM6 GM11 ok in 36 s  X r21: 100.00 mm, Y r22: 100.00 mm, X r22: 100.00 mm, Y r21: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[84/220] IM9 GM20 ok in 256 s  X r39: 100.00 mm, Y r40: 100.00 mm, X r40: 100.00 mm, Y r39: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[85/220] IM6 GM14 ok in 37 s  X r27: 100.00 mm, Y r28: 100.00 mm, X r28: 100.00 mm, Y r27: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[86/220] IM7 GM13 ok in 146 s  X r25: 45.54 mm, Y r26: 21.21 mm, X r26: 100.00 mm, Y r25: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[87/220] IM8 GM19 ok in 192 s  X r37: 100.00 mm, Y r38: 100.00 mm, X r38: 100.00 mm, Y r37: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[88/220] IM6 GM3 ok in 105 s  X r5: 59.66 mm, Y r6: 22.42 mm, X r6: 100.00 mm, Y r5: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[89/220] IM7 GM22 ok in 120 s  X r43: 60.85 mm, Y r44: 56.17 mm, X r44: 100.00 mm, Y r43: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[90/220] IM7 GM5 ok in 185 s  X r9: 55.65 mm, Y r10: 21.86 mm, X r10: 100.00 mm, Y r9: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[91/220] IM7 GM16 ok in 156 s  X r31: 51.95 mm, Y r32: 49.26 mm, X r32: 100.00 mm, Y r31: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[92/220] IM7 GM12 ok in 172 s  X r23: 100.00 mm, Y r24: 100.00 mm, X r24: 100.00 mm, Y r23: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[93/220] IM6 GM17 ok in 32 s  X r33: 100.00 mm, Y r34: 100.00 mm, X r34: 100.00 mm, Y r33: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[94/220] IM6 GM21 ok in 33 s  X r41: 100.00 mm, Y r42: 100.00 mm, X r42: 100.00 mm, Y r41: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[95/220] IM6 GM18 ok in 39 s  X r35: 100.00 mm, Y r36: 100.00 mm, X r36: 57.56 mm, Y r35: 17.53 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[96/220] IM6 GM9 ok in 108 s  X r17: 36.93 mm, Y r18: 29.07 mm, X r18: 100.00 mm, Y r17: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[97/220] IM6 GM10 ok in 106 s  X r19: 100.00 mm, Y r20: 100.00 mm, X r20: 100.00 mm, Y r19: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[98/220] IM6 GM8 ok in 123 s  X r15: 31.27 mm, Y r16: 14.40 mm, X r16: 29.42 mm, Y r15: 16.99 mm
+[99/220] IM6 GM6 ok in 142 s  X r11: 37.09 mm, Y r12: 33.29 mm, X r12: 100.00 mm, Y r11: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[100/220] IM6 GM15 ok in 86 s  X r29: 46.70 mm, Y r30: 27.05 mm, X r30: 37.41 mm, Y r29: 27.96 mm
+[101/220] IM8 GM20 ok in 256 s  X r39: 100.00 mm, Y r40: 100.00 mm, X r40: 100.00 mm, Y r39: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[102/220] IM5 GM7 ok in 40 s  X r13: 100.00 mm, Y r14: 100.00 mm, X r14: 100.00 mm, Y r13: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[103/220] IM5 GM1 ok in 67 s  X r1: 34.70 mm, Y r2: 21.81 mm, X r2: 100.00 mm, Y r1: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[104/220] IM5 GM2 ok in 67 s  X r3: 33.65 mm, Y r4: 16.82 mm, X r4: 26.89 mm, Y r3: 16.81 mm
+[105/220] IM7 GM19 ok in 213 s  X r37: 100.00 mm, Y r38: 100.00 mm, X r38: 100.00 mm, Y r37: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[106/220] IM6 GM5 ok in 199 s  X r9: 33.20 mm, Y r10: 17.21 mm, X r10: 100.00 mm, Y r9: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[107/220] IM5 GM11 ok in 55 s  X r21: 100.00 mm, Y r22: 100.00 mm, X r22: 24.78 mm, Y r21: 22.21 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[108/220] IM5 GM4 ok in 90 s  X r7: 25.50 mm, Y r8: 31.66 mm, X r8: 100.00 mm, Y r7: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[109/220] IM6 GM22 ok in 121 s  X r43: 48.91 mm, Y r44: 29.66 mm, X r44: 100.00 mm, Y r43: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[110/220] IM7 GM20 ok in 259 s  X r39: 100.00 mm, Y r40: 100.00 mm, X r40: 100.00 mm, Y r39: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[111/220] IM6 GM16 ok in 153 s  X r31: 58.11 mm, Y r32: 30.31 mm, X r32: 100.00 mm, Y r31: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[112/220] IM5 GM8 ok in 121 s  X r15: 19.88 mm, Y r16: 12.27 mm, X r16: 17.78 mm, Y r15: 12.99 mm
+[113/220] IM6 GM13 ok in 227 s  X r25: 26.58 mm, Y r26: 17.58 mm, X r26: 29.70 mm, Y r25: 19.06 mm
+[114/220] IM5 GM15 ok in 85 s  X r29: 30.06 mm, Y r30: 18.67 mm, X r30: 25.48 mm, Y r29: 22.08 mm
+[115/220] IM6 GM12 ok in 245 s  X r23: 32.59 mm, Y r24: 20.46 mm, X r24: 100.00 mm, Y r23: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[116/220] IM5 GM18 ok in 61 s  X r35: 26.66 mm, Y r36: 28.79 mm, X r36: 46.72 mm, Y r35: 13.58 mm
+[117/220] IM5 GM3 ok in 163 s  X r5: 50.68 mm, Y r6: 19.82 mm, X r6: 31.38 mm, Y r5: 19.92 mm
+[118/220] IM5 GM17 ok in 78 s  X r33: 61.24 mm, Y r34: 17.11 mm, X r34: 31.80 mm, Y r33: 30.22 mm
+[119/220] IM5 GM14 ok in 129 s  X r27: 100.00 mm, Y r28: 100.00 mm, X r28: 26.11 mm, Y r27: 34.92 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[120/220] IM5 GM9 ok in 156 s  X r17: 24.66 mm, Y r18: 27.81 mm, X r18: 39.23 mm, Y r17: 15.59 mm
+[121/220] IM5 GM10 ok in 173 s  X r19: 36.93 mm, Y r20: 19.61 mm, X r20: 33.83 mm, Y r19: 29.66 mm
+[122/220] IM5 GM21 ok in 91 s  X r41: 33.60 mm, Y r42: 18.73 mm, X r42: 33.20 mm, Y r41: 25.36 mm
+[123/220] IM4 GM2 ok in 63 s  X r3: 14.16 mm, Y r4: 12.94 mm, X r4: 19.14 mm, Y r3: 10.43 mm
+[124/220] IM4 GM1 ok in 93 s  X r1: 24.34 mm, Y r2: 15.23 mm, X r2: 36.19 mm, Y r1: 14.09 mm
+[125/220] IM5 GM6 ok in 221 s  X r11: 28.55 mm, Y r12: 24.06 mm, X r12: 36.12 mm, Y r11: 17.93 mm
+[126/220] IM5 GM22 ok in 122 s  X r43: 32.61 mm, Y r44: 20.66 mm, X r44: 100.00 mm, Y r43: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[127/220] IM5 GM13 ok in 226 s  X r25: 18.59 mm, Y r26: 14.94 mm, X r26: 21.78 mm, Y r25: 15.94 mm
+[128/220] IM4 GM11 ok in 73 s  X r21: 28.91 mm, Y r22: 12.52 mm, X r22: 14.87 mm, Y r21: 15.88 mm
+[129/220] IM4 GM4 ok in 134 s  X r7: 16.11 mm, Y r8: 21.15 mm, X r8: 55.01 mm, Y r7: 10.22 mm
+[130/220] IM5 GM5 ok in 284 s  X r9: 24.14 mm, Y r10: 18.26 mm, X r10: 28.69 mm, Y r9: 15.07 mm
+[131/220] IM5 GM16 ok in 226 s  X r31: 35.82 mm, Y r32: 21.83 mm, X r32: 37.76 mm, Y r31: 23.70 mm
+[132/220] IM4 GM8 ok in 120 s  X r15: 12.72 mm, Y r16: 9.50 mm, X r16: 11.61 mm, Y r15: 9.14 mm
+[133/220] IM4 GM7 ok in 123 s  X r13: 37.78 mm, Y r14: 13.38 mm, X r14: 22.11 mm, Y r13: 18.65 mm
+[134/220] IM4 GM3 ok in 161 s  X r5: 24.46 mm, Y r6: 13.95 mm, X r6: 22.62 mm, Y r5: 14.59 mm
+[135/220] IM6 GM19 ok in 357 s  X r37: 27.45 mm, Y r38: 17.99 mm, X r38: 100.00 mm, Y r37: 100.00 mm [collapse: restrained node above 60 mm, stored as 100 mm]
+[136/220] IM4 GM18 ok in 59 s  X r35: 14.45 mm, Y r36: 20.13 mm, X r36: 35.15 mm, Y r35: 9.67 mm
+[137/220] IM4 GM15 ok in 79 s  X r29: 21.80 mm, Y r30: 15.33 mm, X r30: 20.16 mm, Y r29: 15.34 mm
+[138/220] IM4 GM9 ok in 155 s  X r17: 15.48 mm, Y r18: 18.97 mm, X r18: 24.52 mm, Y r17: 13.48 mm
+[139/220] IM5 GM12 ok in 311 s  X r23: 22.35 mm, Y r24: 16.28 mm, X r24: 28.31 mm, Y r23: 16.36 mm
+[140/220] IM4 GM17 ok in 73 s  X r33: 35.11 mm, Y r34: 13.32 mm, X r34: 24.92 mm, Y r33: 22.75 mm
+[141/220] IM4 GM10 ok in 169 s  X r19: 25.02 mm, Y r20: 15.22 mm, X r20: 22.75 mm, Y r19: 23.54 mm
+[142/220] IM4 GM6 ok in 218 s  X r11: 18.04 mm, Y r12: 17.49 mm, X r12: 26.22 mm, Y r11: 12.34 mm
+[143/220] IM4 GM21 ok in 83 s  X r41: 26.99 mm, Y r42: 14.04 mm, X r42: 22.68 mm, Y r41: 19.26 mm
+[144/220] IM3 GM2 ok in 63 s  X r3: 11.25 mm, Y r4: 9.67 mm, X r4: 13.54 mm, Y r3: 7.52 mm
+[145/220] IM3 GM1 ok in 89 s  X r1: 17.75 mm, Y r2: 11.94 mm, X r2: 23.96 mm, Y r1: 10.28 mm
+[146/220] IM4 GM5 ok in 283 s  X r9: 16.43 mm, Y r10: 12.23 mm, X r10: 16.61 mm, Y r9: 11.58 mm
+[147/220] IM4 GM13 ok in 226 s  X r25: 13.82 mm, Y r26: 10.82 mm, X r26: 16.09 mm, Y r25: 11.67 mm
+[148/220] IM6 GM20 ok in 502 s  X r39: 60.79 mm, Y r40: 19.90 mm, X r40: 36.28 mm, Y r39: 24.52 mm
+[149/220] IM4 GM14 ok in 229 s  X r27: 45.57 mm, Y r28: 13.34 mm, X r28: 21.40 mm, Y r27: 26.39 mm
+[150/220] IM3 GM11 ok in 79 s  X r21: 21.00 mm, Y r22: 9.68 mm, X r22: 11.25 mm, Y r21: 12.66 mm
+[151/220] IM3 GM4 ok in 140 s  X r7: 10.83 mm, Y r8: 18.13 mm, X r8: 37.45 mm, Y r7: 8.36 mm
+[152/220] IM3 GM7 ok in 127 s  X r13: 29.47 mm, Y r14: 11.28 mm, X r14: 16.32 mm, Y r13: 14.79 mm
+[153/220] IM3 GM8 ok in 129 s  X r15: 10.54 mm, Y r16: 6.43 mm, X r16: 9.22 mm, Y r15: 6.43 mm
+[154/220] IM4 GM16 ok in 232 s  X r31: 22.67 mm, Y r32: 14.59 mm, X r32: 20.66 mm, Y r31: 14.06 mm
+[155/220] IM3 GM3 ok in 169 s  X r5: 15.92 mm, Y r6: 10.54 mm, X r6: 17.73 mm, Y r5: 12.56 mm
+[156/220] IM4 GM22 ok in 214 s  X r43: 18.93 mm, Y r44: 16.37 mm, X r44: 37.89 mm, Y r43: 14.21 mm
+[157/220] IM3 GM9 ok in 162 s  X r17: 12.58 mm, Y r18: 12.45 mm, X r18: 18.77 mm, Y r17: 10.59 mm
+[158/220] IM4 GM12 ok in 324 s  X r23: 13.23 mm, Y r24: 12.99 mm, X r24: 19.14 mm, Y r23: 12.72 mm
+[159/220] IM3 GM18 ok in 64 s  X r35: 11.40 mm, Y r36: 15.82 mm, X r36: 28.40 mm, Y r35: 7.34 mm
+[160/220] IM3 GM15 ok in 86 s  X r29: 17.41 mm, Y r30: 12.84 mm, X r30: 17.56 mm, Y r29: 12.18 mm
+[161/220] IM3 GM17 ok in 76 s  X r33: 25.93 mm, Y r34: 10.27 mm, X r34: 14.79 mm, Y r33: 17.96 mm
+[162/220] IM3 GM6 ok in 232 s  X r11: 14.32 mm, Y r12: 13.58 mm, X r12: 19.75 mm, Y r11: 10.14 mm
+[163/220] IM3 GM10 ok in 184 s  X r19: 18.83 mm, Y r20: 12.78 mm, X r20: 19.44 mm, Y r19: 16.78 mm
+[164/220] IM5 GM19 ok in 510 s  X r37: 20.13 mm, Y r38: 12.98 mm, X r38: 24.08 mm, Y r37: 14.36 mm
+[165/220] IM5 GM20 ok in 505 s  X r39: 36.67 mm, Y r40: 16.23 mm, X r40: 25.45 mm, Y r39: 20.73 mm
+[166/220] IM3 GM21 ok in 89 s  X r41: 20.48 mm, Y r42: 11.87 mm, X r42: 16.17 mm, Y r41: 14.57 mm
+[167/220] IM2 GM2 ok in 64 s  X r3: 9.05 mm, Y r4: 6.33 mm, X r4: 9.44 mm, Y r3: 5.98 mm
+[168/220] IM2 GM1 ok in 92 s  X r1: 8.97 mm, Y r2: 9.45 mm, X r2: 13.72 mm, Y r1: 5.40 mm
+[169/220] IM3 GM5 ok in 288 s  X r9: 12.92 mm, Y r10: 9.35 mm, X r10: 11.18 mm, Y r9: 9.09 mm
+[170/220] IM2 GM11 ok in 70 s  X r21: 12.62 mm, Y r22: 7.42 mm, X r22: 10.65 mm, Y r21: 8.63 mm
+[171/220] IM3 GM13 ok in 238 s  X r25: 12.70 mm, Y r26: 8.50 mm, X r26: 12.91 mm, Y r25: 9.80 mm
+[172/220] IM3 GM14 ok in 239 s  X r27: 26.65 mm, Y r28: 9.81 mm, X r28: 16.20 mm, Y r27: 19.15 mm
+[173/220] IM2 GM4 ok in 138 s  X r7: 9.34 mm, Y r8: 14.89 mm, X r8: 27.07 mm, Y r7: 6.01 mm
+[174/220] IM2 GM7 ok in 124 s  X r13: 18.68 mm, Y r14: 7.80 mm, X r14: 12.01 mm, Y r13: 11.03 mm
+[175/220] IM3 GM16 ok in 235 s  X r31: 19.64 mm, Y r32: 10.46 mm, X r32: 16.64 mm, Y r31: 11.34 mm
+[176/220] IM2 GM3 ok in 163 s  X r5: 12.39 mm, Y r6: 7.99 mm, X r6: 11.60 mm, Y r5: 10.10 mm
+[177/220] IM2 GM8 ok in 121 s  X r15: 7.61 mm, Y r16: 6.20 mm, X r16: 8.95 mm, Y r15: 4.16 mm
+[178/220] IM3 GM22 ok in 212 s  X r43: 15.29 mm, Y r44: 12.79 mm, X r44: 22.05 mm, Y r43: 11.93 mm
+[179/220] IM2 GM15 ok in 77 s  X r29: 13.10 mm, Y r30: 9.62 mm, X r30: 12.20 mm, Y r29: 10.20 mm
+[180/220] IM2 GM9 ok in 159 s  X r17: 12.74 mm, Y r18: 6.42 mm, X r18: 10.83 mm, Y r17: 8.94 mm
+[181/220] IM3 GM12 ok in 331 s  X r23: 12.52 mm, Y r24: 10.89 mm, X r24: 15.05 mm, Y r23: 9.71 mm
+[182/220] IM2 GM18 ok in 59 s  X r35: 8.83 mm, Y r36: 10.99 mm, X r36: 18.31 mm, Y r35: 5.90 mm
+[183/220] IM2 GM17 ok in 70 s  X r33: 19.93 mm, Y r34: 7.53 mm, X r34: 11.87 mm, Y r33: 12.65 mm
+[184/220] IM2 GM10 ok in 178 s  X r19: 11.88 mm, Y r20: 9.61 mm, X r20: 13.73 mm, Y r19: 10.39 mm
+[185/220] IM4 GM20 ok in 505 s  X r39: 26.07 mm, Y r40: 11.40 mm, X r40: 16.91 mm, Y r39: 16.70 mm
+[186/220] IM4 GM19 ok in 517 s  X r37: 13.99 mm, Y r38: 9.15 mm, X r38: 14.95 mm, Y r37: 10.36 mm
+[187/220] IM2 GM6 ok in 224 s  X r11: 12.41 mm, Y r12: 8.90 mm, X r12: 10.92 mm, Y r11: 8.23 mm
+[188/220] IM2 GM21 ok in 87 s  X r41: 11.24 mm, Y r42: 9.36 mm, X r42: 12.22 mm, Y r41: 9.09 mm
+[189/220] IM1 GM2 ok in 63 s  X r3: 4.45 mm, Y r4: 3.23 mm, X r4: 5.84 mm, Y r3: 2.46 mm
+[190/220] IM2 GM5 ok in 290 s  X r9: 10.64 mm, Y r10: 7.52 mm, X r10: 8.89 mm, Y r9: 6.37 mm
+[191/220] IM1 GM1 ok in 96 s  X r1: 4.66 mm, Y r2: 4.65 mm, X r2: 6.90 mm, Y r1: 3.38 mm
+[192/220] IM2 GM13 ok in 249 s  X r25: 11.19 mm, Y r26: 6.66 mm, X r26: 10.25 mm, Y r25: 8.31 mm
+[193/220] IM1 GM11 ok in 94 s  X r21: 7.07 mm, Y r22: 4.77 mm, X r22: 7.50 mm, Y r21: 3.97 mm
+[194/220] IM1 GM7 ok in 154 s  X r13: 10.21 mm, Y r14: 4.27 mm, X r14: 7.61 mm, Y r13: 5.73 mm
+[195/220] IM2 GM14 ok in 272 s  X r27: 20.07 mm, Y r28: 7.56 mm, X r28: 9.53 mm, Y r27: 13.50 mm
+[196/220] IM1 GM4 ok in 193 s  X r7: 4.89 mm, Y r8: 7.79 mm, X r8: 11.85 mm, Y r7: 3.79 mm
+[197/220] IM2 GM16 ok in 272 s  X r31: 11.35 mm, Y r32: 6.52 mm, X r32: 12.73 mm, Y r31: 9.09 mm
+[198/220] IM1 GM8 ok in 196 s  X r15: 4.16 mm, Y r16: 3.14 mm, X r16: 6.25 mm, Y r15: 2.37 mm
+[199/220] IM1 GM3 ok in 260 s  X r5: 9.39 mm, Y r6: 2.93 mm, X r6: 5.34 mm, Y r5: 5.97 mm
+[200/220] IM2 GM22 ok in 318 s  X r43: 13.28 mm, Y r44: 9.94 mm, X r44: 13.36 mm, Y r43: 9.61 mm
+[201/220] IM1 GM15 ok in 156 s  X r29: 9.16 mm, Y r30: 6.18 mm, X r30: 8.82 mm, Y r29: 6.40 mm
+[202/220] IM1 GM9 ok in 292 s  X r17: 7.29 mm, Y r18: 3.72 mm, X r18: 5.39 mm, Y r17: 3.50 mm
+[203/220] IM3 GM20 ok in 595 s  X r39: 20.43 mm, Y r40: 9.27 mm, X r40: 12.52 mm, Y r39: 13.47 mm
+[204/220] IM1 GM17 ok in 156 s  X r33: 11.25 mm, Y r34: 4.18 mm, X r34: 5.91 mm, Y r33: 6.74 mm
+[205/220] IM2 GM12 ok in 476 s  X r23: 10.34 mm, Y r24: 8.43 mm, X r24: 11.35 mm, Y r23: 5.90 mm
+[206/220] IM1 GM18 ok in 153 s  X r35: 3.97 mm, Y r36: 6.44 mm, X r36: 11.41 mm, Y r35: 2.74 mm
+[207/220] IM1 GM5 ok in 376 s  X r9: 6.62 mm, Y r10: 3.59 mm, X r10: 5.69 mm, Y r9: 3.47 mm
+[208/220] IM1 GM6 ok in 375 s  X r11: 8.09 mm, Y r12: 4.83 mm, X r12: 7.43 mm, Y r11: 4.62 mm
+[209/220] IM1 GM10 ok in 353 s  X r19: 7.73 mm, Y r20: 4.08 mm, X r20: 5.74 mm, Y r19: 5.96 mm
+[210/220] IM3 GM19 ok in 706 s  X r37: 11.26 mm, Y r38: 9.33 mm, X r38: 12.97 mm, Y r37: 8.92 mm
+[211/220] IM1 GM21 ok in 193 s  X r41: 7.05 mm, Y r42: 5.44 mm, X r42: 7.33 mm, Y r41: 4.18 mm
+[212/220] IM1 GM14 ok in 429 s  X r27: 10.95 mm, Y r28: 4.93 mm, X r28: 7.23 mm, Y r27: 6.41 mm
+[213/220] IM1 GM13 ok in 469 s  X r25: 7.49 mm, Y r26: 2.25 mm, X r26: 4.63 mm, Y r25: 3.84 mm
+[214/220] IM1 GM12 ok in 485 s  X r23: 5.06 mm, Y r24: 4.11 mm, X r24: 8.07 mm, Y r23: 2.72 mm
+[215/220] IM1 GM22 ok in 293 s  X r43: 6.90 mm, Y r44: 5.28 mm, X r44: 8.27 mm, Y r43: 4.15 mm
+[216/220] IM2 GM19 ok in 637 s  X r37: 7.57 mm, Y r38: 8.10 mm, X r38: 11.36 mm, Y r37: 4.98 mm
+[217/220] IM1 GM16 ok in 422 s  X r31: 7.86 mm, Y r32: 4.42 mm, X r32: 7.97 mm, Y r31: 4.77 mm
+[218/220] IM2 GM20 ok in 719 s  X r39: 14.64 mm, Y r40: 7.15 mm, X r40: 9.83 mm, Y r39: 9.65 mm
+[219/220] IM1 GM19 ok in 637 s  X r37: 3.55 mm, Y r38: 4.31 mm, X r38: 7.15 mm, Y r37: 2.29 mm
+[220/220] IM1 GM20 ok in 614 s  X r39: 9.70 mm, Y r40: 3.80 mm, X r40: 6.21 mm, Y r39: 5.70 mm
+Done in 33.0 min

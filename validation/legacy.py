@@ -157,16 +157,18 @@ def capture_opensees_calls(script: Path, stop_at: set[str], patch=None) -> tuple
     if patch:
         src = patch(src)
     rec = OpenSeesRecorder(stop_at)
-    ns = {"__name__": "__capture__", "op": rec}
-    cwd = os.getcwd()
+    ns = {"__name__": "__capture__", "__file__": str(Path(script).resolve()), "op": rec}
+    cwd, argv = os.getcwd(), sys.argv
     with tempfile.TemporaryDirectory() as tmp:
         os.chdir(tmp)
+        sys.argv = [str(script)]          # scripts reading command-line options get their defaults
         try:
             exec(compile(src, str(script), "exec"), ns)
         except StopCapture:
             pass
         finally:
             os.chdir(cwd)
+            sys.argv = argv
     return rec.calls, ns
 
 

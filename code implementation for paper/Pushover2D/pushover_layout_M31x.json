@@ -1,0 +1,31 @@
+{
+  "x_d": [
+    1500.0,
+    4500.0,
+    7500.0,
+    10500.0,
+    6000.0
+  ],
+  "n_hangers": 4,
+  "i_stiff": [
+    0,
+    2
+  ],
+  "i_ortho": [
+    4
+  ],
+  "n_ortho_springs": [
+    1
+  ],
+  "n_mains_left": 6,
+  "n_mains_right": 9,
+  "x_center": 6000.0,
+  "alpha": 1.0,
+  "column_order": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ]
+}

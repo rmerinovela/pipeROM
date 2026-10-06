@@ -2,14 +2,22 @@ import openseespy.opensees as op
 import numpy as np
 from matplotlib import pyplot as plt
 from Functions import*
+import os
+
+# Output files (results, layout, figures) next to this script, wherever it is run from
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 #Lumped orthogonal line
 
 # ------------------------------------------------------------
 # Parameters
 # ------------------------------------------------------------
-Lpipe  = 32000
+Lpipe  = 31500
 npipes = 3
+n_mains = 1
+n_mains_left  = n_mains   # mains lumped left of x_center
+n_mains_right = n_mains   # mains lumped right of x_center
+x_center      = Lpipe/2   # split location along the main
 Dext = 127
 Dint = 113
 E = 210000
@@ -27,17 +35,17 @@ soft_spacing = 3000
 # NEW: stiff hangers defined by mask (0/1)
 # Example mask — must be defined by you
 stiff_mask = np.array([
-    1,0,0,1,0,0,1,0,0,1
+    1,0,1,0,0,1,0,0,1,0
 ], dtype=int)
 
 
 # ------------------------------------------------------------
 # Orthogonal branches (generalized)
 # ------------------------------------------------------------
-x_ortho_user         = np.array([1050,4250,7050,11550,14250,18350,20950,25550,30450,2350,7050,11550,19150,22950,30950])
-L_ortho_user         = np.array([5500,5500,5500,5500,5500,5500,5500,5500,5500,5500,5500,5500,5500,5500,5500])
-n_ortho_pipes_user   = np.array([3,3,3,3,3,3,3,3,3,3,3,3,3,3,3])
-n_ortho_springs_user = np.array([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])
+x_ortho_user         = np.array([1050,4250,7050,11550,14250,18350,20950,25550,30450,2350,19150,22950,30950])
+L_ortho_user         = np.array([5500,5500,5500,5500,5500,5500,5500,5500,5500,5500,5500,5500,5500])
+n_ortho_pipes_user   = np.array([3,3,3,3,3,3,3,3,3,3,3,3,3])
+n_ortho_springs_user = np.array([1,1,2,2,1,1,1,1,1,1,1,1,1])
 
 n_orth = len(x_ortho_user)
 
@@ -102,6 +110,10 @@ for dc in dc_vec:
         Dext=Dext,
         Dint=Dint,
         npipes=npipes,
+        n_mains=n_mains,
+        n_mains_left=n_mains_left,
+        n_mains_right=n_mains_right,
+        x_center=x_center,
         E=E,
         G=G,
         rho=rho,
@@ -157,7 +169,40 @@ for dc in dc_vec:
 results_arr = np.array(results, float)
 
 np.savetxt(
-    "pushover_results_M29y.txt",
+    os.path.join(SCRIPT_DIR, "pushover_results_M29y.txt"),
     results_arr,
     fmt="%.3f",
+)
+
+# Layout of the 2D model, used to build the SDOF (Pushover_SDOF)
+save_pushover_layout(
+    os.path.join(SCRIPT_DIR, "pushover_layout_M29y.json"),
+    x_d,
+    x_stiff_out,
+    n_ortho_springs_user,
+    n_mains_left,
+    n_mains_right,
+    x_center,
+)
+
+# ------------------------------------------------------------
+# Displaced shape at critical displacement vs NLTHA mean shape
+# ------------------------------------------------------------
+# NLTHA points on the analysed main: (label, point indices, 2D x [mm])
+nltha_lines = [
+    ('',
+     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
+     [-1050, 0, 1050, 2000, 2350, 4250, 5000, 7050, 8000, 11000, 11550, 14000, 14250, 17000, 18350, 19150, 20000, 20950, 22950, 23125, 25550, 26000, 29000, 30450, 30950]),
+]
+
+plot_shape_vs_nltha(
+    results_arr,
+    x_d,
+    model="M29",
+    direction="Y",
+    nltha_lines=nltha_lines,
+    dc_target=12.0,
+    level=-1,                     # strongest NLTHA intensity
+    x_supports=x_stiff_out,
+    out_png=os.path.join(SCRIPT_DIR, "shape_comparison_M29y.png"),
 )

@@ -2,6 +2,10 @@ import openseespy.opensees as op
 import numpy as np
 from matplotlib import pyplot as plt
 from Functions import*
+import os
+
+# Output files (results, layout, figures) next to this script, wherever it is run from
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 #Lumped orthogonal line
 
@@ -10,7 +14,11 @@ from Functions import*
 # Parameters
 # ------------------------------------------------------------
 Lpipe  = 52000
-npipes = 6
+npipes = 3
+n_mains = 2
+n_mains_left  = n_mains   # mains lumped left of x_center
+n_mains_right = n_mains   # mains lumped right of x_center
+x_center      = Lpipe/2   # split location along the main
 Dext = 127
 Dint = 113
 E = 210000
@@ -34,7 +42,7 @@ stiff_mask = np.array([
 x_ortho_user         = np.array([52000])
 L_ortho_user         = np.array([82000])
 n_ortho_pipes_user   = np.array([3])
-n_ortho_springs_user = np.array([4])
+n_ortho_springs_user = np.array([8])
 
 n_orth = len(x_ortho_user)
 
@@ -97,6 +105,10 @@ for dc in dc_vec:
         Dext=Dext,
         Dint=Dint,
         npipes=npipes,
+        n_mains=n_mains,
+        n_mains_left=n_mains_left,
+        n_mains_right=n_mains_right,
+        x_center=x_center,
         E=E,
         G=G,
         rho=rho,
@@ -152,7 +164,43 @@ for dc in dc_vec:
 results_arr = np.array(results, float)
 
 np.savetxt(
-    "pushover_results_M62x.txt",
+    os.path.join(SCRIPT_DIR, "pushover_results_M62x.txt"),
     results_arr,
     fmt="%.3f",
+)
+
+# Layout of the 2D model, used to build the SDOF (Pushover_SDOF)
+save_pushover_layout(
+    os.path.join(SCRIPT_DIR, "pushover_layout_M62x.json"),
+    x_d,
+    x_stiff_out,
+    n_ortho_springs_user,
+    n_mains_left,
+    n_mains_right,
+    x_center,
+)
+
+# ------------------------------------------------------------
+# Displaced shape at critical displacement vs NLTHA mean shape
+# ------------------------------------------------------------
+# NLTHA points on the analysed main: (label, point indices, 2D x [mm])
+nltha_lines = [
+    ('(branch at x = 82 m)',
+     [29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47],
+     [52000, 51000, 48000, 45000, 42000, 39000, 36000, 33000, 30000, 27000, 24000, 21000, 18000, 15000, 12000, 9000, 6000, 3000, 0]),
+    ('(branch at x = 32 m)',
+     [12, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65],
+     [52000, 51000, 48000, 45000, 42000, 39000, 36000, 33000, 30000, 27000, 24000, 21000, 18000, 15000, 12000, 9000, 6000, 3000, 0]),
+]
+
+plot_shape_vs_nltha(
+    results_arr,
+    x_d,
+    model="M62",
+    direction="X",
+    nltha_lines=nltha_lines,
+    dc_target=12.0,
+    level=-1,                     # strongest NLTHA intensity
+    x_supports=x_stiff_out,
+    out_png=os.path.join(SCRIPT_DIR, "shape_comparison_M62x.png"),
 )

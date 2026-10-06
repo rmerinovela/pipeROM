@@ -1,0 +1,18 @@
+# Units: N, mm, s
+# Layout of archetype M02 (one 18 m branch at the end of a 36 m main line), restraints given as counts.
+name: M02_auto
+description: Layout of archetype M02, restraints placed from counts
+main_line:
+  length: 36000
+  n_pipes: 3
+  hangers: {first: 1000, spacing: 3000}
+  braces:
+    transverse: {count: 4}      # along y
+    longitudinal: {count: 3}    # along x
+branches:
+  - x: 36000
+    side: +y
+    length: 18000
+    braces:
+      transverse: {count: 2}    # along x
+      longitudinal: {count: 2}  # along y
