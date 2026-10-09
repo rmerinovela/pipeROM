@@ -62,12 +62,13 @@ One panel per brace type (transverse, longitudinal):
 | Section | Settings |
 |---|---|
 | Pseudo-pushover | Δc range or explicit list, warm start |
-| Shape iteration and static solver | iterations, tolerances, convergence test; branch-force split (`consistent`, or `legacy` to reproduce the paper's code) |
-| Equivalent SDOF | the Δc defining the SDOF |
+| Shape iteration and static solver | iterations, tolerances, convergence test; branch-force split (`consistent`, as the scripts, or `legacy`, the original code) |
+| Equivalent SDOF | the Δc defining the SDOF; whether to use the closest pushover step (as the scripts) |
 | SDOF time history | damping ratio, convergence test, tolerance, iterations |
-| 3D verification | damping ratio, main and fallback convergence tests and tolerances |
+| 3D verification | damping ratio, main and fallback convergence tests (`script`: each model's own) and tolerances |
 
-Other entries (Rayleigh factors, fallback iterations) come from the loaded settings file.
+Other entries (Rayleigh factors, fallback iterations, restraint caps, collapse displacement, recorder
+time step) come from the loaded settings file. Runs stopped at collapse are reported as such.
 **Download settings** saves a YAML.
 
 ## Pseudo-pushover

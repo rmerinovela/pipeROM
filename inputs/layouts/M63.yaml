@@ -1,0 +1,38 @@
+# Units: N, mm, s
+name: M63
+description: Plan layout of archetype M63, read from inputs/models3d/M63.json (main line shifted by 0
+  mm to start at x = 0)
+main_line:
+  length: 82000
+  n_pipes: 3
+  hangers:
+    positions: [1000, 4000, 7000, 10000, 13000, 16000, 19000, 22000, 25000, 28000, 31000, 34000, 37000,
+      40000, 43000, 46000, 49000, 52000, 55000, 58000, 61000, 64000, 67000, 70000, 73000, 76000, 79000]
+  braces:
+    transverse:
+      positions: [1000, 13000, 25000, 37000, 49000, 61000, 73000]
+    longitudinal:
+      positions: [1000, 16000, 31000, 49000, 64000, 79000]
+branches:
+- x: 32000
+  side: +y
+  length: 52000
+  hangers:
+    positions: [1000, 4000, 7000, 10000, 13000, 16000, 19000, 22000, 25000, 28000, 31000, 34000, 37000,
+      40000, 43000, 46000, 49000]
+  braces:
+    transverse:
+      positions: [4000, 19000, 34000, 49000]
+    longitudinal:
+      positions: [4000, 19000, 34000, 49000]
+- x: 82000
+  side: +y
+  length: 52000
+  hangers:
+    positions: [1000, 4000, 7000, 10000, 13000, 16000, 19000, 22000, 25000, 28000, 31000, 34000, 37000,
+      40000, 43000, 46000, 49000]
+  braces:
+    transverse:
+      positions: [4000, 19000, 34000, 49000]
+    longitudinal:
+      positions: [4000, 19000, 34000, 49000]

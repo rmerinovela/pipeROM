@@ -49,24 +49,28 @@ Other members:
 
 ## Internal structure of `solve_static_step`
 
-1. Section properties (`_section`) and mass per length.
+1. Section properties (`_section`) of one main and mass per length; bending stiffness × `n_mains_left` /
+   `n_mains_right` on each side of `x_center`.
 2. Main-line mesh: nodes at 0, hangers, branch junctions and L. A branch closer than `SNAP_TOL` to a node
-   snaps onto it.
-3. Lumped masses from tributary lengths; elastic beam chain.
+   snaps onto it. A massless node is added at `x_center` unless a node is within `SNAP_TOL`.
+3. Lumped masses from tributary lengths between mass nodes (hangers, junctions, ends); elastic beam chain,
+   each element with the bending stiffness of the side of its midpoint.
 4. Hangers:
    - fixed top node, bottom node rigid-linked to the beam;
    - zeroLength spring between them: brace secant stiffness (braced) or `SOFT_STIFFNESS` (unbraced),
      rigid in z and rotations.
-5. Branches: a node offset by `BRANCH_OFFSET`, a beam stub, the lumped mass and a spring of stiffness
-   `n_braces` × longitudinal secant.
+5. Branches: a node offset by `BRANCH_OFFSET`, a beam stub (bending stiffness of the mains at the
+   junction), the lumped mass and a spring of stiffness α·(`n_braces` / mains at the junction) ×
+   longitudinal secant.
 6. Load pattern:
    - branch force split into stay and pass parts, in one loop (`_neighbours` finds the tributary
      window). `solver.branch_split` chooses the rule: `consistent` (shares by mass, junction node in the
-     main-line share, parts summing to the branch force) or `legacy` (the paper's code);
+     main-line share, parts summing to the branch force; the scripts' rule) or `legacy` (the original code);
    - pass part divided left/right;
    - segment-wise redistribution ∝ m·d between branch junctions.
-7. Static solve; Γ, M_eff, mass ratio and base shear with the shape normalised to the last DOF (the
-   reference branch).
+7. Static solve; Γ, M_eff and mass ratio with the shape normalised to the last DOF (the reference branch)
+   and the main-line masses × the mains on each DOF's side; base shear = support reactions at the assumed
+   shape (braced hangers, branch springs), each × the mains on its side.
 
 The paper's code also ran a diagnostic `eigen(2)` at every solve, whose result nothing used. It's
 omitted: results are unchanged (regression tests) and the pushover runs about 3× faster.
@@ -87,7 +91,8 @@ omitted: results are unchanged (regression tests) and the pushover runs about 3�
 
 ## Tests
 
-- `tests/test_regression.py` reproduces all 18 `pushover_results_*.txt` files through `pushover` (with
-  `branch_split: legacy`).
-- `tests/test_static_model.py` checks equilibrium: with the consistent split, the base shear equals the
-  sum of the spring forces for every archetype.
+- `tests/test_regression.py` reproduces all 18 `pushover_results_*.txt` files through `pushover` (default
+  settings).
+- `tests/test_static_model.py` checks equilibrium (with the consistent split the applied loads equal the
+  spring forces of the analysed main), the base shear (support reactions × mains, every archetype) and the
+  lumped mains of M29x.

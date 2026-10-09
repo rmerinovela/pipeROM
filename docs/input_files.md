@@ -27,6 +27,10 @@ description: free text
 main_line:
   length: 18000            # mm
   n_pipes: 3               # identical pipes in the bundle
+  n_mains: 1               # optional: identical parallel mains lumped into this one (default 1)
+  n_mains_left: null       # optional: mains left / right of x_center (default n_mains)
+  n_mains_right: null
+  x_center: null           # optional: where the number of mains changes (default length / 2)
 
 pipe:                      # optional; defaults shown
   outer_diameter: 127.0
@@ -113,9 +117,11 @@ pushover:
 shape_iteration: {max_iterations: 50, tolerance: 1.0e-3}
 static_solver: {test: NormDispIncr, tolerance: 1.0e-8, max_iterations: 50}
 equivalent_static:
-  branch_split: consistent  # or legacy: the paper code's split of branch forces (docs/legacy_issues.md, A2)
+  branch_split: consistent  # or legacy: the original code's split of branch forces (docs/legacy_issues.md, A2)
 sdof:
   delta_c: 12.0            # Δc defining the equivalent SDOF
+  on_pushover_grid: true   # use the pushover step closest to delta_c (as Pushover_SDOF/sdof_from_2d.py)
+  round_decimals: 3        # Δc, Γ, M_eff and shape rounded as the scripts read them; null = full precision
 
 motions:                   # default floor-motion selection
   set: S4_IM
@@ -123,30 +129,37 @@ motions:                   # default floor-motion selection
   records: null            # null = every record of the set
   floor: 4
 
-sdof_time_history:
-  damping_ratio: 0.02
-  rayleigh: {mass: 0.0, current_stiffness: 1.0, committed_stiffness: 0.0, initial_stiffness: 0.0}
+sdof_time_history:         # as Pushover_SDOF/<tag>_SDOF_NLTHA.py
+  damping_ratio: 0.01
+  rayleigh: {mass: 1.0, current_stiffness: 0.0, committed_stiffness: 0.0, initial_stiffness: 0.0}
   test: EnergyIncr
-  tolerance: 1.0e-8
-  max_iterations: 50
-  fallback_tolerance: 1.0e-6
-  fallback_max_iterations: 100000
-
-verification_3d:
-  gravity_steps: 10
-  damping_ratio: 0.02
-  rayleigh_modes: [1, 2]
-  rayleigh: {mass: 1.0, current_stiffness: 0.0, committed_stiffness: 1.0, initial_stiffness: 0.0}
-  test: EnergyIncr          # M01-M03 paper scripts use RelativeEnergyIncr, which fails from rest
   tolerance: 1.0e-4
   max_iterations: 500
-  fallback_test: EnergyIncr
   fallback_tolerance: 1.0e-3
   fallback_max_iterations: 3000
+  restraint_caps: {longitudinal: 60.0, transverse: 35.0}   # mm at the support; null = no cap
+  collapse_displacement: 60.0   # stop when Γ·max φ·u exceeds this (mm); null = never
+  check_steps: 100
+
+verification_3d:           # as 3D_models/*_biron.py
+  gravity_steps: 10
+  damping_ratio: 0.01
+  rayleigh_modes: [1]      # one mode: 2ξω (mass), 2ξ/ω (stiffness); two modes: classical Rayleigh
+  rayleigh: {mass: 1.0, current_stiffness: 0.0, committed_stiffness: 0.0, initial_stiffness: 0.0}
+  system: UmfPack
+  test: EnergyIncr
+  tolerance: 1.0e-4
+  max_iterations: 500
+  fallback_test: script    # the model's own fallback test types (they differ between scripts), or one type
+  fallback_tolerance: 1.0e-3
+  fallback_max_iterations: 3000
+  collapse_displacement: 60.0   # stop when a braced node exceeds this (mm); null = never
+  check_steps: 100
+  record_dt: 0.001         # recorder time step (s); null = every analysis step
 ```
 
-The `rayleigh` entries are factors (0 or 1 in the paper) on the mass and stiffness terms of Rayleigh
-damping.
+The `rayleigh` entries are factors (0 or 1 in the scripts) on the mass and stiffness terms of the damping,
+computed from the initial SDOF frequency or the `rayleigh_modes` of the 3D model.
 
 ## Floor motions
 

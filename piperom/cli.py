@@ -2,7 +2,7 @@
 
     python -m piperom check       SYSTEM.yaml
     python -m piperom pushover    SYSTEM.yaml [--settings S.yaml] [--out DIR]
-    python -m piperom sdof        SYSTEM.yaml [--settings S.yaml] [--delta-c MM] [--out DIR]
+    python -m piperom sdof        SYSTEM.yaml [--settings S.yaml] [--delta-c MM] [--pushover] [--cyclic] [--out DIR]
     python -m piperom timehistory SYSTEM.yaml [--settings S.yaml] [--delta-c MM] [--set NAME] [--levels 1,2]
                                   [--records ID,ID] [--floor N] [--out DIR]
     python -m piperom verify3d    MODEL [--settings S.yaml] [--set NAME] [--level N] [--pair K | --records X,Y]
@@ -20,7 +20,7 @@ from .jobs import verification_job
 from .motions import motion_set, select_runs
 from .pushover import rows_to_csv, run_pushover
 from .sdof import derive_sdof
-from .timehistory import SDOFModel, TimeHistorySettings, run_sdof_time_history
+from .timehistory import CYCLIC_PROTOCOL, SDOFModel, TimeHistorySettings, run_sdof_pushover, run_sdof_time_history
 from .verification3d import braced_peaks, load_model3d
 
 OUTPUT_DIR = Path("piperom_output")
@@ -64,8 +64,15 @@ def cmd_sdof(args, settings) -> int:
     p = derive_sdof(rs, settings, args.delta_c)
     print(f"{rs.name} at delta_c={p.delta_c:g} mm: gamma={p.gamma:.4f}  M_eff={p.effective_mass:.4f} t  "
           f"u_sdof={p.u_sdof:.4f} mm" + ("" if p.converged else "  (shape NOT converged)"))
-    for f in p.write(args.out or OUTPUT_DIR / rs.name / f"sdof_{p.delta_c:g}"):
+    out = args.out or OUTPUT_DIR / rs.name / f"sdof_{p.delta_c:g}"
+    for f in p.write(out):
         print(f"wrote {f}")
+    if args.pushover or args.cyclic:
+        po = run_sdof_pushover(SDOFModel.from_parameters(p), CYCLIC_PROTOCOL if args.cyclic else None)
+        rows = [{"u_sdof": u, "base_shear": v} for u, v in zip(po.u, po.force)]
+        f = out / ("sdof_pushover_cyclic.csv" if args.cyclic else "sdof_pushover.csv")
+        f.write_text(rows_to_csv(rows, ["u_sdof", "base_shear"]))
+        print(f"wrote {f}" + ("" if po.completed else "  (pushover stopped: no convergence)"))
     return 0
 
 
@@ -87,9 +94,9 @@ def cmd_timehistory(args, settings) -> int:
         r = run_sdof_time_history(model, ms.load(record, level, floor), th)
         rows.append({"level": "" if level is None else level, "record": record, "peak_u_sdof": r.peak_u,
                      "peak_support_displacement": p.gamma * max(model.support_phi) * r.peak_u,
-                     "completed": r.completed})
+                     "completed": r.completed, "collapsed": r.collapsed})
         print(f"  {k + 1:4d}/{len(runs)}  level={level}  record={record}  peak u={r.peak_u:8.3f} mm"
-              + ("" if r.completed else "  (NOT completed)"))
+              + ("  (collapse)" if r.collapsed else "" if r.completed else "  (NOT completed)"))
     out = args.out or OUTPUT_DIR / rs.name / "timehistory"
     out.mkdir(parents=True, exist_ok=True)
     (out / "sdof_peaks.csv").write_text(rows_to_csv(rows, list(rows[0])))
@@ -111,7 +118,9 @@ def cmd_verify3d(args, settings) -> int:
     print(f"3D model {args.model}: x <- {rx}, y <- {ry}, level {level}, floor {floor}")
     res = verification_job(args.model, ms.name, rx, ry, level, floor, settings)
     r = res.response
-    print(f"  3D {'completed' if r.completed else f'NOT completed (stopped at {r.end_time:.3f} s)'}; "
+    status = ("completed" if r.completed else f"collapse at {r.end_time:.3f} s" if r.collapsed
+              else f"NOT completed (stopped at {r.end_time:.3f} s)")
+    print(f"  3D {status}; "
           f"T1 = {r.periods[0]:.4f} s")
     for d, peak in braced_peaks(load_model3d(args.model), r).items():
         line = f"  {d}: 3D max peak at braced nodes {peak:.3f} mm"
@@ -151,8 +160,12 @@ def build_parser() -> argparse.ArgumentParser:
     for name, help in (("sdof", "derive equivalent SDOF parameters at a target displacement"),
                        ("timehistory", "SDOF nonlinear time-history analyses under floor motions")):
         p = command(name, help)
-        p.add_argument("--delta-c", type=float, help="Delta_c defining the SDOF in mm (default: settings sdof.delta_c)")
+        p.add_argument("--delta-c", type=float, help="Delta_c defining the SDOF in mm (default: settings sdof.delta_c); the closest pushover step is used unless settings sdof.on_pushover_grid is false")
         p.add_argument("--out", type=Path, help="output directory (default: piperom_output/<name>/...)")
+        if name == "sdof":
+            p.add_argument("--pushover", action="store_true",
+                           help="also run the SDOF pushover to 50 mm (as Pushover_SDOF/<tag>_SDOF.py)")
+            p.add_argument("--cyclic", action="store_true", help="cyclic SDOF pushover instead (the scripts' 'CPO')")
     p.add_argument("--levels", help="comma-separated intensity levels (default: settings motions.levels)")
     p.add_argument("--records", help="comma-separated record IDs (default: all records of the set)")
     p3 = command("verify3d", "full 3D analysis of a paper archetype, with the ROM prediction", target="model")

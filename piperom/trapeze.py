@@ -124,16 +124,16 @@ class Pinching4:
         out["dmgType"] = self.dmg_type
         return out
 
-    def scaled(self, force_scale: float, disp_scale: float) -> "Pinching4":
-        """Copy with envelope forces multiplied by ``force_scale`` and deformations by ``disp_scale``."""
+    def scaled(self, force_scale: float, disp_divisor: float) -> "Pinching4":
+        """Copy with envelope forces multiplied by ``force_scale`` and deformations divided by ``disp_divisor``."""
         from dataclasses import replace
 
         return replace(
             self,
             pos_force=tuple(force_scale * v for v in self.pos_force),
             neg_force=tuple(force_scale * v for v in self.neg_force),
-            pos_disp=tuple(disp_scale * v for v in self.pos_disp),
-            neg_disp=tuple(disp_scale * v for v in self.neg_disp),
+            pos_disp=tuple(v / disp_divisor for v in self.pos_disp),
+            neg_disp=tuple(v / disp_divisor for v in self.neg_disp),
         )
 
     def opensees_args(self) -> list:

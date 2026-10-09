@@ -1,5 +1,7 @@
 #Piping system layout without branches
 # N, mm, s
+# Main-line y restraints at x = 4, 10, 19, 28, 37, 46, 52, 61, 70, 79 m (moved on 2026-10-09 from 1, 10, 19, 28,
+# 37, 43, 49, 58, 67, 76 m to match the 2D model of Pushover2D/CS_Lumped_Iter_M61y_cont_PO.py).
 import openseespy.opensees as op
 import os
 import sys
@@ -939,8 +941,8 @@ for im in IMS:
 
             #5.2: Braces behaviour
             
-            op.element('zeroLength', 	501,		201,		301,  '-mat',	1, 2, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
-            op.element('zeroLength', 	502,		202,		302,  '-mat',	3, 3, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly 
+            op.element('zeroLength', 	501,		201,		301,  '-mat',	1, 3, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
+            op.element('zeroLength', 	502,		202,		302,  '-mat',	3, 2, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly 
             op.element('zeroLength', 	503,		203,		303,  '-mat',	3, 3, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
             op.element('zeroLength', 	504,		204,		304,  '-mat',	1, 2, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
             op.element('zeroLength', 	505,		205,		305,  '-mat',	3, 3, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly 
@@ -953,19 +955,19 @@ for im in IMS:
             op.element('zeroLength', 	512,		212,		312,  '-mat',	3, 3, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
             op.element('zeroLength', 	513,		213,		313,  '-mat',	1, 2, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
             op.element('zeroLength', 	514,		214,		314,  '-mat',	3, 3, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
-            op.element('zeroLength', 	515,		215,		315,  '-mat',	3, 2, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
-            op.element('zeroLength', 	516,		216,		316,  '-mat',	1, 3, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
-            op.element('zeroLength', 	517,		217,		317,  '-mat',	3, 2, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
-            op.element('zeroLength', 	518,		218,		318,  '-mat',	3, 3, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
+            op.element('zeroLength', 	515,		215,		315,  '-mat',	3, 3, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
+            op.element('zeroLength', 	516,		216,		316,  '-mat',	1, 2, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
+            op.element('zeroLength', 	517,		217,		317,  '-mat',	3, 3, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
+            op.element('zeroLength', 	518,		218,		318,  '-mat',	3, 2, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
             op.element('zeroLength', 	519,		219,		319,  '-mat',	1, 3, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
-            op.element('zeroLength', 	520,		220,		320,  '-mat',	3, 2, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
-            op.element('zeroLength', 	521,		221,		321,  '-mat',	3, 3, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
+            op.element('zeroLength', 	520,		220,		320,  '-mat',	3, 3, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
+            op.element('zeroLength', 	521,		221,		321,  '-mat',	3, 2, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
             op.element('zeroLength', 	522,		222,		322,  '-mat',	1, 3, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
-            op.element('zeroLength', 	523,		223,		323,  '-mat',	3, 2, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
-            op.element('zeroLength', 	524,		224,		324,  '-mat',	3, 3, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
+            op.element('zeroLength', 	523,		223,		323,  '-mat',	3, 3, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
+            op.element('zeroLength', 	524,		224,		324,  '-mat',	3, 2, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
             op.element('zeroLength', 	525,		225,		325,  '-mat',	1, 3, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
-            op.element('zeroLength', 	526,		226,		326,  '-mat',	3, 2, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
-            op.element('zeroLength', 	527,		227,		327,  '-mat',	3, 3, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
+            op.element('zeroLength', 	526,		226,		326,  '-mat',	3, 3, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
+            op.element('zeroLength', 	527,		227,		327,  '-mat',	3, 2, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
 
             #First Cross line
             op.element('zeroLength', 	528,		228,		328,  '-mat',	3, 1, 4, 4, 4, 4,	'-dir', 	1, 2, 3, 4, 5, 6) #Typology of subassembly
@@ -1021,7 +1023,7 @@ for im in IMS:
                       128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 1004,
                       145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 1005]
                   
-            nodesYt = [101,104,107,110,113,115,117,120,123,126,128,131,134,137,140,143,145,148,151,154,157,160]   # restrained nodes from the hanger springs
+            nodesYt = [102,104,107,110,113,116,118,121,124,127,128,131,134,137,140,143,145,148,151,154,157,160]   # restrained nodes from the hanger springs
             nodesYp = []
 
             for i in range(len(nodesY)):

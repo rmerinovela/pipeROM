@@ -3,8 +3,8 @@ name: M03x
 description: Archetype M03, loading along x (from code implementation for paper/Pushover2D/CS_Lumped_Iter_M03x_cont_PO.py)
 main_line: {length: 18000, n_pipes: 3}
 pipe: {outer_diameter: 127, inner_diameter: 113, elastic_modulus: 210000, shear_modulus: 81000, density: 7.85e-09}
-hangers: {first: 1000, spacing: 3000}
+hangers: {positions: [2000, 5000, 8000, 11000, 14000, 17000]}
 braces:
-  mask: [0, 0, 0, 1, 0, 0]
+  mask: [0, 0, 1, 0, 0, 0]
 branches:
 - {x: 18000, length: 36000, n_pipes: 3, n_braces: 2}

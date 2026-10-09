@@ -20,6 +20,7 @@ def build_model(
 
         x0_soft=1000.0,          # first soft hanger location
         soft_spacing=3000.0,     # spacing between soft hangers
+        x_hangers_user=None,     # explicit hanger positions (0 < x < Lpipe), instead of the grid above
         stiff_mask=None,         # 0/1 vector selecting stiff hangers
 
         Delta=1.0,
@@ -104,21 +105,29 @@ def build_model(
     # --------------------------------------------------------
     # Build hanger grid (ALL hangers: soft + stiff)
     # --------------------------------------------------------
-    if x0_soft > Lpipe - 1000.0:
-        raise ValueError(
-            f"First hanger at {x0_soft} must be at least 1 m from the right end."
-        )
+    if x_hangers_user is not None:
+        # explicit positions (e.g. the hangers of an irregular 3D layout)
+        x_soft = np.round(np.array(x_hangers_user, dtype=float), 6)
+        if len(x_soft) == 0 or np.any(np.diff(x_soft) <= 0):
+            raise ValueError("x_hangers_user must be a non-empty, strictly increasing list.")
+        if x_soft[0] <= 0.0 or x_soft[-1] >= Lpipe:
+            raise ValueError("Hangers must lie strictly inside the pipe (0 < x < Lpipe).")
+    else:
+        if x0_soft > Lpipe - 1000.0:
+            raise ValueError(
+                f"First hanger at {x0_soft} must be at least 1 m from the right end."
+            )
 
-    # Maximum number of intervals that keep last hanger ≥ 1 m from right end
-    Nmax = int((Lpipe - 1000.0 - x0_soft) // soft_spacing)
+        # Maximum number of intervals that keep last hanger ≥ 1 m from right end
+        Nmax = int((Lpipe - 1000.0 - x0_soft) // soft_spacing)
 
-    x_soft = []
-    for i in range(Nmax + 1):
-        xi = x0_soft + i * soft_spacing
-        if xi <= Lpipe - 1000.0 + 1e-6:
-            x_soft.append(xi)
+        x_soft = []
+        for i in range(Nmax + 1):
+            xi = x0_soft + i * soft_spacing
+            if xi <= Lpipe - 1000.0 + 1e-6:
+                x_soft.append(xi)
 
-    x_soft = np.array(x_soft, dtype=float)
+        x_soft = np.array(x_soft, dtype=float)
     n_soft = len(x_soft)
     x_soft_all = x_soft.copy()   # preserve ALL hangers
 

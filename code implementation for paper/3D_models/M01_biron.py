@@ -1,5 +1,8 @@
 #Piping system layout without branches
 # N, mm, s
+# Branch hangers at y = 2, 5, 8, 11, 14, 17 m (moved from 1, 4, ..., 16 m on 2026-10-09 to match the 2D model
+# of Pushover2D/CS_Lumped_Iter_M01x_cont_PO.py, which measures them from the free end of the branch); the x
+# restraints stay on the same hangers (y = 2, 8, 14 m).
 import openseespy.opensees as op
 import os
 import sys
@@ -73,12 +76,12 @@ for im in IMS:
 
 
             #Cross lines fixed points trapezes
-            op.node(13,	 36000.0,  1000.0,	10.0) 	#fix point
-            op.node(14,	 36000.0,  4000.0,	10.0) 	#fix point
-            op.node(15,  36000.0,  7000.0,	10.0) 	#fix point
-            op.node(16,  36000.0,  10000.0,	10.0) 	#fix point
-            op.node(17,  36000.0,  13000.0,	10.0) 	#fix point
-            op.node(18,  36000.0,  16000.0,	10.0) 	#fix point
+            op.node(13,	 36000.0,  2000.0,	10.0) 	#fix point
+            op.node(14,	 36000.0,  5000.0,	10.0) 	#fix point
+            op.node(15,  36000.0,  8000.0,	10.0) 	#fix point
+            op.node(16,  36000.0,  11000.0,	10.0) 	#fix point
+            op.node(17,  36000.0,  14000.0,	10.0) 	#fix point
+            op.node(18,  36000.0,  17000.0,	10.0) 	#fix point
 
             massML = [0.363, 0.363, 0.363, 0, 0, 0]
             massCL = [0.363, 0.363, 0.363, 0, 0, 0]
@@ -100,12 +103,12 @@ for im in IMS:
             op.node(1002,	36000.0,	0.0,		0.0) 	#pipe connection	
 
             #Cross line
-            op.node(113, 	36000.0,	1000.0,		0.0, '-mass', *massML) 	#pipe connection
-            op.node(114, 	36000.0,	4000.0,		0.0, '-mass', *massML) 	#pipe connection
-            op.node(115, 	36000.0,	7000.0,		0.0, '-mass', *massML) 	#pipe connection
-            op.node(116, 	36000.0,	10000.0,	0.0, '-mass', *massML) 	#pipe connection
-            op.node(117, 	36000.0,	13000.0,	0.0, '-mass', *massML) 	#pipe connection
-            op.node(118, 	36000.0,	16000.0,	0.0, '-mass', *massML) 	#pipe connection
+            op.node(113, 	36000.0,	2000.0,		0.0, '-mass', *massML) 	#pipe connection
+            op.node(114, 	36000.0,	5000.0,		0.0, '-mass', *massML) 	#pipe connection
+            op.node(115, 	36000.0,	8000.0,		0.0, '-mass', *massML) 	#pipe connection
+            op.node(116, 	36000.0,	11000.0,	0.0, '-mass', *massML) 	#pipe connection
+            op.node(117, 	36000.0,	14000.0,	0.0, '-mass', *massML) 	#pipe connection
+            op.node(118, 	36000.0,	17000.0,	0.0, '-mass', *massML) 	#pipe connection
             op.node(1003, 	36000.0,	18000.0,	0.0) 	#pipe connection
 
             #### Nodes for nonlinear & linear springs
@@ -127,12 +130,12 @@ for im in IMS:
 
             #Cross lines 
             #Second cross line (1)
-            op.node(213,	 36000.0,	1000.0,		5.0) 	#spring
-            op.node(214,	 36000.0,	4000.0,		5.0) 	#spring
-            op.node(215,	 36000.0,	7000.0,		5.0) 	#spring
-            op.node(216,	 36000.0,	10000.0,	5.0) 	#spring
-            op.node(217,	 36000.0,	13000.0,	5.0) 	#spring
-            op.node(218,	 36000.0,	16000.0,	5.0) 	#spring
+            op.node(213,	 36000.0,	2000.0,		5.0) 	#spring
+            op.node(214,	 36000.0,	5000.0,		5.0) 	#spring
+            op.node(215,	 36000.0,	8000.0,		5.0) 	#spring
+            op.node(216,	 36000.0,	11000.0,	5.0) 	#spring
+            op.node(217,	 36000.0,	14000.0,	5.0) 	#spring
+            op.node(218,	 36000.0,	17000.0,	5.0) 	#spring
 
 
             #Main Line (2)
@@ -152,12 +155,12 @@ for im in IMS:
 
             #Cross lines 
             #Second cross line (2)
-            op.node(313,	 36000.0,	1000.0,		5.0) 	#spring
-            op.node(314,	 36000.0,	4000.0,		5.0) 	#spring
-            op.node(315,	 36000.0,	7000.0,		5.0) 	#spring
-            op.node(316,	 36000.0,	10000.0,	5.0) 	#spring
-            op.node(317,	 36000.0,	13000.0,	5.0) 	#spring
-            op.node(318,	 36000.0,	16000.0,	5.0) 	#spring
+            op.node(313,	 36000.0,	2000.0,		5.0) 	#spring
+            op.node(314,	 36000.0,	5000.0,		5.0) 	#spring
+            op.node(315,	 36000.0,	8000.0,		5.0) 	#spring
+            op.node(316,	 36000.0,	11000.0,	5.0) 	#spring
+            op.node(317,	 36000.0,	14000.0,	5.0) 	#spring
+            op.node(318,	 36000.0,	17000.0,	5.0) 	#spring
 
             ## Pipe connection nodes
             #Main line (1)

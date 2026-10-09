@@ -27,6 +27,9 @@ static_solver:              # OpenSees settings of each linear static solve
 
 sdof:
   delta_c: 12.0             # target displacement (mm) at which the equivalent SDOF is defined
+  on_pushover_grid: true    # true: use the pushover step closest to delta_c (as Pushover_SDOF/sdof_from_2d.py)
+  round_decimals: 3         # Delta_c, Gamma, M_eff and the shape rounded as the scripts read them from the
+                            # pushover results (written with 3 decimals); null = full precision
 
 motions:                    # default floor-motion selection (sets are described in motions/motion_sets.yaml)
   set: S4_IM
@@ -34,31 +37,40 @@ motions:                    # default floor-motion selection (sets are described
   records: null             # null = every record of the set; or a list of record IDs
   floor: 4
 
-sdof_time_history:          # nonlinear time-history analysis of the equivalent SDOF (as in NLTHA_SDOF.py)
-  damping_ratio: 0.02
-  rayleigh:                 # factors on the Rayleigh terms, computed from the first SDOF mode
-    mass: 0.0
-    current_stiffness: 1.0
+sdof_time_history:          # nonlinear time-history analysis of the equivalent SDOF (Pushover_SDOF/*_SDOF_NLTHA.py)
+  damping_ratio: 0.01
+  rayleigh:                 # factors on the Rayleigh terms, computed from the initial (elastic) SDOF frequency
+    mass: 1.0               # mass-proportional only: a constant dashpot; the trapezes dissipate through hysteresis
+    current_stiffness: 0.0
     committed_stiffness: 0.0
     initial_stiffness: 0.0
   test: EnergyIncr
-  tolerance: 1.0e-8
-  max_iterations: 50
-  fallback_tolerance: 1.0e-6
-  fallback_max_iterations: 100000
+  tolerance: 1.0e-4
+  max_iterations: 500
+  fallback_tolerance: 1.0e-3
+  fallback_max_iterations: 3000
+  restraint_caps:           # each spring is capped (MinMax) at this displacement of its support (mm), as in
+    longitudinal: 60.0      # the 3D models; null = no cap
+    transverse: 35.0
+  collapse_displacement: 60.0   # stop when the largest braced-node displacement Gamma*max(phi)*u exceeds this (mm)
+  check_steps: 100          # time steps between collapse checks
 
-verification_3d:            # full 3D models of inputs/models3d/ (procedure of the paper's 3D_models scripts)
+verification_3d:            # full 3D models of inputs/models3d/ (procedure of the paper's 3D_models/*_biron.py)
   gravity_steps: 10
-  damping_ratio: 0.02
-  rayleigh_modes: [1, 2]
+  damping_ratio: 0.01
+  rayleigh_modes: [1]       # one mode: 2*xi*w on the mass term; two modes [i, j]: classical Rayleigh
   rayleigh:                 # factors on the Rayleigh terms
     mass: 1.0
     current_stiffness: 0.0
-    committed_stiffness: 1.0
+    committed_stiffness: 0.0
     initial_stiffness: 0.0
-  test: EnergyIncr          # as M29-M63; M01-M03 use RelativeEnergyIncr, which fails to converge from rest
+  system: UmfPack           # sparse solver of the scripts (same results as FullGeneral to ~1e-7 mm, faster)
+  test: EnergyIncr
   tolerance: 1.0e-4
   max_iterations: 500
-  fallback_test: EnergyIncr
+  fallback_test: script     # 'script': the test types of the model's own script (they differ between models)
   fallback_tolerance: 1.0e-3
   fallback_max_iterations: 3000
+  collapse_displacement: 60.0   # stop when a braced node exceeds this displacement (mm)
+  check_steps: 100          # time steps between collapse checks
+  record_dt: 0.001          # time step of the displacement recorders (s); null = every analysis step

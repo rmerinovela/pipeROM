@@ -1,0 +1,25 @@
+# Units: N, mm, s
+name: M02
+description: Plan layout of archetype M02, read from inputs/models3d/M02.json (main line shifted by 0
+  mm to start at x = 0)
+main_line:
+  length: 36000
+  n_pipes: 3
+  hangers:
+    positions: [1000, 4000, 7000, 10000, 13000, 16000, 19000, 22000, 25000, 28000, 31000, 34000]
+  braces:
+    transverse:
+      positions: [1000, 13000, 22000, 34000]
+    longitudinal:
+      positions: [1000, 16000, 31000]
+branches:
+- x: 36000
+  side: +y
+  length: 18000
+  hangers:
+    positions: [1000, 4000, 7000, 10000, 13000, 16000]
+  braces:
+    transverse:
+      positions: [4000, 13000]
+    longitudinal:
+      positions: [4000, 13000]

@@ -109,11 +109,24 @@ def test_custom_trapeze_file_is_used(tmp_path):
     ({"branches": [{"x": 19000, "length": 1000, "n_pipes": 1, "n_braces": 1}]}, "on the main line"),
     ({"hangers": {"positions": [3000, 1000]}}, "increasing"),
     ({"main_line": {"length": -1, "n_pipes": 3}}, "> 0"),
+    ({"main_line": {"length": 18000, "n_pipes": 3, "n_mains": 0}}, "> 0"),
+    ({"main_line": {"length": 18000, "n_pipes": 3, "n_mains_left": 1.5}}, "integer"),
+    ({"main_line": {"length": 18000, "n_pipes": 3, "x_center": 18000}}, "inside the main line"),
     ({"unknown_key": 1}, "Unknown"),
 ])
 def test_invalid_inputs(over, msg):
     with pytest.raises(InputError, match=msg):
         system(**over).resolve()
+
+
+def test_lumped_mains_inputs():
+    rs = system().resolve()
+    assert (rs.n_mains_left, rs.n_mains_right, rs.x_center) == (1, 1, 9000.0)
+    rs = system(main_line={"length": 18000, "n_pipes": 3, "n_mains": 2, "n_mains_right": 5,
+                           "x_center": 7000}).resolve()
+    assert (rs.n_mains_left, rs.n_mains_right, rs.x_center) == (2, 5, 7000.0)
+    assert [rs.n_mains_at(x) for x in (1000, 7000, 7000.0005, 13000)] == [2.0, 3.5, 3.5, 5.0]
+    assert system(main_line={"length": 18000, "n_pipes": 3, "n_mains": 2}).to_dict()["main_line"] ==         {"length": 18000, "n_pipes": 3, "n_mains": 2}
 
 
 def test_settings_defaults_and_overrides():

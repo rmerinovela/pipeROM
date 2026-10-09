@@ -452,3 +452,63 @@ def plot_displaced_shape(model, direction, im, amp=None, amp_zoom=None, dc_targe
             ax.annotate(tag.strip() or "zoom", hi, color="C3", fontsize=10)
     fig.tight_layout()
     return fig
+
+
+# ----------------------------------------------------------------------------------------------
+# Pushover curves
+# ----------------------------------------------------------------------------------------------
+C_2D = "C0"
+
+
+def load_pushovers(model, direction, dc_target=12.0):
+    """
+    Pushover curves of one direction as (u_ref, Vb) with u_ref = displacement (mm) at the reference
+    node of the 2D model (where its shape is normalized) and Vb = base shear (N):
+      2d   Pushover2D/pushover_results_<tag>.txt: u_ref = Gamma * u_SDOF (= Delta_c / max d_norm)
+      sdof Pushover_SDOF/Results<tag>_SDOF/DispC.out, VbaseC.out: u_ref = Gamma * u (phi_ref = 1),
+           Vb = - support reaction
+      3d   Results/<model>_biron_pushover<X|Y>.txt (3D_models/pushover_3d.py): displacement of the
+           3D node at the reference DOF, under a mass-proportional load; None if not run yet
+    and the 2D step the SDOF was built from (calib = (u_ref, Vb, Delta_c)).
+    """
+    tag = model + direction.lower()
+    res = np.loadtxt(os.path.join(PUSHOVER2D_DIR, f"pushover_results_{tag}.txt"))
+    out = {"2d": (np.r_[0.0, res[:, 1] * res[:, 5]], np.r_[0.0, res[:, 3]])}
+    i = np.argmin(np.abs(res[:, 0] - dc_target))
+    out["calib"] = (res[i, 1] * res[i, 5], res[i, 3], res[i, 0])
+
+    d = os.path.join(SDOF_DIR, f"Results{tag}_SDOF")
+    gamma = sdof_params(model, direction, dc_target)["Gamma"]
+    u, r = np.loadtxt(os.path.join(d, "DispC.out")), np.loadtxt(os.path.join(d, "VbaseC.out"))
+    n = min(len(u), len(r))
+    out["sdof"] = (np.r_[0.0, gamma * u[:n]], np.r_[0.0, -r[:n]])
+
+    p = os.path.join(RESULTS_DIR, f"{model}_biron_pushover{direction.upper()}.txt")
+    out["3d"] = tuple(np.loadtxt(p).T) if os.path.exists(p) else None
+    return out
+
+
+def plot_pushover_comparison(model, dc_target=12.0, u_max=None):
+    """Base shear vs displacement at the reference node of the 2D model: 3D pushover (mass-proportional
+    load), 2D adaptive pushover and SDOF pushover, both directions."""
+    fig, axs = plt.subplots(1, 2, figsize=(11, 4.3))
+    for ax, d in zip(axs, "XY"):
+        c = load_pushovers(model, d, dc_target)
+        if c["3d"] is not None:
+            ax.plot(c["3d"][0], c["3d"][1] / 1e3, color=C_3D, lw=1.8, label="3D pushover")
+        else:
+            ax.text(0.5, 0.5, "3D pushover not run yet\n(3D_models/pushover_3d.py)", ha="center",
+                    transform=ax.transAxes, color="0.4")
+        ax.plot(c["2d"][0], c["2d"][1] / 1e3, "o--", color=C_2D, ms=3.5, lw=1.4, label="2D adaptive pushover")
+        ax.plot(c["sdof"][0], c["sdof"][1] / 1e3, color=C_SDOF, lw=1.4, label=r"SDOF pushover ($\Gamma u$)")
+        u, v, dc = c["calib"]
+        ax.plot(u, v / 1e3, "*", color=C_SDOF, mec="k", ms=13, zorder=5,
+                label=rf"SDOF calibration ($\Delta_c$ = {dc:.1f} mm)")
+        ax.set_xlim(0, u_max or max(c["2d"][0].max(), 0 if c["3d"] is None else c["3d"][0].max()))
+        ax.set_ylim(bottom=0)
+        ax.set_xlabel("Displacement at the reference node (mm)", fontsize=12)
+        ax.set_ylabel("Base shear (kN)", fontsize=12)
+        ax.set_title(f"{model} – direction {d}")
+        ax.legend(fontsize=9, loc="lower right")
+    fig.tight_layout()
+    return fig

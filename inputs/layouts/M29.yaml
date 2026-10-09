@@ -1,0 +1,165 @@
+# Units: N, mm, s
+name: M29
+description: Plan layout of archetype M29, read from inputs/models3d/M29.json (main line shifted by 1050
+  mm to start at x = 0)
+main_line:
+  length: 32000
+  n_pipes: 3
+  hangers:
+    positions: [1050, 3050, 6050, 9050, 12050, 15050, 18050, 21050, 24175, 27050, 30050]
+  braces:
+    transverse:
+      positions: [1050, 9050, 18050, 27050]
+    longitudinal:
+      positions: [3050, 15050, 27050]
+branches:
+- x: 2100
+  side: +y
+  length: 5000
+  hangers:
+    positions: [1500, 4500]
+  braces:
+    transverse:
+      positions: [1500]
+    longitudinal:
+      positions: [1500]
+- x: 3400
+  side: -y
+  length: 5000
+  hangers:
+    positions: [1500, 4500]
+  braces:
+    transverse:
+      positions: [4500]
+    longitudinal:
+      positions: [4500]
+- x: 5300
+  side: +y
+  length: 5000
+  hangers:
+    positions: [1500, 4500]
+  braces:
+    transverse:
+      positions: [1500]
+    longitudinal:
+      positions: [1500]
+- x: 8100
+  side: +y
+  length: 5000
+  hangers:
+    positions: [1500, 4500]
+  braces:
+    transverse:
+      positions: [1500]
+    longitudinal:
+      positions: [1500]
+- x: 8100
+  side: -y
+  length: 5000
+  hangers:
+    positions: [1500, 4500]
+  braces:
+    transverse:
+      positions: [4500]
+    longitudinal:
+      positions: [4500]
+- x: 12600
+  side: +y
+  length: 5000
+  hangers:
+    positions: [1500, 4500]
+  braces:
+    transverse:
+      positions: [1500]
+    longitudinal:
+      positions: [1500]
+- x: 12600
+  side: -y
+  length: 5000
+  hangers:
+    positions: [1500, 4500]
+  braces:
+    transverse:
+      positions: [4500]
+    longitudinal:
+      positions: [4500]
+- x: 15300
+  side: +y
+  length: 5000
+  hangers:
+    positions: [1500, 4500]
+  braces:
+    transverse:
+      positions: [1500]
+    longitudinal:
+      positions: [1500]
+- x: 19400
+  side: +y
+  length: 5000
+  hangers:
+    positions: [1500, 4500]
+  braces:
+    transverse:
+      positions: [1500]
+    longitudinal:
+      positions: [1500]
+- x: 20200
+  side: -y
+  length: 5000
+  hangers:
+    positions: [1500, 4500]
+  braces:
+    transverse:
+      positions: [4500]
+    longitudinal:
+      positions: [4500]
+- x: 22000
+  side: +y
+  length: 5000
+  hangers:
+    positions: [1500, 4500]
+  braces:
+    transverse:
+      positions: [1500]
+    longitudinal:
+      positions: [1500]
+- x: 24000
+  side: -y
+  length: 5000
+  hangers:
+    positions: [1500, 4500]
+  braces:
+    transverse:
+      positions: [4500]
+    longitudinal:
+      positions: [4500]
+- x: 26600
+  side: +y
+  length: 5000
+  hangers:
+    positions: [1500, 4500]
+  braces:
+    transverse:
+      positions: [1500]
+    longitudinal:
+      positions: [1500]
+- x: 31500
+  side: +y
+  length: 5000
+  hangers:
+    positions: [1500, 4500]
+  braces:
+    transverse:
+      positions: [1500]
+    longitudinal:
+      positions: [1500]
+- x: 32000
+  side: -y
+  length: 5000
+  hangers:
+    positions: [1500, 4500]
+  braces:
+    transverse:
+      positions: [4500]
+    longitudinal:
+      positions: [4500]

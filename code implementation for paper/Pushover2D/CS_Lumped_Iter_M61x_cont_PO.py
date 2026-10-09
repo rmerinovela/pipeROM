@@ -8,6 +8,10 @@ import os
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 #Lumped orthogonal line
+# 2D model of the loading along x, consistent with the 3D model (3D_models/M61_biron.py): the analysed line
+#   is a branch, 2D x = 52000 mm - y (tee at the end of the line, x = 52000); hangers and transverse restraints at
+#   the 3D positions along the branch (1000, 4000, 7000, 10000, 13000, 16000, 19000, 22000, 25000, 28000, 31000, 34000, 37000, 40000, 43000, 46000, 49000 and 4000, 13000, 22000, 31000, 40000, 49000 mm from the tee); the main line is the orthogonal at
+#   the tee, with the 9 longitudinal restraints of the 3D main line.
 
 
 # ------------------------------------------------------------
@@ -27,13 +31,14 @@ rho = 7.85e-9
 
 # Stiff spring coordinates (user input)
 #x_stiff_user = np.array([4000.0, 13000.0, 25000.0, 37000.0, 46000.0])
-x0_soft =1000
+x0_soft = 1000          # not used: explicit hanger positions below
 soft_spacing = 3000
+x_hangers_user = np.array([3000,6000,9000,12000,15000,18000,21000,24000,27000,30000,33000,36000,39000,42000,45000,48000,51000])   # 52000 - (3D hangers along the branch)
 
 # NEW: stiff hangers defined by mask (0/1)
 # Example mask — must be defined by you
 stiff_mask = np.array([
-    0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1
+    1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0
 ], dtype=int)
 
 # ------------------------------------------------------------
@@ -42,7 +47,7 @@ stiff_mask = np.array([
 x_ortho_user         = np.array([52000])
 L_ortho_user         = np.array([82000])
 n_ortho_pipes_user   = np.array([3])
-n_ortho_springs_user = np.array([8])
+n_ortho_springs_user = np.array([9])   # longitudinal restraints of the 3D main line
 
 n_orth = len(x_ortho_user)
 
@@ -95,8 +100,8 @@ for dc in dc_vec:
         Delta=dc,
         max_iter=50,
         tol=1e-3,
-
         x0_soft=x0_soft,
+        x_hangers_user=x_hangers_user,
         soft_spacing=soft_spacing,
         stiff_mask=stiff_mask,
 

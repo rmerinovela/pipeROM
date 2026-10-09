@@ -1,6 +1,15 @@
 # Defaults for optional entries of a piping-system file. Units: N, mm, s (mass in tonnes).
 # A system file only needs to specify what differs from these values.
 
+main_line:
+  # Identical parallel mains lumped into the analysed main: they add bending stiffness, share each
+  # branch's longitudinal braces and add mass to the modal quantities. The number may differ on each
+  # side of x_center (n_mains_left / n_mains_right, default n_mains; x_center default length / 2).
+  n_mains: 1
+  n_mains_left: null
+  n_mains_right: null
+  x_center: null
+
 pipe:
   outer_diameter: 127.0     # external diameter of one pipe
   inner_diameter: 113.0     # internal diameter of one pipe

@@ -1,17 +1,19 @@
 """Equivalent SDOF parameters at a chosen target displacement Delta_c.
 
-This replaces the values typed by hand into ``code implementation for paper/Pushover_SDOF/*.py`` and reproduces the
-``equivalent_static.py`` -> ``NLTHA_SDOF.py`` chain of ``code_proposed_procedure/``:
+Reproduces ``code implementation for paper/Pushover_SDOF/sdof_from_2d.py`` (``load_sdof_params``):
 
-* the equivalent static procedure is run at Delta_c;
+* the equivalent static procedure is run at Delta_c; by default (``sdof.on_pushover_grid``) Delta_c is
+  the pushover step closest to the requested value, as the scripts read the SDOF from the pushover results,
+  and the values are rounded to 3 decimals as written there (``sdof.round_decimals``);
 * Gamma and the effective mass come from the converged shape;
 * each braced hanger (transverse) and each branch (longitudinal) is one support, with
   phi = displaced shape at the support, normalised to the reference (last) branch DOF;
 * each support becomes a Pinching4 spring of the SDOF with envelope deformations divided by
-  Gamma * phi and envelope forces multiplied by the number of trapezes it represents
-  (1 for a braced hanger, ``n_braces`` for a branch).
+  Gamma * phi and envelope forces multiplied by the number of trapezes it represents: the number of
+  mains lumped on its side of x_center for a braced hanger, ``alpha * n_braces`` for a branch. The SDOF
+  base shear then matches the base shear of the static model.
 
-The SDOF itself (mass = effective mass, parallel springs) is not analysed here.
+The SDOF itself (mass = effective mass, parallel springs) is analysed in ``timehistory``.
 """
 
 from __future__ import annotations
@@ -23,9 +25,11 @@ from pathlib import Path
 
 import numpy as np
 
-from .inputs import AnalysisSettings, PipingSystem, ResolvedSystem, dump_yaml
+from .inputs import AnalysisSettings, InputError, PipingSystem, ResolvedSystem, dump_yaml
 from .pushover import PushoverStep, run_step
 from .trapeze import Pinching4
+
+MIN_PHI = 1e-3      # a spring needs a positive shape value at its support
 
 
 @dataclass
@@ -35,7 +39,7 @@ class SDOFSupport:
     x: float
     branch: int | None
     phi: float
-    n_trapezes: int
+    n_trapezes: float   # trapezes represented by the spring (force scale)
     spring: Pinching4   # scaled Pinching4 of the SDOF spring
 
 
@@ -59,7 +63,7 @@ class SDOFParameters:
         return sum(s.kind == "transverse" for s in self.supports)
 
     @property
-    def n_longitudinal_trapezes(self) -> int:
+    def n_longitudinal_trapezes(self) -> float:
         return sum(s.n_trapezes for s in self.supports if s.kind == "longitudinal")
 
     @property
@@ -102,7 +106,7 @@ class SDOFParameters:
         for k, s in enumerate(self.supports):
             p = s.spring.parameters()
             w.writerow([k, s.kind, repr(s.x), "" if s.branch is None else s.branch, repr(float(s.phi)),
-                        s.n_trapezes] + [repr(float(p[c])) for c in cols[6:]])
+                        repr(float(s.n_trapezes))] + [repr(float(p[c])) for c in cols[6:]])
         return buf.getvalue()
 
     def write(self, out_dir: str | Path) -> list[Path]:
@@ -114,33 +118,62 @@ class SDOFParameters:
         return files
 
 
+def _rounded(v, decimals: int | None):
+    """``v`` as written with ``decimals`` decimals and read back (``np.savetxt(fmt="%.3f")`` + ``np.loadtxt``)."""
+    if decimals is None:
+        return v
+    if isinstance(v, np.ndarray):
+        return np.array([float(f"{x:.{decimals}f}") for x in v])
+    return float(f"{v:.{decimals}f}")
+
+
 def sdof_from_step(rs: ResolvedSystem, step: PushoverStep, converged: bool | None = None,
-                   iterations: int | None = None) -> SDOFParameters:
-    gamma = step.gamma
+                   iterations: int | None = None, decimals: int | None = None) -> SDOFParameters:
+    """SDOF from a pushover step. With ``decimals``, the values of the step's row of the pushover results
+    (Delta_c, Gamma, M_eff, V_b, mass ratio, u_SDOF, shape) are rounded as the scripts read them."""
+    r = lambda v: _rounded(v, decimals)  # noqa: E731
+    gamma = r(step.gamma)
+    d_norm = r(step.d_norm)
     supports: list[SDOFSupport] = []
     for i in np.where(rs.brace_mask == 1)[0]:
-        phi = float(step.d_norm[i])
-        supports.append(SDOFSupport("transverse", int(i), float(rs.hanger_x[i]), None, phi, 1,
-                                    rs.transverse.scaled(1.0, 1.0 / (gamma * phi))))
+        x = float(rs.hanger_x[i])
+        phi = float(d_norm[i])
+        n = rs.n_mains_at(x)
+        supports.append(SDOFSupport("transverse", int(i), x, None, phi, n,
+                                    rs.transverse.scaled(n, gamma * phi)))
     for j in range(rs.n_branches):
         i = rs.n_hangers + j
-        phi = float(step.d_norm[i])
-        n = int(rs.branch_n_braces[j])
+        phi = float(d_norm[i])
+        n = rs.branch_participation * int(rs.branch_n_braces[j])
         supports.append(SDOFSupport("longitudinal", i, float(rs.branch_x[j]), j, phi, n,
-                                    rs.longitudinal.scaled(float(n), 1.0 / (gamma * phi))))
+                                    rs.longitudinal.scaled(n, gamma * phi)))
+    for s in supports:
+        if s.phi <= MIN_PHI:
+            raise InputError(f"{rs.name}: non-positive shape value {s.phi:.3g} at the {s.kind} support at "
+                             f"x = {s.x:g} (Delta_c = {step.delta_c:.2f} mm); choose another Delta_c")
     return SDOFParameters(
-        name=rs.name, delta_c=step.delta_c, gamma=gamma, effective_mass=step.effective_mass,
-        total_mass=step.total_mass, mass_ratio=step.mass_ratio, u_sdof=step.u_sdof, base_shear=step.base_shear,
+        name=rs.name, delta_c=r(step.delta_c), gamma=gamma, effective_mass=r(step.effective_mass),
+        total_mass=step.total_mass, mass_ratio=r(step.mass_ratio), u_sdof=r(step.u_sdof),
+        base_shear=r(step.base_shear),
         converged=step.converged if converged is None else converged,
         iterations=step.iterations if iterations is None else iterations,
-        supports=supports, d_norm=step.d_norm,
+        supports=supports, d_norm=d_norm,
     )
+
+
+def sdof_delta_c(settings: AnalysisSettings, delta_c: float | None = None) -> float:
+    """Delta_c at which the SDOF is derived: the requested value (default ``sdof.delta_c``), or the pushover
+    step closest to it when ``sdof.on_pushover_grid`` is set."""
+    dc = settings.sdof_delta_c if delta_c is None else float(delta_c)
+    if settings.sdof_on_pushover_grid:
+        grid = settings.delta_c()
+        dc = float(grid[np.argmin(np.abs(grid - dc))])
+    return dc
 
 
 def derive_sdof(system: PipingSystem | ResolvedSystem, settings: AnalysisSettings,
                 delta_c: float | None = None) -> SDOFParameters:
-    """Run the equivalent static procedure at ``delta_c`` (default: ``settings.sdof_delta_c``)."""
+    """Run the equivalent static procedure at ``sdof_delta_c(settings, delta_c)``."""
     rs = system.resolve() if isinstance(system, PipingSystem) else system
-    dc = settings.sdof_delta_c if delta_c is None else float(delta_c)
-    step, _ = run_step(rs, settings, dc)
-    return sdof_from_step(rs, step)
+    step, _ = run_step(rs, settings, sdof_delta_c(settings, delta_c))
+    return sdof_from_step(rs, step, decimals=settings.sdof_round_decimals)

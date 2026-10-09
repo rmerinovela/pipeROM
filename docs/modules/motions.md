@@ -35,8 +35,9 @@ Functions:
 ## Design notes
 
 - Record IDs are strings; numeric IDs read from text files are normalised (`120111.0` → `"120111"`).
-- The time step comes from the file (first time value), matching `NLTHA_SDOF.py`. For the provided sets
-  it equals the record time step / 10 used by the paper's 3D scripts.
+- The time step comes from the file (first time value), as the SDOF scripts (`motion_set(...).load`). The 3D
+  scripts compute it as `Timesteps.txt` / 10; for the provided sets the two agree (to the last bit except
+  0.0003 s, where they differ by ~5e-20 s).
 - Loading a 30,000-row file takes about 0.1–0.2 s; nothing is cached, to keep memory flat in batch runs.
 
 ## Tests

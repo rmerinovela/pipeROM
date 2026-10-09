@@ -16,9 +16,9 @@ input validation rules live. File format reference: [input_files.md](../input_fi
 | `InputError(ValueError)` | every invalid-input condition; the message names the offending entry |
 | `PipeProperties` | pipe section, material, densities, mass factor; `effective_fluid_density` applies the `density / 7.8` rule |
 | `Branch` | `x`, `length`, `n_pipes`, `n_braces` |
-| `PipingSystem` | the system **as specified**: hangers as a grid *or* positions, braces as mask *or* positions *or* count, trapezes as `"default"`, a path or a `Pinching4` |
-| `ResolvedSystem` | the system **as analysed**: numpy arrays of hanger x, brace mask, branch data, plus loaded `Pinching4` and derived `Trilinear` for each trapeze type |
-| `AnalysisSettings` | pushover, shape-iteration, static-solver, branch-split and SDOF settings as typed fields; the `motions`, `sdof_time_history` and `verification_3d` sections as dictionaries, parsed by their modules |
+| `PipingSystem` | the system **as specified**: lumped mains (`n_mains`, optional `n_mains_left` / `n_mains_right` / `x_center`), hangers as a grid *or* positions, braces as mask *or* positions *or* count, trapezes as `"default"`, a path or a `Pinching4` |
+| `ResolvedSystem` | the system **as analysed**: numpy arrays of hanger x, brace mask, branch data, the mains on each side of `x_center` (`n_mains_at(x)`: the number at x, the average at `x_center` ± 1e-3 mm), plus loaded `Pinching4` and derived `Trilinear` for each trapeze type |
+| `AnalysisSettings` | pushover, shape-iteration, static-solver, branch-split and SDOF settings (`sdof_delta_c`, `sdof_on_pushover_grid`) as typed fields; the `motions`, `sdof_time_history` and `verification_3d` sections as dictionaries, parsed by their modules |
 
 ## Lifecycle
 
@@ -56,6 +56,7 @@ whenever an analysis starts.
   hanger.
 - Inner diameter smaller than outer diameter; all lengths, counts and moduli positive; NaN treated as
   missing.
+- `n_mains`, `n_mains_left`, `n_mains_right` positive integers; `x_center` strictly inside the main line.
 - Unknown keys anywhere are rejected.
 
 ## Design notes
@@ -71,5 +72,6 @@ whenever an analysis starts.
 - equivalent definitions give identical models (grid vs positions; mask vs positions vs count; list vs
   CSV branches);
 - every validation error;
+- the lumped-mains entries;
 - YAML round-trips of all archetypes;
 - settings overrides.

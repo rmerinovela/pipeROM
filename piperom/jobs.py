@@ -56,6 +56,7 @@ class RomPrediction:
     phi_max: float
     peak_u: float
     completed: bool
+    collapsed: bool = False
 
     @property
     def peak_support_displacement(self) -> float:
@@ -85,7 +86,7 @@ def verification_job(model_name: str, set_name: str, record_x: str, record_y: st
         sm = SDOFModel.from_parameters(p)
         r = run_sdof_time_history(sm, motion, th)
         rom[direction] = RomPrediction(direction, name, motion.record, p.gamma, max(sm.support_phi),
-                                       r.peak_u, r.completed)
+                                       r.peak_u, r.completed, r.collapsed)
     progress = (lambda f: queue.put((f, 1.0))) if queue is not None else None
     response = run_3d(model, mx, my, Verification3DSettings.from_dict(settings.verification_3d), progress)
     return VerificationResult(response, rom)

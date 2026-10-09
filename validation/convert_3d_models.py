@@ -11,6 +11,7 @@ records in x and y.
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -34,6 +35,19 @@ def plain(v):
     return v
 
 
+def fallback_tests(script: Path) -> list[list[str]]:
+    """Test types of the four fallback attempts of the transient analysis (Newton -initial, Broyden,
+    NewtonLineSearch, KrylovNewton): [test during the attempt, main test restored after it]. They differ
+    between the scripts."""
+    src = script.read_text(encoding="utf-8")
+    block = src[src.index("Time-controlled analysis"):]
+    tests = re.findall(r"op\.test\('(\w+)',\*testParams(2?)\)", block)[:8]
+    pairs = [[tests[2 * k][0], tests[2 * k + 1][0]] for k in range(4)]
+    if [t[1] for t in tests] != ["2", ""] * 4:
+        raise ValueError(f"{script.name}: unexpected fallback sequence {tests}")
+    return pairs
+
+
 def convert(script: Path) -> dict:
     calls, ns = capture_opensees_calls(script, stop_at={"constraints"})
     name = script.stem.replace("_biron", "")
@@ -43,6 +57,7 @@ def convert(script: Path) -> dict:
         "units": "N, mm, s",
         "rom_systems": {"x": f"{name}x", "y": f"{name}y"},
         "node_groups": {k: [int(n) for n in ns[v]] for k, v in NODE_GROUPS.items() if v in ns},
+        "fallback_tests": fallback_tests(script),
         "commands": [[cmd, plain(list(args))] for cmd, args in calls],
     }
 

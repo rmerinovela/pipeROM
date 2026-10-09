@@ -1,0 +1,25 @@
+# Units: N, mm, s
+name: M03
+description: Plan layout of archetype M03, read from inputs/models3d/M03.json (main line shifted by 0
+  mm to start at x = 0)
+main_line:
+  length: 36000
+  n_pipes: 3
+  hangers:
+    positions: [1000, 4000, 7000, 10000, 13000, 16000, 19000, 22000, 25000, 28000, 31000, 34000]
+  braces:
+    transverse:
+      positions: [4000, 19000, 34000]
+    longitudinal:
+      positions: [10000, 25000]
+branches:
+- x: 36000
+  side: +y
+  length: 18000
+  hangers:
+    positions: [1000, 4000, 7000, 10000, 13000, 16000]
+  braces:
+    transverse:
+      positions: [10000]
+    longitudinal:
+      positions: [10000]

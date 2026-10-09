@@ -14,8 +14,8 @@ code: 0 on success, 2 on invalid input.
 |---|---|---|
 | `check SYSTEM` | `load_system`, `resolve` | — (prints the resolved layout) |
 | `pushover SYSTEM` | `pushover.run_pushover` (with a printing progress callback) | `PushoverResult.write` |
-| `sdof SYSTEM` | `sdof.derive_sdof` | `SDOFParameters.write` |
-| `timehistory SYSTEM` | `derive_sdof` → `SDOFModel.from_parameters` → `timehistory.run_sdof_time_history` per run | `sdof_peaks.csv` + SDOF parameters |
+| `sdof SYSTEM [--pushover \| --cyclic]` | `sdof.derive_sdof`; with `--pushover` / `--cyclic` also `timehistory.run_sdof_pushover` | `SDOFParameters.write`; `sdof_pushover.csv` / `sdof_pushover_cyclic.csv` |
+| `timehistory SYSTEM` | `derive_sdof` → `SDOFModel.from_parameters` → `timehistory.run_sdof_time_history` per run | `sdof_peaks.csv` (with completed and collapsed flags) + SDOF parameters |
 | `verify3d MODEL` | `jobs.verification_job` | `peaks_3d.csv` |
 
 Structure:

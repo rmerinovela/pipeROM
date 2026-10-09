@@ -24,6 +24,7 @@ MAX_HANGERS = 299
 MAX_BRANCHES = 9999
 COORD_DECIMALS = 6          # coordinates are rounded to 1e-6 mm
 BRANCH_BRACE_CLASH_TOL = 1e-2
+X_CENTER_TOL = 1e-3         # a point closer than this to x_center belongs to both sides of it
 
 
 class InputError(ValueError):
@@ -108,12 +109,21 @@ class PipingSystem:
 
     The main line lies along x and is loaded transversely (y). Branches are straight pipelines
     orthogonal to the main line, loaded along their axis, each lumped into one DOF.
+
+    ``n_mains`` identical parallel mains can be lumped into the analysed one, with a different number on
+    each side of ``x_center`` (``n_mains_left`` / ``n_mains_right``, default ``n_mains``; ``x_center``
+    default length / 2). The analysed main keeps the mass of one main; the others add their bending
+    stiffness, share each branch's longitudinal braces and add their mass to the modal quantities.
     """
 
     name: str
     description: str
     length: float
     n_pipes: int
+    n_mains: int
+    n_mains_left: int | None
+    n_mains_right: int | None
+    x_center: float | None
     pipe: PipeProperties
     hanger_first: float | None
     hanger_spacing: float | None
@@ -134,8 +144,10 @@ class PipingSystem:
                                      "branches", "branch_participation", "trapezes"})
         base_dir = Path(base_dir) if base_dir else Path.cwd()
 
-        main = data.get("main_line") or {}
-        check_keys("main_line", main, {"length", "n_pipes"})
+        main = data["main_line"]
+        check_keys("main_line", main, {"length", "n_pipes", "n_mains", "n_mains_left", "n_mains_right", "x_center"})
+        side = {k: None if main.get(k) is None else parse_number("main_line", k, main[k], integer=True)
+                for k in ("n_mains_left", "n_mains_right")}
 
         p = data["pipe"]
         check_keys("pipe", p, {"outer_diameter", "inner_diameter", "elastic_modulus", "shear_modulus",
@@ -182,6 +194,10 @@ class PipingSystem:
             description=str(data.get("description") or ""),
             length=parse_number("main_line", "length", main.get("length")),
             n_pipes=parse_number("main_line", "n_pipes", main.get("n_pipes"), integer=True),
+            n_mains=parse_number("main_line", "n_mains", main.get("n_mains"), integer=True),
+            n_mains_left=side["n_mains_left"],
+            n_mains_right=side["n_mains_right"],
+            x_center=None if main.get("x_center") is None else parse_number("main_line", "x_center", main["x_center"]),
             pipe=pipe,
             hanger_first=None if h.get("first") is None else parse_number("hangers", "first", h["first"]),
             hanger_spacing=None if h.get("spacing") is None else parse_number("hangers", "spacing", h["spacing"]),
@@ -211,10 +227,14 @@ class PipingSystem:
             braces = {"count": self.brace_count}
         trapezes = {k: (f"custom_{k}.csv" if isinstance(v, Pinching4) else str(v))
                     for k, v in self.trapezes.items()}
+        main_line: dict[str, Any] = {"length": self.length, "n_pipes": self.n_pipes, "n_mains": self.n_mains}
+        for k in ("n_mains_left", "n_mains_right", "x_center"):
+            if getattr(self, k) is not None:
+                main_line[k] = getattr(self, k)
         return {
             "name": self.name,
             "description": self.description,
-            "main_line": {"length": self.length, "n_pipes": self.n_pipes},
+            "main_line": main_line,
             "pipe": dict(vars(self.pipe)),
             "hangers": hangers,
             "braces": braces,
@@ -283,6 +303,9 @@ class PipingSystem:
                 raise InputError(f"Branch {i + 1} at x={xo:g} coincides with a braced hanger (not allowed)")
         if self.pipe.inner_diameter >= self.pipe.outer_diameter:
             raise InputError("Pipe inner diameter must be smaller than the outer diameter")
+        x_center = 0.5 * self.length if self.x_center is None else float(self.x_center)
+        if not 0.0 < x_center < self.length:
+            raise InputError(f"'main_line.x_center' must lie inside the main line (0 < x < length), got {x_center:g}")
 
         t = load_trapeze(self.trapezes.get("transverse"), "transverse")
         l = load_trapeze(self.trapezes.get("longitudinal"), "longitudinal")
@@ -290,6 +313,9 @@ class PipingSystem:
             name=self.name,
             length=float(self.length),
             n_pipes=self.n_pipes,
+            n_mains_left=self.n_mains if self.n_mains_left is None else self.n_mains_left,
+            n_mains_right=self.n_mains if self.n_mains_right is None else self.n_mains_right,
+            x_center=x_center,
             pipe=self.pipe,
             hanger_x=hx,
             brace_mask=mask,
@@ -353,6 +379,9 @@ class ResolvedSystem:
     name: str
     length: float
     n_pipes: int
+    n_mains_left: int
+    n_mains_right: int
+    x_center: float
     pipe: PipeProperties
     hanger_x: np.ndarray
     brace_mask: np.ndarray
@@ -377,6 +406,14 @@ class ResolvedSystem:
     @property
     def n_dof(self) -> int:
         return self.n_hangers + self.n_branches
+
+    def n_mains_at(self, x: float) -> float:
+        """Number of mains lumped at position x; a point at x_center straddles both sides (average)."""
+        if x < self.x_center - X_CENTER_TOL:
+            return float(self.n_mains_left)
+        if x > self.x_center + X_CENTER_TOL:
+            return float(self.n_mains_right)
+        return 0.5 * (self.n_mains_left + self.n_mains_right)
 
     def dof_table(self) -> list[dict]:
         """One row per DOF, in DOF order: all hangers by position, then branches in input order."""
@@ -407,6 +444,8 @@ class AnalysisSettings:
     solver_tolerance: float
     solver_max_iterations: int
     sdof_delta_c: float
+    sdof_on_pushover_grid: bool
+    sdof_round_decimals: int | None
     branch_split: str
     motions: dict = field(default_factory=dict)              # default floor-motion selection
     sdof_time_history: dict = field(default_factory=dict)    # parsed by timehistory.TimeHistorySettings
@@ -421,7 +460,7 @@ class AnalysisSettings:
         check_keys("pushover", po, {"delta_c_start", "delta_c_stop", "n_steps", "delta_c_values", "warm_start"})
         check_keys("shape_iteration", it, {"max_iterations", "tolerance"})
         check_keys("static_solver", so, {"test", "tolerance", "max_iterations"})
-        check_keys("sdof", sd, {"delta_c"})
+        check_keys("sdof", sd, {"delta_c", "on_pushover_grid", "round_decimals"})
         eq = d["equivalent_static"]
         check_keys("equivalent_static", eq, {"branch_split"})
         if eq["branch_split"] not in ("consistent", "legacy"):
@@ -443,6 +482,9 @@ class AnalysisSettings:
             solver_tolerance=parse_number("static_solver", "tolerance", so["tolerance"]),
             solver_max_iterations=parse_number("static_solver", "max_iterations", so["max_iterations"], integer=True),
             sdof_delta_c=parse_number("sdof", "delta_c", sd["delta_c"]),
+            sdof_on_pushover_grid=bool(sd["on_pushover_grid"]),
+            sdof_round_decimals=None if sd["round_decimals"] is None
+            else parse_number("sdof", "round_decimals", sd["round_decimals"], positive=False, integer=True),
             branch_split=eq["branch_split"],
             motions=d.get("motions") or {},
             sdof_time_history=d.get("sdof_time_history") or {},
@@ -466,7 +508,8 @@ class AnalysisSettings:
             "static_solver": {"test": self.solver_test, "tolerance": self.solver_tolerance,
                               "max_iterations": self.solver_max_iterations},
             "equivalent_static": {"branch_split": self.branch_split},
-            "sdof": {"delta_c": self.sdof_delta_c},
+            "sdof": {"delta_c": self.sdof_delta_c, "on_pushover_grid": self.sdof_on_pushover_grid,
+                     "round_decimals": self.sdof_round_decimals},
             "motions": self.motions,
             "sdof_time_history": self.sdof_time_history,
             "verification_3d": self.verification_3d,

@@ -1,10 +1,10 @@
 # Units: N, mm, s
 name: M29x
 description: Archetype M29, loading along x (from code implementation for paper/Pushover2D/CS_Lumped_Iter_M29x_cont_PO.py)
-main_line: {length: 12000, n_pipes: 18}
+main_line: {length: 10000, n_pipes: 3, n_mains_left: 6, n_mains_right: 9}
 pipe: {outer_diameter: 127, inner_diameter: 113, elastic_modulus: 210000, shear_modulus: 81000, density: 7.85e-09}
-hangers: {first: 1500, spacing: 3000}
+hangers: {positions: [500, 3500, 6500, 9500]}
 braces:
   mask: [1, 0, 1, 0]
 branches:
-- {x: 6000, length: 32000, n_pipes: 3, n_braces: 3}
+- {x: 5000, length: 32000, n_pipes: 3, n_braces: 3}

@@ -8,6 +8,10 @@ import os
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 #Lumped orthogonal line
+# 2D model of the loading along y, consistent with the 3D model (3D_models/M30_biron.py):
+#   2D x = 3D x + 1.05 m (main line from -1.05 to 30.95 m in 3D); hangers and transverse restraints at
+#   the positions of the 3D main line; one orthogonal per tee, 5 m long: the two branches that share a
+#   tee (7.05 and 11.55 m, one on each side) form one orthogonal of 6 pipes and 2 longitudinal restraints.
 
 # ------------------------------------------------------------
 # Parameters
@@ -29,23 +33,24 @@ rho = 7.85e-9
 # Stiff spring coordinates (user input)
 #x_stiff_user = np.array([2000.0, 14000.0, 26000.0])
 
-x0_soft =2000
+x0_soft = 1000          # not used: explicit hanger positions below
 soft_spacing = 3000
+x_hangers_user = np.array([1050,3050,6050,9050,12050,15050,18050,21050,24175,27050,30050])   # 3D hangers 0...29000 mm + 1050
 
 # NEW: stiff hangers defined by mask (0/1)
 # Example mask — must be defined by you
 stiff_mask = np.array([
-    1,0,0,0,1,0,0,0,1,0
+    0,1,0,0,0,1,0,0,0,1,0
 ], dtype=int)
 
 
 # ------------------------------------------------------------
 # Orthogonal branches (generalized)
 # ------------------------------------------------------------
-x_ortho_user         = np.array([1050,4250,7050,11550,14250,18350,20950,25550,30450,2350,7050,11550,19150,22950,30950])
-L_ortho_user         = np.array([5500,5500,5500,5500,5500,5500,5500,5500,5500,5500,5500,5500,5500,5500,5500])
-n_ortho_pipes_user   = np.array([3,3,3,3,3,3,3,3,3,3,3,3,3,3,3])
-n_ortho_springs_user = np.array([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])
+x_ortho_user         = np.array([2100,5300,8100,12600,15300,19400,22000,26600,31500,3400,20200,24000,32000])
+L_ortho_user         = np.array([5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000])
+n_ortho_pipes_user   = np.array([3,3,6,6,3,3,3,3,3,3,3,3,3])
+n_ortho_springs_user = np.array([1,1,2,2,1,1,1,1,1,1,1,1,1])
 
 n_orth = len(x_ortho_user)
 
@@ -100,8 +105,8 @@ for dc in dc_vec:
         Delta=dc,
         max_iter=50,
         tol=1e-3,
-
         x0_soft=x0_soft,
+        x_hangers_user=x_hangers_user,
         soft_spacing=soft_spacing,
         stiff_mask=stiff_mask,
 
@@ -200,7 +205,7 @@ save_pushover_layout(
 nltha_lines = [
     ('',
      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
-     [-1050, 0, 1050, 2000, 2350, 4250, 5000, 7050, 8000, 11000, 11550, 14000, 14250, 17000, 18350, 19150, 20000, 20950, 22950, 23125, 25550, 26000, 29000, 30450, 30950]),
+     [0, 1050, 2100, 3050, 3400, 5300, 6050, 8100, 9050, 12050, 12600, 15050, 15300, 18050, 19400, 20200, 21050, 22000, 24000, 24175, 26600, 27050, 30050, 31500, 32000]),
 ]
 
 plot_shape_vs_nltha(

@@ -144,8 +144,9 @@ def solve_static_step(rs: ResolvedSystem, d, delta: float, solver: SolverSetting
     op.logFile(os.devnull, "-noEcho")   # silence OpenSees (zeroLength length warnings at every solve)
     op.model("basic", "-ndm", 3, "-ndf", 6)
 
-    A, Aw, J, Iy = _section(rs.n_pipes, p.outer_diameter, p.inner_diameter)
-    Iz = Iy
+    # one main (n_pipes pipes) gives mass, area and torsion; the lumped mains add bending stiffness
+    A, Aw, J, I_single = _section(rs.n_pipes, p.outer_diameter, p.inner_diameter)
+    I_left, I_right = rs.n_mains_left * I_single, rs.n_mains_right * I_single
     m_per_length = p.mass_factor * (rho * A + rho_f * Aw)
 
     op.uniaxialMaterial("Elastic", MAT_RIGID, RIGID_STIFFNESS)
@@ -162,6 +163,9 @@ def solve_static_step(rs: ResolvedSystem, d, delta: float, solver: SolverSetting
             x_branch[j] = cand[i_min]
         else:
             coords.append(xo)
+    # massless node at x_center, so that the change of bending stiffness falls on a node
+    if np.min(np.abs(np.array(coords, float) - rs.x_center)) >= SNAP_TOL:
+        coords.append(rs.x_center)
     x_coords = np.sort(np.unique(np.round(np.array(coords, float), 6)))
 
     op.geomTransf("Linear", TRANSF, 0.0, 0.0, 1.0)
@@ -173,16 +177,20 @@ def solve_static_step(rs: ResolvedSystem, d, delta: float, solver: SolverSetting
 
     main_node_at_branch = [main_nodes[int(np.argmin(np.abs(x_coords - x_branch[j])))] for j in range(nb)]
 
-    # lumped masses from tributary lengths (every main-line node is a hanger, branch junction or end)
-    elem_len = np.diff(x_coords)
-    trib = 0.5 * (np.r_[0.0, elem_len] + np.r_[elem_len, 0.0])
-    nodal_mass = trib * m_per_length
-    for node, m in zip(main_nodes, nodal_mass):
-        op.mass(node, m, m, 0, 0, 0, 0)
+    # lumped masses from tributary lengths between mass nodes (hangers, branch junctions, ends), so the
+    # massless x_center node does not take tributary length from its neighbours
+    mass_x = list(x_h) + list(x_branch) + [0.0, L]
+    idx_mass = np.where([any(abs(x - xm) < X_TOL for xm in mass_x) for x in x_coords])[0]
+    elem_len = np.diff(x_coords[idx_mass])
+    nodal_mass = np.zeros_like(x_coords)
+    nodal_mass[idx_mass] = 0.5 * (np.r_[0.0, elem_len] + np.r_[elem_len, 0.0]) * m_per_length
+    for i in idx_mass:
+        op.mass(main_nodes[i], nodal_mass[i], nodal_mass[i], 0, 0, 0, 0)
 
     for i in range(len(main_nodes) - 1):
+        I_e = I_left if 0.5 * (x_coords[i] + x_coords[i + 1]) < rs.x_center else I_right
         op.element("elasticBeamColumn", BEAM_ELE + i, main_nodes[i], main_nodes[i + 1],
-                   A, E, G, J, Iy, Iz, TRANSF)
+                   A, E, G, J, I_e, I_e, TRANSF)
 
     # ---------------------------------------------------------------- hangers
     brace_k = np.zeros(n_brace)
@@ -225,14 +233,16 @@ def solve_static_step(rs: ResolvedSystem, d, delta: float, solver: SolverSetting
 
         start = BRANCH_START + j
         op.node(start, x_j, BRANCH_OFFSET, 0.0)
-        op.element("elasticBeamColumn", eid, main_node_at_branch[j], start, A, E, G, J, Iy, Iz, TRANSF)
+        I_tee = rs.n_mains_at(x_j) * I_single
+        op.element("elasticBeamColumn", eid, main_node_at_branch[j], start, A, E, G, J, I_tee, I_tee, TRANSF)
         eid += 1
 
         A_j, Aw_j, _, _ = _section(np_j, p.outer_diameter, p.inner_diameter)
         m_per_length_j = p.mass_factor * (rho * A_j + rho_f * Aw_j)
         branch_mass[j] = alpha * m_per_length_j * L_j
         k_unit = tri_L.secant_stiffness(delta * d[nh + j])
-        branch_k[j] = alpha * ns_j * k_unit
+        # the branch's longitudinal braces are shared by the mains lumped on its side of x_center
+        branch_k[j] = alpha * (ns_j / rs.n_mains_at(x_j)) * k_unit
         op.uniaxialMaterial("Elastic", BRANCH_MAT + j, branch_k[j])
 
         support, bottom = BRANCH_SUPPORT + j, BRANCH_BOTTOM + j
@@ -349,15 +359,25 @@ def solve_static_step(rs: ResolvedSystem, d, delta: float, solver: SolverSetting
         raise RuntimeError(f"Static solve failed at delta={delta}")
 
     # ---------------------------------------------------------------- modal quantities
+    # main-line masses of all the lumped mains (same shape), n_mains taken on each DOF's side
     d_ref = d / d[-1]
-    m_all = m_d.copy()
+    n_mains_d = np.array([rs.n_mains_at(x) for x in x_d])
+    m_all = n_mains_d * m_d
     m_all[nh:] += branch_mass
     num = np.sum(m_all * d_ref)
     den = np.sum(m_all * d_ref * d_ref)
     gamma = num / den if den > 0 else 0.0
     f_push = (m_all * d_ref) / num
     m_eff = gamma * num
-    total_mass = np.sum(m_d) + np.sum(branch_mass)
+    total_mass = np.sum(n_mains_d * m_d) + np.sum(branch_mass)
+
+    # base shear = support reactions at the assumed shape (braced hangers + branch springs), times the
+    # number of mains on each support's side
+    base_shear = 0.0
+    for i in range(n_brace):
+        base_shear += rs.n_mains_at(x_brace[i]) * brace_k[i] * (delta * d[brace_idx[i]])
+    for j in range(nb):
+        base_shear += rs.n_mains_at(x_branch[j]) * (branch_k[j] * (delta * d[nh + j]))
 
     dof_nodes = [int(n) for n in hanger_bottom] + main_node_at_branch
     u = np.array([op.nodeDisp(nd, 2) for nd in dof_nodes])
@@ -367,7 +387,7 @@ def solve_static_step(rs: ResolvedSystem, d, delta: float, solver: SolverSetting
         branch_stay_load=stay, brace_stiffness=brace_k, branch_stiffness=branch_k,
         gamma=gamma, effective_mass=m_eff, total_mass=total_mass,
         mass_ratio=m_eff / total_mass if total_mass > 0 else 0.0,
-        base_shear=np.sum(loads) + np.sum(stay), f_push=f_push,
+        base_shear=base_shear, f_push=f_push,
     )
 
 
