@@ -29,25 +29,28 @@ refer to the previous inputs, until the analysis is run again.
     back to the defaults.
 - **Settings file:** upload a settings YAML and **Load settings**, or **Default settings**.
 
-## Geometry
+## Layout
 
-- **Main line and pipe properties:**
-  - name, description, length, number of pipes;
-  - pipe section, material and densities (fluid density defaults to density / 7.8);
-  - mass factor and branch participation factor.
+The system is described in plan: a main line along x and identical branches on each side (+y, −y).
+The inputs are in three columns across the tab, with the plots below them:
+
+| Column | Inputs |
+|---|---|
+| System | name, description; pipe properties (diameters, moduli, density, mass factor; fluid density defaults to density / 7.8); branch participation factor |
+| Main line (along x) | length, number of pipes; hangers; restraint table |
+| Branches (along y) | common length and number of pipes; one sub-tab per side (+y, −y) with the tee positions, hangers and restraint table |
+
 - **Hangers:** a regular grid (first, spacing, end clearance) or explicit positions (comma-separated).
-- **Transverse braces:**
-  - *Select hangers*: tick braced hangers in a table that follows the current hanger list; or
-  - *Evenly spaced*: a number of braces, placed as in the paper's `compute_stiff_mask`.
-- **Branches:** an editable table (x, length, pipes, longitudinal braces). Add and delete rows freely.
-- **Plan view:**
-  - main line, gravity hangers and braces;
-  - branches drawn to scale, labelled with their longitudinal brace count (branches sharing an x
-    alternate sides);
-  - the loading direction.
-- **Validation:** problems (e.g. a branch on a braced hanger) are reported here and block the analyses.
-- **Download inputs:** a zip with `system.yaml`, `settings.yaml` and any custom trapeze CSVs, usable
-  directly with the CLI.
+- **Restraint tables:** one row per hanger, with a checkbox per direction (across and along the line). The
+  table follows the current hanger list.
+- **Branches:** a side with no tee positions has no branches.
+- **Plots (bottom):**
+  - plan view: lines, gravity hangers and restraints in x, y or both, drawn to scale;
+  - the equivalent line of each loading direction analysed by the reduced-order model.
+- **Validation:** problems (e.g. a side without restraints) are reported above the plots and block the
+  analyses.
+- **Download inputs:** a zip with the layout, the equivalent system of each direction, the settings and
+  any custom trapeze CSVs, usable directly with the CLI.
 
 ## Trapezes
 
@@ -99,6 +102,11 @@ Uses the SDOF parameters of the current inputs (derive them here if needed). Cho
 - intensity levels (for sets with levels);
 - all records, or a selection.
 
+**Floor motions:** a line shows whether the files of the selected set are all in `motions/`. For the
+sets of the Zenodo dataset (`S4_IM`, `S4_150`), **Download from Zenodo** downloads and unzips the
+missing files, with a progress bar (it's disabled when nothing is missing; existing files are kept). The
+run is disabled while files of the selected analyses are missing.
+
 **Run SDOF time histories** (about 0.3 s per analysis) gives:
 - **Peaks plot:** peak support displacement (Γ · max φ · peak u) per record. With several levels it's
   plotted against level, with the median.
@@ -115,6 +123,8 @@ For the paper's archetypes (`inputs/models3d/`); defaults to the model matching 
 **Choose:**
 - a motion set with record pairs, an intensity level and a floor;
 - the ground motion and its orientation (which component acts in x).
+
+The same floor-motion line and **Download from Zenodo** button as in the SDOF time history tab.
 
 **Run 3D verification:**
 - runs the full 3D model under both components;
@@ -140,6 +150,7 @@ after stopping the app during a long 3D run, check for leftover `multiprocessing
 
 ## Limitations
 
-- Floor motions must be in `motions/` and described in `motion_sets.yaml`; they can't be uploaded.
+- Floor motions must be in `motions/` and described in `motion_sets.yaml`; they can't be uploaded. The
+  paper's sets can be downloaded from Zenodo in the app or with `python -m piperom download-motions`.
 - 3D verification is limited to the archetypes with a 3D model.
 - Results live in the browser session; download what you want to keep.

@@ -9,7 +9,7 @@ inputs/                     everything the engine reads (besides motions)
 ├── archetypes/               the 18 system files of the paper (M01x … M63y)
 ├── examples/                 example system files
 └── models3d/                 the paper's 3D models as data (JSON)
-motions/                    floor motions + motion_sets.yaml (catalogue); large files not in git
+motions/                    floor motions + motion_sets.yaml (catalogue); large files on Zenodo (download-motions)
 piperom/                    the engine (Python package)
 app/streamlit_app.py        web app
 validation/                 comparison with the paper's code and results; 3D model converter

@@ -11,12 +11,12 @@
 
 S4_IM:
   description: >
-    Floor accelerations of the 4-storey building at 12 intensity levels, for the 22 bidirectional
+    Floor accelerations of the 4-storey building at 10 intensity levels, for the 22 bidirectional
     ground motions in ground_motions/ (used by the 3D models of the paper)
   file_pattern: floor_motions/ResultsS4/FloorAcc_IM{level}_{record}.txt
   records: {file: ground_motions/Names.txt}
   record_pairs: true
-  levels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  levels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   time_column: 0
   floors: {1: 1, 2: 2, 3: 3, 4: 4}
   to_mm_s2: 1000.0

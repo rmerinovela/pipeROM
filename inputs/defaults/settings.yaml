@@ -33,7 +33,7 @@ sdof:
 
 motions:                    # default floor-motion selection (sets are described in motions/motion_sets.yaml)
   set: S4_IM
-  levels: [12]              # intensity levels (ignored for sets without levels)
+  levels: [10]              # intensity levels (ignored for sets without levels)
   records: null             # null = every record of the set; or a list of record IDs
   floor: 4
 

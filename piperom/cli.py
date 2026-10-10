@@ -7,6 +7,7 @@
                                   [--records ID,ID] [--floor N] [--out DIR]
     python -m piperom verify3d    MODEL [--settings S.yaml] [--set NAME] [--level N] [--pair K | --records X,Y]
                                   [--floor N] [--out DIR]
+    python -m piperom download-motions [--sets S4_IM,S4_150] [--keep-zip]
 """
 
 from __future__ import annotations
@@ -17,7 +18,7 @@ from pathlib import Path
 
 from .inputs import InputError, load_settings, load_system
 from .jobs import verification_job
-from .motions import motion_set, select_runs
+from .motions import download_floor_motions, motion_set, select_runs
 from .pushover import rows_to_csv, run_pushover
 from .sdof import derive_sdof
 from .timehistory import CYCLIC_PROTOCOL, SDOFModel, TimeHistorySettings, run_sdof_pushover, run_sdof_time_history
@@ -137,8 +138,14 @@ def cmd_verify3d(args, settings) -> int:
     return 0
 
 
+def cmd_download_motions(args, settings) -> int:
+    written = download_floor_motions(_csv_list(args.sets), keep_zip=args.keep_zip)
+    print(f"{len(written)} floor-motion files written to motions/floor_motions/")
+    return 0
+
+
 COMMANDS = {"check": cmd_check, "pushover": cmd_pushover, "sdof": cmd_sdof, "timehistory": cmd_timehistory,
-            "verify3d": cmd_verify3d}
+            "verify3d": cmd_verify3d, "download-motions": cmd_download_motions}
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -176,13 +183,16 @@ def build_parser() -> argparse.ArgumentParser:
     for q in (p, p3):
         q.add_argument("--set", help="motion set in motions/motion_sets.yaml (default: settings motions.set)")
         q.add_argument("--floor", type=int, help="floor (default: settings motions.floor)")
+    pd = sub.add_parser("download-motions", help="download the floor motions from Zenodo into motions/")
+    pd.add_argument("--sets", help="comma-separated sets (default: S4_IM,S4_150)")
+    pd.add_argument("--keep-zip", action="store_true", help="keep the downloaded zips in motions/")
     return ap
 
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
-        return COMMANDS[args.command](args, load_settings(args.settings))
+        return COMMANDS[args.command](args, load_settings(getattr(args, "settings", None)))
     except (ValueError, FileNotFoundError) as exc:   # InputError, malformed trapeze files
         print(f"Input error: {exc}", file=sys.stderr)
         return 2

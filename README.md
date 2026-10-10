@@ -24,7 +24,14 @@ python -m piperom sdof     inputs/archetypes/M01x.yaml --delta-c 12
 streamlit run app/streamlit_app.py                          # → http://localhost:8501
 ```
 
-The time-history analyses also need the floor motions in `motions/floor_motions/` (2.2 GB, not in git).
+The time-history analyses also need the floor motions (about 750 MB to download, 2 GB unzipped, not in
+git). They are on Zenodo, [10.5281/zenodo.23283900](https://doi.org/10.5281/zenodo.23283900), with the OpenSees model of the building and its ground motions. Download
+them into `motions/floor_motions/` with:
+
+```bash
+python -m piperom download-motions          # both sets; --sets S4_IM or --sets S4_150 for one
+```
+
 Then:
 
 ```bash

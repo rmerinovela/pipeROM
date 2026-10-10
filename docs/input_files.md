@@ -125,7 +125,7 @@ sdof:
 
 motions:                   # default floor-motion selection
   set: S4_IM
-  levels: [12]
+  levels: [10]
   records: null            # null = every record of the set
   floor: 4
 
@@ -172,7 +172,7 @@ S4_IM:
   file_pattern: floor_motions/ResultsS4/FloorAcc_IM{level}_{record}.txt   # relative to motions/
   records: {file: ground_motions/Names.txt}     # or a list, or {range: [1, 150]}
   record_pairs: true          # consecutive records = two horizontal components of one ground motion
-  levels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]   # or null if the pattern has no {level}
+  levels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]   # or null if the pattern has no {level}
   time_column: 0              # time step = first time value
   floors: {1: 1, 2: 2, 3: 3, 4: 4}   # floor -> column
   to_mm_s2: 1000.0            # file units -> mm/s²
@@ -180,7 +180,7 @@ S4_IM:
 
 | Set | Files | Records | Levels | Used by the paper in |
 |---|---|---|---|---|
-| `S4_IM` | `floor_motions/ResultsS4/FloorAcc_IM{k}_{name}.txt` | 44 (22 pairs, `ground_motions/Names.txt`) | 1–12 | 3D models; SDOF results (IM1–IM10) |
+| `S4_IM` | `floor_motions/ResultsS4/FloorAcc_IM{k}_{name}.txt` | 44 (22 pairs, `ground_motions/Names.txt`) | 1–10 | 3D models; SDOF results |
 | `S4_150` | `floor_motions/ResultsS4/FloorAcc_{n}.txt` | 150 | — | `NLTHA_SDOF.py` |
 
 Content of the provided files, checked:
@@ -189,7 +189,21 @@ Content of the provided files, checked:
   10 × the ground record length in rows.
 - **Ground records:** `ground_motions/Scaled_Records/{name}_Scaled.txt` (single column, presumably g)
   aren't used by the engine.
-- **Size:** the floor files total 2.2 GB and aren't tracked by git.
+- **Size:** the floor files total 2 GB and aren't tracked by git.
+
+**Getting the files.** Both sets are on Zenodo, [10.5281/zenodo.23283900](https://doi.org/10.5281/zenodo.23283900). Download and unzip them into
+`motions/floor_motions/` with:
+
+```
+python -m piperom download-motions [--sets S4_IM,S4_150] [--keep-zip]
+```
+
+Each zip is checked against the MD5 checksum published by Zenodo. Files that already exist are kept,
+never overwritten, so the command can be re-run to complete a partial download. The zips are deleted after
+extraction unless `--keep-zip` is given. The Zenodo record also has the OpenSees model of the 4-storey
+frame (`frame_4storey.py`) and its input ground motions. Its README lists which files that model
+reproduces: `S4_150` and `S4_IM` levels 2, 5 and 10. Levels 1, 3, 4 and 6–9 come from an earlier version
+of the frame model.
 
 To add motions:
 1. Put the files under `motions/`.
@@ -217,6 +231,7 @@ python -m piperom timehistory SYSTEM.yaml [--settings S.yaml] [--delta-c MM] [--
                               [--levels 1,5,10] [--records ID,ID] [--floor N] [--out DIR]
 python -m piperom verify3d    MODEL [--settings S.yaml] [--set NAME] [--level N]
                               [--pair K | --records X_ID,Y_ID] [--floor N] [--out DIR]
+python -m piperom download-motions [--sets S4_IM,S4_150] [--keep-zip]
 ```
 
 Command-line options override the settings file, which overrides the defaults. Outputs go to
@@ -229,6 +244,7 @@ Command-line options override the settings file, which overrides the defaults. O
 | `sdof` | `sdof_parameters.yaml` (Γ, masses, supports with scaled Pinching4), `sdof_springs.csv` |
 | `timehistory` | `sdof_peaks.csv` (record, level, peak u, peak support displacement, completed), SDOF parameters |
 | `verify3d` | `peaks_3d.csv`; prints the 3D peaks and the ROM prediction per direction |
+| `download-motions` | the floor-motion files in `motions/floor_motions/` (from Zenodo; existing files kept) |
 
 Exit code 2 means invalid input; the message names the offending entry.
 

@@ -71,3 +71,15 @@ def test_app_reports_invalid_layout():
     assert any("increasing" in e.value for e in at.error)
     at.text_input(key="p_tees").set_value("40000").run()
     assert any("tee must lie on the main line" in e.value or "increasing" in e.value for e in at.error)
+
+
+@pytest.mark.skipif(not HAVE_MOTIONS, reason="floor motions not available")
+def test_app_offers_floor_motion_download():
+    at = st_testing.AppTest.from_file(APP, default_timeout=240)
+    at.run()
+    button(at, "Derive SDOF parameters").click().run()
+    assert not at.exception, at.exception
+    dl = [b for b in at.button if b.label.startswith("Download S4_IM from Zenodo")]
+    assert {b.key for b in dl} == {"dl_motions_th", "dl_motions_3d"}
+    assert all(b.disabled for b in dl)          # every file present locally: nothing to download
+    assert any("available locally" in c.value for c in at.caption)

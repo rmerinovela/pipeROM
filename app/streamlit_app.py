@@ -30,7 +30,8 @@ from piperom.inputs import AnalysisSettings, InputError, PipingSystem, dump_yaml
 from piperom.jobs import pushover_job, sdof_job, sdof_time_history_job, verification_job  # noqa: E402
 from piperom.layout import Layout, layout_from_dict  # noqa: E402
 from piperom.sdof import sdof_delta_c  # noqa: E402
-from piperom.motions import load_motion_sets, select_runs  # noqa: E402
+from piperom.motions import (DATASET_ZIPS, ZENODO_DOI, download_floor_motions, load_motion_sets,  # noqa: E402
+                             missing_files, select_runs)
 from piperom.timehistory import SDOFModel, support_demands  # noqa: E402
 from piperom.verification3d import braced_peaks, list_models3d, load_model3d  # noqa: E402
 from piperom.pushover import CURVE_COLUMNS, SHAPE_COLUMNS, rows_to_csv  # noqa: E402
@@ -367,28 +368,32 @@ def equivalent_view(system: PipingSystem, direction: str) -> go.Figure:
 
 
 with tab_geo:
-    c_in, c_plot = st.columns([1, 2])
-    with c_in:
+    # Inputs in three columns across the tab (system and pipe | main line | branches); plots below.
+    c_gen, c_main, c_br = st.columns([1, 1.25, 1.25], gap="medium")
+    with c_gen:
+        st.subheader("System")
         st.text_input("Name", key="name")
         st.text_area("Description", key="description", height=68)
-        with st.expander("Pipe properties"):
-            st.number_input("Outer diameter (mm)", min_value=0.1, key="pipe_outer_diameter")
-            st.number_input("Inner diameter (mm)", min_value=0.0, key="pipe_inner_diameter")
-            st.number_input("Elastic modulus (MPa)", min_value=1.0, key="pipe_elastic_modulus")
-            st.number_input("Shear modulus (MPa)", min_value=1.0, key="pipe_shear_modulus")
-            st.number_input("Density (t/mm³)", min_value=0.0, format="%.3e", key="pipe_density")
-            fluid_default = st.checkbox("Fluid density = density / 7.8 (water in steel)",
-                                        value=ss.pipe_fluid_density is None, key=f"fluid_default_{v}")
-            if fluid_default:
-                ss.pipe_fluid_density = None
-            else:
-                ss.pipe_fluid_density = st.number_input(
-                    "Fluid density (t/mm³)", min_value=0.0, format="%.3e",
-                    value=float(ss.pipe_fluid_density if ss.pipe_fluid_density is not None
-                                else ss.pipe_density / 7.8), key=f"fluid_{v}")
-            st.number_input("Mass factor", min_value=0.01, key="pipe_mass_factor")
-            st.number_input("Branch participation factor", min_value=0.01, key="branch_participation")
+        st.markdown("**Pipe properties**")
+        q1, q2 = st.columns(2)
+        q1.number_input("Outer diameter (mm)", min_value=0.1, key="pipe_outer_diameter")
+        q2.number_input("Inner diameter (mm)", min_value=0.0, key="pipe_inner_diameter")
+        q1.number_input("Elastic modulus (MPa)", min_value=1.0, key="pipe_elastic_modulus")
+        q2.number_input("Shear modulus (MPa)", min_value=1.0, key="pipe_shear_modulus")
+        q1.number_input("Density (t/mm³)", min_value=0.0, format="%.3e", key="pipe_density")
+        q2.number_input("Mass factor", min_value=0.01, key="pipe_mass_factor")
+        fluid_default = st.checkbox("Fluid density = density / 7.8 (water in steel)",
+                                    value=ss.pipe_fluid_density is None, key=f"fluid_default_{v}")
+        if fluid_default:
+            ss.pipe_fluid_density = None
+        else:
+            ss.pipe_fluid_density = st.number_input(
+                "Fluid density (t/mm³)", min_value=0.0, format="%.3e",
+                value=float(ss.pipe_fluid_density if ss.pipe_fluid_density is not None
+                            else ss.pipe_density / 7.8), key=f"fluid_{v}")
+        st.number_input("Branch participation factor", min_value=0.01, key="branch_participation")
 
+    with c_main:
         st.subheader("Main line (along x)")
         m1, m2 = st.columns(2)
         m1.number_input("Length (mm)", min_value=1.0, step=500.0, key="m_length")
@@ -397,19 +402,22 @@ with tab_geo:
         st.caption("Restraints of the main line: transverse = along y, longitudinal = along x.")
         brace_table("m", hx_main, "restrained in y", "restrained in x")
 
+    with c_br:
         st.subheader("Branches (along y)")
-        st.caption("All branches have the same length and pipes; the branches on each side of the main line are "
-                   "identical (hangers and restraints, measured from the tee). Tees can be anywhere on the main line.")
         b1, b2 = st.columns(2)
         b1.number_input("Length (mm)", min_value=1.0, step=500.0, key="b_length")
         b2.number_input("Number of pipes", min_value=1, step=1, key="b_npipes")
-        for side, s in SIDE_KEY.items():
-            with st.expander(f"Branches on the {side} side", expanded=bool(ss[f"{s}_tees"].strip())):
+        st.caption("All branches have the same length and pipes; the branches on each side of the main line are "
+                   "identical (hangers and restraints, measured from the tee). Tees can be anywhere on the main line.")
+        for (side, s), t in zip(SIDE_KEY.items(), st.tabs([f"{side} side" for side in SIDE_KEY])):
+            with t:
                 st.text_input("Tee positions along the main line (mm, comma separated; empty = none)",
                               key=f"{s}_tees")
                 if ss[f"{s}_tees"].strip():
                     hx_b = hanger_inputs(s, ss.b_length, f"{side} branches")
                     brace_table(s, hx_b, "restrained in x", "restrained in y")
+                else:
+                    st.caption(f"No branches on the {side} side.")
 
 
 
@@ -599,20 +607,20 @@ def signature(*parts: str) -> str:
 
 
 with tab_geo:
-    with c_plot:
-        if error:
-            st.error(error)
-        else:
-            p1, p2 = st.columns([3, 2])
-            p1.plotly_chart(plan_view(layout), width="stretch")
-            with p2:
-                for d in DIRS:
-                    st.plotly_chart(equivalent_view(systems[d], d), width="stretch", key=f"eq_{d}")
-                st.caption("Equivalent lines analysed by the reduced-order model: ▲ restraint across the line, "
-                           "○ gravity hanger, ◆ branch DOF (number of longitudinal restraints above it).")
-            if settings is not None:
-                st.download_button("Download inputs (layout + equivalent systems + settings + custom trapezes, zip)",
-                                   zip_bytes(input_files(settings)), file_name=f"{ss.name}_inputs.zip")
+    st.divider()
+    if error:
+        st.error(error)
+    else:
+        p1, p2 = st.columns([3, 2])
+        p1.plotly_chart(plan_view(layout), width="stretch")
+        with p2:
+            for d in DIRS:
+                st.plotly_chart(equivalent_view(systems[d], d), width="stretch", key=f"eq_{d}")
+            st.caption("Equivalent lines analysed by the reduced-order model: ▲ restraint across the line, "
+                       "○ gravity hanger, ◆ branch DOF (number of longitudinal restraints above it).")
+        if settings is not None:
+            st.download_button("Download inputs (layout + equivalent systems + settings + custom trapezes, zip)",
+                               zip_bytes(input_files(settings)), file_name=f"{ss.name}_inputs.zip")
 
 ready = systems is not None and settings is not None
 po_sig, sd_sig = {}, {}
@@ -818,6 +826,45 @@ with tab_sdof:
                 show_sdof(d)
 
 
+# ============================================================================ floor motions
+def floor_motions_status(ms, needed: list, key: str) -> bool:
+    """Availability of the floor-motion files of set ``ms``, with the download from Zenodo. Returns whether
+    the files of the selected analyses (``needed``: (record, level) pairs) are all available."""
+    doi = f"[{ZENODO_DOI}](https://doi.org/{ZENODO_DOI})"
+    missing = missing_files(ms)
+    n_total = len(select_runs(ms))
+    downloadable = ms.name in DATASET_ZIPS
+    c1, c2 = st.columns([3, 2], vertical_alignment="center")
+    if not missing:
+        c1.caption(f"Floor motions {ms.name}: all {n_total} files available locally (dataset {doi}).")
+    elif downloadable:
+        c1.warning(f"Floor motions {ms.name}: {len(missing)} of {n_total} files are missing. Download them from "
+                   f"Zenodo ({doi}); existing files are kept.")
+    else:
+        c1.warning(f"Floor motions {ms.name}: {len(missing)} of {n_total} files are missing from motions/.")
+    if downloadable and c2.button(f"Download {ms.name} from Zenodo", key=key, disabled=not missing,
+                                  help="Downloads the set's zip from the Zenodo dataset, checks its checksum "
+                                       "and unzips the missing files into motions/floor_motions/."):
+        bar = st.progress(0.0, text="Connecting to Zenodo...")
+
+        def on_bytes(done, total):
+            bar.progress(done / total, text=f"Downloading {done / 1e6:.0f} of {total / 1e6:.0f} MB"
+                         if done < total else "Checking and unzipping...")
+
+        try:
+            download_floor_motions([ms.name], progress=lambda msg: None, on_bytes=on_bytes)
+        except (InputError, OSError) as exc:
+            bar.empty()
+            st.error(f"Download failed: {exc}")
+        else:
+            st.rerun()
+    lost = {ms.path(r, lv) for r, lv in needed} & set(missing)
+    if lost:
+        st.info(f"{len(lost)} of the selected analyses need floor-motion files that are missing; download the "
+                "set or change the selection.")
+    return not lost
+
+
 # ============================================================================ SDOF time history
 def show_time_history(d: str, th_sig: str) -> None:
     if not ss.th_result.get(d):
@@ -916,9 +963,10 @@ with tab_th:
             runs = []
             st.error(str(exc))
         st.caption(f"{len(runs)} analyses per direction (about 0.3 s each).")
+        motions_ok = floor_motions_status(ms, runs, key="dl_motions_th")
         th_sig = {d: sd_sig[d] + signature(ms.name, str(runs), str(ss.m_floor), dump_yaml(settings.sdof_time_history))
                   for d in DIRS}
-        if st.button("Run SDOF time histories", type="primary", disabled=not runs):
+        if st.button("Run SDOF time histories", type="primary", disabled=not runs or not motions_ok):
             try:
                 for d in DIRS:
                     model = SDOFModel.from_parameters(sds[d])
@@ -972,7 +1020,8 @@ with tab_3d:
         rx, ry = pairs[k][::-1] if flip else pairs[k]
         st.caption(f"x ← {rx}, y ← {ry}. One run takes about 45 s for M01–M03 and several minutes for the "
                    "larger models.")
-        if st.button("Run 3D verification", type="primary"):
+        motions_ok3 = floor_motions_status(ms3, [(rx, level3d), (ry, level3d)], key="dl_motions_3d")
+        if st.button("Run 3D verification", type="primary", disabled=not motions_ok3):
             try:
                 ss.v3_result = run_remote(verification_job, name3d, set3d, rx, ry, level3d, int(floor3d), settings,
                                           label="3D analysis")

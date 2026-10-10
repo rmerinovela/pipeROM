@@ -17,11 +17,12 @@ code: 0 on success, 2 on invalid input.
 | `sdof SYSTEM [--pushover \| --cyclic]` | `sdof.derive_sdof`; with `--pushover` / `--cyclic` also `timehistory.run_sdof_pushover` | `SDOFParameters.write`; `sdof_pushover.csv` / `sdof_pushover_cyclic.csv` |
 | `timehistory SYSTEM` | `derive_sdof` → `SDOFModel.from_parameters` → `timehistory.run_sdof_time_history` per run | `sdof_peaks.csv` (with completed and collapsed flags) + SDOF parameters |
 | `verify3d MODEL` | `jobs.verification_job` | `peaks_3d.csv` |
+| `download-motions` | `motions.download_floor_motions` | floor-motion files in `motions/floor_motions/` |
 
 Structure:
 - `build_parser()` defines the commands and options.
 - Each command is a function `cmd_<name>(args, settings) -> int`, selected through the `COMMANDS` table.
-- `main` loads the settings, dispatches, and turns input errors into exit code 2.
+- `main` loads the settings (defaults for `download-motions`, which has no `--settings`), dispatches, and turns input errors into exit code 2.
 - The time-history commands resolve the motion selection (command-line option → settings `motions` →
   defaults) with `motions.select_runs`.
 - `verify3d` reports the paper's measure: the largest peak over the braced nodes

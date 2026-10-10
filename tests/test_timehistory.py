@@ -23,7 +23,7 @@ def test_motion_catalogue_and_selection():
     sets = load_motion_sets()
     assert {"S4_IM", "S4_150"} <= set(sets)
     ms = sets["S4_IM"]
-    assert len(ms.records) == 44 and len(ms.pairs()) == 22 and ms.levels == list(range(1, 13))
+    assert len(ms.records) == 44 and len(ms.pairs()) == 22 and ms.levels == list(range(1, 11))
     assert len(select_runs(ms, [1, 2], None)) == 88
     assert select_runs(ms, [3], ["120111"]) == [("120111", 3)]
     assert len(select_runs(sets["S4_150"])) == 150
