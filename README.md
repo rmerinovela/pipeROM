@@ -73,3 +73,9 @@ pipeROM is released under the MIT License (see `LICENSE`). It requires OpenSees 
 which is not included and is distributed under its own license by the Regents of the University
 of California: free for educational, research and non-profit use, with commercial use requiring
 permission from UC Berkeley. Users are responsible for complying with the OpenSees license.
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23322178.svg)](https://doi.org/10.5281/zenodo.23322178)
+
+Archived on Zenodo: [10.5281/zenodo.23322178](https://doi.org/10.5281/zenodo.23322178) (all versions);
+the version used in the paper is v1.0.0, [10.5281/zenodo.23322179](https://doi.org/10.5281/zenodo.23322179).
+
