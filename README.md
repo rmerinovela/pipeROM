@@ -68,3 +68,8 @@ validation/                      comparison with the paper (reports, 3D model co
 tests/                           pytest suite
 docs/                            documentation
 ```
+## License
+pipeROM is released under the MIT License (see `LICENSE`). It requires OpenSees (OpenSeesPy),
+which is not included and is distributed under its own license by the Regents of the University
+of California: free for educational, research and non-profit use, with commercial use requiring
+permission from UC Berkeley. Users are responsible for complying with the OpenSees license.
