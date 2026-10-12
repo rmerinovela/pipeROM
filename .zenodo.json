@@ -1,0 +1,39 @@
+{
+  "title": "pipeROM: a reduced-order model for performance-based seismic design of suspended piping systems in buildings",
+  "upload_type": "software",
+  "description": "<p>Code and results supporting the paper \"A reduced-order model for performance-based seismic design of suspended piping systems in buildings\", by Roberto J. Merino, Roberto Gentile and Carmine Galasso. This release freezes the version of the code used for the paper's results.</p><ul><li><code>code implementation for paper/</code>: the paper's original scripts and results (equivalent static procedure and pseudo-pushover, equivalent SDOF, SDOF nonlinear time histories, full 3D OpenSees models of all archetypes, and the comparison notebooks).</li><li><code>piperom</code>: a reusable engine, command-line interface and web app implementing the same reduced-order model from file-based inputs. It reproduces the paper's scripts and stored results to their stored precision (see <code>docs/validation.md</code>).</li><li><code>docs/</code>: methodology, software architecture, inputs, app, validation and known issues of the original scripts.</li></ul><p>The time-history analyses need the floor motions, archived separately on Zenodo (<a href=\"https://doi.org/10.5281/zenodo.23283900\">10.5281/zenodo.23283900</a>). pipeROM requires OpenSees (OpenSeesPy), which is not included and is distributed under its own license.</p>",
+  "creators": [
+    {
+      "name": "Merino, Roberto J.",
+      "affiliation": "University College London; City St George's, University of London",
+      "orcid": "0000-0002-1116-468X"
+    },
+    {
+      "name": "Gentile, Roberto",
+      "affiliation": "University College London",
+      "orcid": "0000-0002-7682-4490"
+    },
+    {
+      "name": "Galasso, Carmine",
+      "affiliation": "University College London",
+      "orcid": "0000-0001-5445-4911"
+    }
+  ],
+  "license": "MIT",
+  "keywords": [
+    "nonstructural elements",
+    "suspended piping systems",
+    "reduced-order model",
+    "performance-based seismic design",
+    "equivalent SDOF",
+    "OpenSees"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "10.5281/zenodo.23283900",
+      "relation": "references",
+      "resource_type": "dataset",
+      "scheme": "doi"
+    }
+  ]
+}
