@@ -119,6 +119,20 @@ def run_step(rs: ResolvedSystem, settings: AnalysisSettings, delta_c: float,
     return PushoverStep.from_shape(delta_c, res), res
 
 
+def first_yield_step(result: PushoverResult, system: PipingSystem | ResolvedSystem) -> int | None:
+    """Index of the first pushover step at which a restraint reaches its first-yield displacement (the first
+    breakpoint of its trilinear backbone): a braced hanger, transverse, or a branch, longitudinal. None if no
+    restraint yields within the analysed range. NLTHA show that the displaced shape stabilises at first yield."""
+    rs = system.resolve() if isinstance(system, PipingSystem) else system
+    braced = np.array([d["kind"] == "hanger" and d["braced"] for d in result.dofs])
+    branch = np.array([d["kind"] == "branch" for d in result.dofs])
+    for k, s in enumerate(result.steps):
+        D = np.abs(s.d_scaled)
+        if np.any(D[braced] >= rs.transverse_trilinear.d1) or np.any(D[branch] >= rs.longitudinal_trilinear.d1):
+            return k
+    return None
+
+
 def run_pushover(system: PipingSystem | ResolvedSystem, settings: AnalysisSettings,
                  progress: Callable[[int, int, PushoverStep], None] | None = None) -> PushoverResult:
     rs = system.resolve() if isinstance(system, PipingSystem) else system

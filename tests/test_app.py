@@ -29,6 +29,13 @@ def test_app_runs_pushover_and_sdof_in_both_directions():
     button(at, "Run pseudo-pushover").click().run()
     assert not at.exception, at.exception
     assert {d: len(r.steps) for d, r in at.session_state.po_result.items()} == {"x": 4, "y": 4}
+    # the displaced shape opens at the first yield of a restraint (Δc = 0.1, 16.7, 33.4, 50 mm: the second
+    # step), with the warning on shapes beyond first yield only after moving past it
+    assert at.session_state.po_yield == {"x": 1, "y": 1}
+    assert at.select_slider(key="po_k_y").value == 1
+    assert not any("beyond the first yield" in w.value for w in at.warning)
+    at.select_slider(key="po_k_y").set_value(3).run()
+    assert any("beyond the first yield" in w.value for w in at.warning)
 
     button(at, "Derive SDOF parameters").click().run()
     assert not at.exception, at.exception

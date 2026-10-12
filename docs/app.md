@@ -81,7 +81,10 @@ time step) come from the loaded settings file. Runs stopped at collapse are repo
   backbone is overlaid.
 - **Γ and effective-mass ratio** against Δc.
 - **Displaced shape** at any Δc (slider), normalised or in mm, with braces and branch DOFs marked; base
-  shear, Γ, effective mass and iteration count for that step.
+  shear, Γ, effective mass and iteration count for that step. After each run the slider opens at the first
+  yield of a restraint (`pushover.first_yield_step`); beyond it, a warning notes that the static shapes may be
+  inaccurate (distorted by local non-linearities, whereas NLTHA show the dynamic shape stabilises at first
+  yield).
 - **Table and downloads:** curve CSV, or a zip with the curve, the shapes and the inputs.
 
 Steps that didn't reach the shape tolerance are reported.

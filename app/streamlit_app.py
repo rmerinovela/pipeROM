@@ -34,7 +34,7 @@ from piperom.motions import (DATASET_ZIPS, ZENODO_DOI, download_floor_motions, l
                              missing_files, select_runs)
 from piperom.timehistory import SDOFModel, support_demands  # noqa: E402
 from piperom.verification3d import braced_peaks, list_models3d, load_model3d  # noqa: E402
-from piperom.pushover import CURVE_COLUMNS, SHAPE_COLUMNS, rows_to_csv  # noqa: E402
+from piperom.pushover import CURVE_COLUMNS, SHAPE_COLUMNS, first_yield_step, rows_to_csv  # noqa: E402
 from piperom.trapeze import (PARAMETER_NAMES, Pinching4, load_trapeze, parse_trapeze_csv,  # noqa: E402
                              trilinear_from_pinching4)
 
@@ -697,8 +697,19 @@ def show_pushover(d: str) -> None:
                           legend=dict(orientation="h", y=1.1))
         st.plotly_chart(fig, width="stretch", key=f"po_gamma_{d}")
 
+    k_yield = ss.po_yield.get(d)
     k = st.select_slider("Displaced shape at Δc (mm)", options=list(range(len(res.steps))), key=f"po_k_{d}",
-                         format_func=lambda i: f"{res.steps[i].delta_c:.3g}", value=len(res.steps) - 1)
+                         format_func=lambda i: f"{res.steps[i].delta_c:.3g}",
+                         value=len(res.steps) - 1 if k_yield is None else k_yield)
+    if k_yield is None:
+        st.caption("No restraint reaches its first-yield displacement within the analysed Δc range.")
+    else:
+        st.caption(f"Shown by default: first yield of a restraint, at Δc = {res.steps[k_yield].delta_c:.3g} mm.")
+    if k_yield is None or k > k_yield:
+        st.warning("Displaced shapes beyond the first yield of the restraints may be inaccurate: in the static "
+                   "procedure they are distorted by local non-linearities, whereas NLTHA show that the dynamic "
+                   "displaced shape stabilises at first yield and remains essentially unchanged at higher intensities. "
+                   "Use the first-yield shape to define the equivalent SDOF.")
     step = res.steps[k]
     dofs = pd.DataFrame(res.dofs)
     scaled = st.toggle("Show displacements in mm (otherwise normalised to the reference branch DOF)",
@@ -735,7 +746,7 @@ def show_pushover(d: str) -> None:
                        file_name=f"{res.name}_pushover.zip", key=f"po_dl2_{d}")
 
 
-for _key in ("po_result", "po_sig", "sdof_result", "sdof_sig", "th_result", "th_sig"):
+for _key in ("po_result", "po_sig", "po_yield", "sdof_result", "sdof_sig", "th_result", "th_sig"):
     ss.setdefault(_key, {})
 
 with tab_po:
@@ -750,6 +761,8 @@ with tab_po:
                 for d in DIRS:
                     ss.po_result[d] = run_remote(pushover_job, systems[d], settings, label=f"Loading along {d}: step")
                     ss.po_sig[d] = po_sig[d]
+                    ss.po_yield[d] = first_yield_step(ss.po_result[d], systems[d])
+                    ss.pop(f"po_k_{d}", None)   # show the first-yield shape of the new run
                 ss.po_inputs = input_files(settings)
             except Exception as exc:  # noqa: BLE001
                 st.error(f"Analysis failed: {exc}")

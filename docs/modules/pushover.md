@@ -35,6 +35,9 @@ the adaptive shapes, and writes them to CSV.
 Helpers:
 - `rows_to_csv(rows, columns)`: floats written with `repr`, i.e. full precision.
 - `solver_settings(settings)`: maps settings to `SolverSettings`.
+- `first_yield_step(result, system)`: index of the first step at which a restraint reaches its first-yield
+  displacement (first breakpoint of its trilinear backbone; braced hangers against the transverse trapeze,
+  branches against the longitudinal one), or `None`. The app shows the displaced shape at this step by default.
 - `CURVE_COLUMNS`, `SHAPE_COLUMNS`: the CSV column orders, also used by the app.
 
 ## Design notes
@@ -47,4 +50,5 @@ Helpers:
 
 ## Tests
 
-`tests/test_regression.py` (all archetypes, every value against the paper's files), `tests/test_app.py`.
+`tests/test_regression.py` (all archetypes, every value against the paper's files), `tests/test_pushover.py`
+(first-yield step), `tests/test_app.py`.
