@@ -35,9 +35,15 @@ spring $k_{L,1}$, its two longitudinal restraints in parallel: (12 mm, 15 000 N)
 ($t$ = 1, from 0 to 36 m).
 
 **Step 2.2: masses.** The masses are lumped at the hangers and at the junction using tributary lengths
-(Table 2). The tributary mass carried by the longitudinal line is $m_{T|L,1}$ = 0.125 t, from 35 m (half-way to
+(Table 2 and Figure 1). The tributary mass carried by the longitudinal line is $m_{T|L,1}$ = 0.125 t, from 35 m (half-way to
 the restraint at 34 m) to 36 m. The first 0.5 m at the free left end (0.06 t, under 1% of the mass) lumps onto the
 end node, which is not a point of support, and is not part of the procedure.
+
+![Plan view of archetype 2 divided into tributary areas](figures/archetype2_y_tributary_areas.png)
+
+**Figure 1.** Archetype 2 in the y direction, divided into tributary areas. The positions of the two longitudinal
+restraints along the branch are schematic: only their number enters the procedure. Figure produced by
+[`plot_tributary_areas.py`](plot_tributary_areas.py).
 
 **Table 2.** Lumped masses of the transverse line.
 
@@ -50,9 +56,9 @@ end node, which is not a point of support, and is not part of the procedure.
 
 **Step 3: equivalent linear static analysis.** The target displacement $\Delta_c$ = 12 mm is assigned to the
 largest displacement of the transverse line; with it, the most-displaced transverse restraint reaches
-approximately its first-yield displacement (10 mm). The initial guess is a uniform shape (step a: $\Delta$ = 12 mm
-at all points, with $\Delta_{L,1} = \Delta_{T|L,1}$). In the first iteration:
+approximately its first-yield displacement (10 mm). The first iteration is:
 
+- **a)** Initial guess: a uniform shape, $\Delta$ = 12 mm at all points, with $\Delta_{L,1} = \Delta_{T|L,1}$.
 - **b)** Each transverse restraint at 12 mm carries 6857 N (secant stiffness 571 N/mm), so $V_{T,tot,1}$ = 27 429 N.
   The longitudinal spring carries $V_{L,tot,1}$ = 15 000 N.
 - **c)** Eq. 3: $V_{L,1}$ = 2.246 / (2.246 + 0.125) × 15 000 = 14 210 N stays on the longitudinal line.
@@ -87,7 +93,7 @@ most-displaced transverse restraint (22 m) reaches 10.0 mm, its first yield; all
 
 ## 3. Phase 2: equivalent SDOF system
 
-**Step 1: effective mass and equivalent displacement.** With $\mathbf{m}_{full}$ and $\boldsymbol{\Delta}_{full}$,
+**Step 1: effective mass and equivalent displacement.** With $`\mathbf{m}_{full}`$ and $`\boldsymbol{\Delta}_{full}`$,
 which include $m_{L,1}$ = 2.246 t at $\Delta_{L,1} = \Delta_{T|L,1}$ = 7.84 mm,
 $\sum m_l \Delta_l$ = 64.28 t·mm and $\sum m_l \Delta_l^2$ = 638.3 t·mm². Eqs. 9 and 10 give
 

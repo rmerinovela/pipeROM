@@ -78,5 +78,6 @@ permission from UC Berkeley. Users are responsible for complying with the OpenSe
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23322178.svg)](https://doi.org/10.5281/zenodo.23322178)
 
 Archived on Zenodo: [10.5281/zenodo.23322178](https://doi.org/10.5281/zenodo.23322178) (all versions);
-the version used in the paper is v1.0.0, [10.5281/zenodo.23322179](https://doi.org/10.5281/zenodo.23322179).
+the version cited in the paper is v1.1.0, [10.5281/zenodo.23327676](https://doi.org/10.5281/zenodo.23327676), which adds
+the worked example to v1.0.0 ([10.5281/zenodo.23322179](https://doi.org/10.5281/zenodo.23322179)); the paper's results are the same in both.
 
